@@ -3,3105 +3,2032 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Study Quest</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
     padding:0;
-    font-family:Arial,Helvetica,sans-serif;
-}
-
-:root{
-    --blue:#0757b8;
-    --blue2:#0b70df;
-    --dark:#063b80;
-    --light:#eef6ff;
-    --white:#ffffff;
-    --text:#17324d;
-    --muted:#6d7f91;
-    --border:#d8e6f5;
-    --green:#16a05d;
-    --red:#d94848;
-    --shadow:0 8px 25px rgba(8,60,120,.10);
 }
 
 body{
-    background:#f4f8fc;
-    color:var(--text);
-    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:#f3f6fb;
+    color:#14213d;
 }
 
-/* =========================
-   AUTH
-========================= */
+button{
+    border:0;
+    border-radius:12px;
+    padding:11px 17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd6e5;
+    border-radius:10px;
+    margin:7px 0 14px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.primary{
+    background:#164a96;
+    color:white;
+}
+
+.secondary{
+    background:#e5edfb;
+    color:#164a96;
+}
+
+.danger{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.hidden{
+    display:none!important;
+}
+
+/* LOGIN */
 
 #authPage{
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     padding:20px;
-    background:linear-gradient(135deg,#063b80,#0b70df);
 }
 
-.auth-box{
-    background:white;
+.authBox{
     width:100%;
     max-width:430px;
+    background:white;
     padding:35px;
-    border-radius:22px;
-    box-shadow:0 20px 50px rgba(0,0,0,.2);
+    border-radius:25px;
+    box-shadow:0 10px 40px #00000018;
 }
 
-.logo-big{
-    text-align:center;
-    margin-bottom:25px;
-}
-
-.sq-logo{
-    width:58px;
-    height:58px;
-    background:var(--blue);
-    color:white;
-    border-radius:16px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
+.logo{
+    font-size:35px;
     font-weight:900;
-    box-shadow:0 8px 20px rgba(7,87,184,.25);
+    color:#164a96;
 }
 
-.logo-big h1{
-    margin-top:12px;
-    color:var(--dark);
+.authBox h1{
+    margin:8px 0;
 }
 
-.logo-big p{
-    color:var(--muted);
-    margin-top:5px;
+.authBox h2{
+    margin:25px 0 10px;
 }
 
-.auth-tabs{
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-}
-
-.auth-tabs button{
-    flex:1;
-    border:none;
-    padding:12px;
-    border-radius:10px;
-    cursor:pointer;
-    background:#edf4fb;
-    color:var(--text);
-    font-weight:bold;
-}
-
-.auth-tabs button.active{
-    background:var(--blue);
-    color:white;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:6px;
-    font-weight:bold;
-    font-size:14px;
-}
-
-.form-group input{
-    width:100%;
-    padding:13px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    outline:none;
-    font-size:15px;
-}
-
-.form-group input:focus{
-    border-color:var(--blue2);
-}
-
-.primary-btn{
-    width:100%;
-    border:none;
-    background:var(--blue);
-    color:white;
-    padding:14px;
-    border-radius:11px;
-    font-weight:bold;
-    cursor:pointer;
-    font-size:15px;
-}
-
-.primary-btn:hover{
-    background:var(--dark);
-}
-
-.auth-note{
-    font-size:12px;
-    color:var(--muted);
+.switch{
+    color:#164a96;
+    text-align:center;
     margin-top:15px;
-    line-height:1.5;
+    cursor:pointer;
 }
 
-/* =========================
-   APP
-========================= */
-
-#app{
-    display:none;
-}
+/* NAVBAR */
 
 .navbar{
-    height:70px;
-    background:white;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    padding:0 22px;
-    gap:25px;
-    position:sticky;
-    top:0;
-    z-index:50;
-}
-
-.nav-logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:900;
-    color:var(--dark);
-    font-size:19px;
-    white-space:nowrap;
-}
-
-.nav-logo .sq-logo{
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    font-size:15px;
-}
-
-.nav-links{
-    display:flex;
-    gap:5px;
-    overflow-x:auto;
-}
-
-.nav-links button{
-    border:none;
-    background:transparent;
-    color:#50677d;
-    padding:10px 12px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
-    white-space:nowrap;
-}
-
-.nav-links button:hover,
-.nav-links button.active{
-    background:#e9f3ff;
-    color:var(--blue);
-}
-
-.nav-user{
-    margin-left:auto;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:var(--blue);
+    background:#164a96;
     color:white;
+    padding:14px 20px;
     display:flex;
     align-items:center;
-    justify-content:center;
-    font-weight:bold;
+    gap:8px;
+    flex-wrap:wrap;
 }
 
-.logout-btn{
-    border:none;
-    background:#edf4fb;
-    color:var(--dark);
-    padding:9px 12px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
+.navLogo{
+    font-size:23px;
+    font-weight:900;
+    margin-right:auto;
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
-.layout{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) 300px;
-    gap:20px;
-    max-width:1500px;
-    margin:auto;
-    padding:25px;
+.navbar button{
+    background:transparent;
+    color:white;
 }
 
-.main-content{
-    min-width:0;
+.navbar button:hover{
+    background:#ffffff18;
 }
 
-.sidebar{
-    position:sticky;
-    top:95px;
-    height:fit-content;
-}
+/* PAGES */
 
 .page{
     display:none;
+    max-width:1200px;
+    margin:auto;
+    padding:25px;
 }
 
 .page.active{
     display:block;
 }
 
-/* =========================
-   HEADERS
-========================= */
-
-.page-title{
+.hero{
+    background:white;
+    border-radius:20px;
+    padding:25px;
     margin-bottom:20px;
 }
 
-.page-title h1{
-    font-size:28px;
-    color:var(--dark);
-}
-
-.page-title p{
-    color:var(--muted);
-    margin-top:5px;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
-    padding:20px;
-    box-shadow:var(--shadow);
-}
-
-.card h2{
-    color:var(--dark);
-    margin-bottom:8px;
-}
-
-.card h3{
-    color:var(--dark);
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
 }
 
 .grid{
     display:grid;
-    gap:15px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
 }
 
-.grid-2{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-}
-
-.grid-3{
-    grid-template-columns:repeat(3,minmax(0,1fr));
-}
-
-.grid-4{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stat-card{
+.card{
     background:white;
-    border:1px solid var(--border);
-    padding:18px;
-    border-radius:15px;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:13px;
-    font-weight:bold;
-}
-
-.stat-value{
-    font-size:27px;
-    color:var(--dark);
-    font-weight:900;
-    margin-top:5px;
-}
-
-.stat-icon{
-    font-size:24px;
-    margin-bottom:7px;
-}
-
-/* =========================
-   XP
-========================= */
-
-.level-box{
-    margin-top:20px;
-    background:linear-gradient(135deg,#063b80,#0b70df);
-    color:white;
+    padding:20px;
     border-radius:18px;
-    padding:23px;
+    box-shadow:0 4px 15px #0000000b;
 }
 
-.level-top{
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    margin-bottom:12px;
+.statNumber{
+    color:#164a96;
+    font-size:30px;
+    font-weight:900;
+    margin-top:7px;
 }
 
-.xp-track{
-    height:13px;
-    background:rgba(255,255,255,.25);
-    border-radius:99px;
+.progressBar{
+    width:100%;
+    height:15px;
+    background:#dbe5f4;
+    border-radius:20px;
     overflow:hidden;
 }
 
-.xp-fill{
+.progressFill{
     height:100%;
+    background:#164a96;
     width:0%;
-    background:white;
-    border-radius:99px;
-    transition:.4s;
 }
 
-/* =========================
-   QUESTS
-========================= */
+/* QUESTS */
 
-.quest-card{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:18px;
-    background:white;
-    border:1px solid var(--border);
-    border-radius:15px;
-    margin-bottom:12px;
-}
-
-.quest-icon{
-    width:48px;
-    height:48px;
-    border-radius:13px;
-    background:#e9f3ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:23px;
-    flex-shrink:0;
-}
-
-.quest-info{
-    flex:1;
-}
-
-.quest-info h3{
-    color:var(--dark);
-    margin-bottom:4px;
-}
-
-.quest-info p{
-    color:var(--muted);
-    font-size:13px;
-}
-
-.quest-reward{
-    font-weight:bold;
-    color:var(--blue);
-    margin-right:8px;
-}
-
-.small-btn{
-    border:none;
-    background:var(--blue);
-    color:white;
-    padding:9px 13px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.small-btn:hover{
-    background:var(--dark);
-}
-
-.small-btn.secondary{
-    background:#e9f3ff;
-    color:var(--blue);
-}
-
-.small-btn.green{
-    background:var(--green);
-}
-
-.small-btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
-.completed{
-    opacity:.65;
-}
-
-.completed .small-btn{
-    background:#dfe8ef;
-    color:#687a89;
-}
-
-/* =========================
-   BADGES
-========================= */
-
-.badge{
-    text-align:center;
-    padding:18px 10px;
-    border:1px solid var(--border);
-    border-radius:14px;
-    background:white;
-}
-
-.badge-icon{
-    font-size:30px;
-    margin-bottom:7px;
-}
-
-.badge.locked{
-    filter:grayscale(1);
-    opacity:.45;
-}
-
-/* =========================
-   FLASHCARDS
-========================= */
-
-.flashcard-create{
-    margin-bottom:20px;
-}
-
-.flashcard-create input,
-.flashcard-create textarea,
-.room-form input,
-.room-form select{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:10px;
-    margin-bottom:10px;
-    outline:none;
-}
-
-.flashcard-create textarea{
-    resize:vertical;
-    min-height:90px;
-}
-
-.flashcard{
-    min-height:230px;
-    background:linear-gradient(135deg,#063b80,#0b70df);
-    color:white;
-    border-radius:18px;
-    padding:30px;
+.quest{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    cursor:pointer;
+    gap:12px;
 }
 
-.flashcard .fc-label{
-    font-size:13px;
-    opacity:.8;
+.quest button{
+    margin-top:auto;
+}
+
+/* FLASHCARDS */
+
+.flashcard{
+    background:white;
+    padding:18px;
+    border-radius:16px;
     margin-bottom:12px;
+    border:1px solid #e0e7f2;
 }
 
-.flashcard .fc-text{
-    font-size:25px;
-    font-weight:bold;
-    line-height:1.35;
-}
-
-.flashcard-controls{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    margin-top:15px;
-    flex-wrap:wrap;
-}
-
-.flashcard-list-item{
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:15px;
+.answer{
+    background:#edf3ff;
+    padding:12px;
+    border-radius:10px;
     margin-top:10px;
 }
 
-.flashcard-list-item strong{
-    color:var(--dark);
-}
+/* TIMER */
 
-.flashcard-list-item p{
-    color:var(--muted);
-    margin-top:5px;
-}
-
-/* =========================
-   TIMER
-========================= */
-
-.timer-shell{
-    min-height:600px;
-    border-radius:22px;
+.timerBox{
+    min-height:550px;
     background:white;
-    border:1px solid var(--border);
+    border-radius:25px;
     display:flex;
     flex-direction:column;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     text-align:center;
-    box-shadow:var(--shadow);
 }
 
-.timer-mode{
-    display:flex;
-    gap:8px;
-    margin-bottom:30px;
-}
-
-.timer-mode button{
-    border:none;
-    padding:11px 16px;
-    border-radius:10px;
-    background:#eaf3fc;
-    color:var(--dark);
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.timer-mode button.active{
-    background:var(--blue);
-    color:white;
-}
-
-.timer-number{
-    font-size:105px;
+.timerDisplay{
+    font-size:90px;
     font-weight:900;
-    color:var(--dark);
-    letter-spacing:2px;
-    line-height:1;
+    color:#164a96;
+    margin:25px;
 }
 
-.timer-label{
-    color:var(--muted);
-    margin-top:15px;
-    font-size:16px;
-}
-
-.timer-controls{
+.timerControls{
     display:flex;
     gap:10px;
-    margin-top:30px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
-.timer-controls button{
-    border:none;
-    padding:13px 22px;
-    border-radius:11px;
-    cursor:pointer;
-    font-weight:bold;
-}
+/* ROOMS */
 
-.timer-start{
-    background:var(--blue);
-    color:white;
-}
-
-.timer-reset{
-    background:#eaf1f7;
-    color:var(--dark);
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar-card{
+.room{
     background:white;
-    border:1px solid var(--border);
-    border-radius:17px;
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:15px;
+}
+
+.videoGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+}
+
+video{
+    width:100%;
+    min-height:200px;
+    background:#111827;
+    border-radius:18px;
+}
+
+/* FRIENDS */
+
+.friendToolbar{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:290px;
+    max-height:450px;
+    overflow:auto;
+    background:white;
+    border-radius:20px;
     padding:18px;
-    margin-bottom:15px;
-    box-shadow:var(--shadow);
+    box-shadow:0 10px 40px #00000025;
+    z-index:100;
 }
 
-.sidebar-title{
+.friendRow{
     display:flex;
+    align-items:center;
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:13px;
-}
-
-.sidebar-title h3{
-    color:var(--dark);
-}
-
-.icon-btn{
-    border:none;
-    background:#e9f3ff;
-    color:var(--blue);
-    width:32px;
-    height:32px;
-    border-radius:9px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.friend{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:9px 0;
-    border-bottom:1px solid #edf2f6;
-}
-
-.friend:last-child{
-    border-bottom:none;
-}
-
-.friend-avatar{
-    width:36px;
-    height:36px;
-    border-radius:50%;
-    background:#dcecff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
-    color:var(--dark);
-}
-
-.friend-info{
-    flex:1;
-}
-
-.friend-name{
-    font-weight:bold;
-    font-size:14px;
-}
-
-.friend-status{
-    color:var(--muted);
-    font-size:11px;
-}
-
-.online-dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#19a964;
-    display:inline-block;
-}
-
-.offline-dot{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#aab5bf;
-    display:inline-block;
-}
-
-.room-mini{
-    padding:12px;
-    background:#f1f7fd;
-    border-radius:11px;
-    margin-top:9px;
-}
-
-.room-mini strong{
-    color:var(--dark);
-}
-
-.room-mini p{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:3px;
-}
-
-/* =========================
-   FRIENDS
-========================= */
-
-.friend-search{
-    display:flex;
     gap:8px;
-    margin-bottom:15px;
+    padding:10px 0;
+    border-bottom:1px solid #edf0f5;
 }
 
-.friend-search input{
-    flex:1;
-    padding:11px;
-    border:1px solid var(--border);
-    border-radius:9px;
+.online{
+    width:10px;
+    height:10px;
+    display:inline-block;
+    border-radius:50%;
+    background:#22c55e;
 }
 
-.friend-result{
+/* LIVE ROOM */
+
+.liveRoom{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+}
+
+.roomTools{
     display:flex;
-    align-items:center;
-    justify-content:space-between;
-    border:1px solid var(--border);
-    padding:12px;
-    border-radius:11px;
-    margin-top:8px;
-}
-
-/* =========================
-   ROOMS
-========================= */
-
-.room-code{
-    font-size:28px;
-    letter-spacing:5px;
-    font-weight:900;
-    color:var(--blue);
-    background:#edf5fd;
-    padding:15px;
-    border-radius:12px;
-    text-align:center;
+    gap:10px;
+    flex-wrap:wrap;
     margin:15px 0;
 }
 
-.room-actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.room-actions button{
-    border:none;
-    padding:12px 16px;
-    border-radius:10px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.live-room{
-    background:#071e38;
-    color:white;
-    min-height:500px;
-    border-radius:20px;
-    padding:22px;
-}
-
-.live-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.live-dot{
-    color:#ff5555;
-    font-weight:bold;
-}
-
-.live-timer{
-    font-size:52px;
-    font-weight:900;
-    text-align:center;
-    margin:40px 0;
-}
-
-.participants{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.participant{
-    background:#102e4c;
-    padding:9px 12px;
-    border-radius:20px;
-}
-
-.reactions{
-    display:flex;
-    gap:8px;
-    margin-top:20px;
-}
-
-.reactions button{
-    border:none;
-    background:#173d61;
-    color:white;
-    padding:10px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-/* =========================
-   TUTORING
-========================= */
-
-.feature-card{
-    padding:20px;
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-}
-
-.feature-card .feature-icon{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.feature-card h3{
-    margin-bottom:6px;
-}
-
-.feature-card p{
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.5;
-}
-
-.tutor-board{
-    min-height:260px;
-    border:2px dashed #bdd4eb;
-    background:#fbfdff;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--muted);
-    text-align:center;
-}
-
-.poll-option{
-    margin-top:8px;
-    padding:10px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    cursor:pointer;
-}
-
-.poll-option:hover{
-    background:#edf5fd;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-    position:fixed;
-    bottom:25px;
-    left:50%;
-    transform:translateX(-50%) translateY(100px);
-    background:#063b80;
-    color:white;
-    padding:13px 20px;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    transition:.3s;
-    z-index:100;
-    opacity:0;
-    font-weight:bold;
-}
-
-.toast.show{
-    transform:translateX(-50%) translateY(0);
-    opacity:1;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(3,30,60,.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:80;
-}
-
-.modal.show{
-    display:flex;
-}
-
-.modal-box{
+#whiteboard{
     width:100%;
-    max-width:500px;
+    height:400px;
+    border:2px solid #dbe5f4;
+    border-radius:15px;
     background:white;
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    touch-action:none;
 }
 
-.modal-box h2{
-    color:var(--dark);
-    margin-bottom:15px;
-}
-
-.modal-close{
-    float:right;
-    border:none;
-    background:#edf4fb;
-    padding:7px 10px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:1000px){
-    .layout{
-        grid-template-columns:1fr;
-    }
-
-    .sidebar{
-        position:static;
-        display:grid;
-        grid-template-columns:repeat(2,1fr);
-        gap:15px;
-    }
-
-    .sidebar-card{
-        margin-bottom:0;
-    }
-}
+/* MOBILE */
 
 @media(max-width:700px){
+
+    .navLogo{
+        width:100%;
+        text-align:center;
+        margin-bottom:5px;
+    }
+
     .navbar{
-        padding:0 12px;
-        gap:10px;
+        justify-content:center;
     }
 
-    .nav-logo span:last-child{
-        display:none;
+    .timerDisplay{
+        font-size:60px;
     }
 
-    .nav-user .logout-btn{
-        display:none;
-    }
-
-    .layout{
-        padding:15px;
-    }
-
-    .grid-2,
-    .grid-3,
-    .grid-4{
-        grid-template-columns:1fr;
-    }
-
-    .sidebar{
-        grid-template-columns:1fr;
-    }
-
-    .timer-number{
-        font-size:70px;
-    }
-
-    .timer-shell{
-        min-height:500px;
-    }
-
-    .quest-card{
-        align-items:flex-start;
-        flex-wrap:wrap;
-    }
-
-    .quest-info{
-        min-width:150px;
+    .friendToolbar{
+        width:calc(100% - 30px);
+        right:15px;
+        bottom:15px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      LOGIN / SIGNUP
-========================= -->
+===================================================== -->
 
-<div id="authPage">
+<section id="authPage">
 
-    <div class="auth-box">
+<div class="authBox">
 
-        <div class="logo-big">
-            <div class="sq-logo">SQ</div>
-            <h1>Study Quest</h1>
-            <p>Learn. Quest. Level up.</p>
-        </div>
+<div class="logo">SQ</div>
 
-        <div class="auth-tabs">
-            <button id="loginTab" class="active" onclick="showAuth('login')">
-                Login
-            </button>
+<h1>Study Quest</h1>
 
-            <button id="signupTab" onclick="showAuth('signup')">
-                Sign Up
-            </button>
-        </div>
+<p>Learn. Level up. Improve. 🚀</p>
 
-        <div id="loginForm">
 
-            <div class="form-group">
-                <label>Username</label>
-                <input id="loginUsername" type="text" placeholder="Enter username">
-            </div>
+<div id="loginBox">
 
-            <div class="form-group">
-                <label>Password</label>
-                <input id="loginPassword" type="password" placeholder="Enter password">
-            </div>
+<h2>Log in</h2>
 
-            <button class="primary-btn" onclick="login()">
-                Login
-            </button>
+<input
+id="loginEmail"
+type="email"
+placeholder="Email">
 
-        </div>
+<input
+id="loginPassword"
+type="password"
+placeholder="Password">
 
-        <div id="signupForm" style="display:none;">
+<button
+class="primary"
+style="width:100%"
+onclick="login()">
 
-            <div class="form-group">
-                <label>Username</label>
-                <input id="signupUsername" type="text" placeholder="Choose a username">
-            </div>
+Log In
 
-            <div class="form-group">
-                <label>Password</label>
-                <input id="signupPassword" type="password" placeholder="Choose a password">
-            </div>
+</button>
 
-            <button class="primary-btn" onclick="signup()">
-                Create Account
-            </button>
+<p
+class="switch"
+onclick="showSignup()">
 
-        </div>
+Don't have an account? Sign up
 
-        <p class="auth-note">
-            This is a prototype account system for the website.
-            Do not use a real password here. A real public version
-            should use secure authentication and a proper database.
-        </p>
-
-    </div>
+</p>
 
 </div>
 
 
-<!-- =========================
+<div
+id="signupBox"
+class="hidden">
+
+<h2>Create account</h2>
+
+<input
+id="signupUsername"
+placeholder="Username">
+
+<input
+id="signupEmail"
+type="email"
+placeholder="Email">
+
+<input
+id="signupPassword"
+type="password"
+placeholder="Password">
+
+<button
+class="primary"
+style="width:100%"
+onclick="signup()">
+
+Create Account
+
+</button>
+
+<p
+class="switch"
+onclick="showLogin()">
+
+Already have an account? Log in
+
+</p>
+
+</div>
+
+<p id="authMessage"></p>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      MAIN APP
-========================= -->
+===================================================== -->
 
-<div id="app">
-
-    <nav class="navbar">
-
-        <div class="nav-logo">
-            <div class="sq-logo">SQ</div>
-            <span>Study Quest</span>
-        </div>
-
-        <div class="nav-links">
-
-            <button class="nav-btn active" onclick="showPage('dashboard',this)">
-                🏠 Dashboard
-            </button>
-
-            <button class="nav-btn" onclick="showPage('quests',this)">
-                🎯 Quests
-            </button>
-
-            <button class="nav-btn" onclick="showPage('flashcards',this)">
-                🃏 My Flashcards
-            </button>
-
-            <button class="nav-btn" onclick="showPage('timer',this)">
-                ⏱️ Focus
-            </button>
-
-            <button class="nav-btn" onclick="showPage('rooms',this)">
-                👥 Study Rooms
-            </button>
-
-            <button class="nav-btn" onclick="showPage('tutoring',this)">
-                🎓 Live Tutoring
-            </button>
-
-            <button class="nav-btn" onclick="showPage('learn',this)">
-                📚 Learn
-            </button>
-
-            <button class="nav-btn" onclick="showPage('progress',this)">
-                📈 Progress
-            </button>
-
-        </div>
-
-        <div class="nav-user">
-
-            <div class="avatar" id="userAvatar">
-                U
-            </div>
-
-            <span id="usernameDisplay">
-                User
-            </span>
-
-            <button class="logout-btn" onclick="logout()">
-                Log Out
-            </button>
-
-        </div>
-
-    </nav>
+<div
+id="app"
+class="hidden">
 
 
-    <div class="layout">
+<nav class="navbar">
 
-        <main class="main-content">
+<div class="navLogo">
+🎓 Study Quest
+</div>
+
+<button onclick="showPage('dashboard')">
+Dashboard
+</button>
+
+<button onclick="showPage('quests')">
+Quests
+</button>
+
+<button onclick="showPage('flashcards')">
+Flashcards
+</button>
+
+<button onclick="showPage('timer')">
+Focus
+</button>
+
+<button onclick="showPage('rooms')">
+Live Rooms
+</button>
+
+<button onclick="showPage('tutoring')">
+Tutoring
+</button>
+
+<button onclick="showPage('progress')">
+Progress
+</button>
+
+<button onclick="showPage('settings')">
+⚙️ Settings
+</button>
+
+<button onclick="toggleFriends()">
+👥 Friends
+</button>
+
+<button onclick="logout()">
+Log Out
+</button>
+
+</nav>
 
 
-<!-- =========================
+<!-- =====================================================
      DASHBOARD
-========================= -->
+===================================================== -->
 
-<section id="dashboard" class="page active">
+<section
+id="dashboard"
+class="page active">
 
-    <div class="page-title">
-        <h1>Welcome to Study Quest 👋</h1>
-        <p>Learn. Level up. Improve.</p>
-    </div>
+<div class="hero">
 
-    <div class="grid grid-4">
+<h1>
+Welcome back,
+<span id="welcomeName"></span> 👋
+</h1>
 
-        <div class="stat-card">
-            <div class="stat-icon">⭐</div>
-            <div class="stat-label">TOTAL XP</div>
-            <div class="stat-value" id="totalXP">0</div>
-        </div>
+<p>
+Ready for today's quests?
+</p>
 
-        <div class="stat-card">
-            <div class="stat-icon">🔥</div>
-            <div class="stat-label">STREAK</div>
-            <div class="stat-value" id="streakDisplay">1</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">🎯</div>
-            <div class="stat-label">QUESTS COMPLETE</div>
-            <div class="stat-value" id="questDisplay">0</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">🏆</div>
-            <div class="stat-label">LEVEL</div>
-            <div class="stat-value" id="levelDisplay">1</div>
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="level-box">
+<div class="stats">
 
-        <div class="level-top">
+<div class="card">
 
-            <div>
-                <strong id="levelName">
-                    Beginner
-                </strong>
+<p>Total XP</p>
 
-                <div style="margin-top:4px;font-size:13px;opacity:.8;">
-                    Study Quest Level
-                </div>
-            </div>
+<div
+id="xpStat"
+class="statNumber">
 
-            <strong id="levelXP">
-                0 / 100 XP
-            </strong>
+0
 
-        </div>
+</div>
 
-        <div class="xp-track">
-            <div class="xp-fill" id="xpFill"></div>
-        </div>
-
-    </div>
+</div>
 
 
-    <div style="margin-top:25px;">
+<div class="card">
 
-        <div class="page-title">
-            <h1 style="font-size:22px;">
-                🎯 Today's Quests
-            </h1>
+<p>🔥 Streak</p>
 
-            <p>
-                Complete quests to earn XP.
-            </p>
-        </div>
+<div
+id="streakStat"
+class="statNumber">
 
-        <div id="dashboardQuests"></div>
+1
 
-    </div>
+</div>
+
+</div>
 
 
-    <div style="margin-top:25px;">
+<div class="card">
 
-        <div class="page-title">
-            <h1 style="font-size:22px;">
-                🏅 Badges
-            </h1>
-        </div>
+<p>Quests Complete</p>
 
-        <div class="grid grid-3" id="badgeGrid"></div>
+<div
+id="questStat"
+class="statNumber">
 
-    </div>
+0
+
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="card">
+
+<h2 id="levelText">
+Level 1 — Beginner
+</h2>
+
+<br>
+
+<div class="progressBar">
+
+<div
+id="xpBar"
+class="progressFill">
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="grid">
+
+
+<div class="card quest">
+
+<h2>🧠 Memory Challenge</h2>
+
+<p>
+Complete a memory challenge.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="claimXP(50)">
+
+Claim XP
+
+</button>
+
+</div>
+
+
+<div class="card quest">
+
+<h2>📝 Practice Questions</h2>
+
+<p>
+Complete practice questions.
+</p>
+
+<b>+75 XP</b>
+
+<button
+class="primary"
+onclick="claimXP(75)">
+
+Claim XP
+
+</button>
+
+</div>
+
+
+<div class="card quest">
+
+<h2>⏱️ Focus Session</h2>
+
+<p>
+Finish a focus timer.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="showPage('timer')">
+
+Start Timer
+
+</button>
+
+</div>
+
+
+<div class="card quest">
+
+<h2>📚 Flashcard Quest</h2>
+
+<p>
+Create and study flashcards.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="showPage('flashcards')">
+
+Open Flashcards
+
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      QUESTS
-========================= -->
+===================================================== -->
 
-<section id="quests" class="page">
+<section
+id="quests"
+class="page">
 
-    <div class="page-title">
-        <h1>🎯 Quests</h1>
-        <p>Your daily Study Quest challenges.</p>
-    </div>
+<h1>⚔️ Daily Quests</h1>
 
-    <div class="card">
+<br>
 
-        <h2>Daily Quest Board</h2>
+<div class="grid">
 
-        <p style="color:var(--muted);margin-bottom:20px;">
-            Complete activities to unlock your XP rewards.
-        </p>
+<div class="card quest">
 
-        <div id="questPageList"></div>
+<h2>🧠 Memory Challenge</h2>
 
-    </div>
+<p>
+Test yourself without looking at notes.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="claimXP(50)">
+
+Complete
+
+</button>
+
+</div>
+
+
+<div class="card quest">
+
+<h2>📖 Study Session</h2>
+
+<p>
+Study for 25 minutes.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="showPage('timer')">
+
+Start
+
+</button>
+
+</div>
+
+
+<div class="card quest">
+
+<h2>📚 Flashcard Quest</h2>
+
+<p>
+Make useful flashcards.
+</p>
+
+<b>+50 XP</b>
+
+<button
+class="primary"
+onclick="showPage('flashcards')">
+
+Start
+
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      FLASHCARDS
-========================= -->
+===================================================== -->
 
-<section id="flashcards" class="page">
+<section
+id="flashcards"
+class="page">
 
-    <div class="page-title">
-        <h1>🃏 My Flashcards</h1>
-        <p>Create cards, revise them, then complete your Flashcard Quest.</p>
-    </div>
+<h1>📚 My Flashcards</h1>
 
-
-    <div class="card flashcard-create">
-
-        <h2>Create a Flashcard</h2>
-
-        <input
-            id="cardQuestion"
-            placeholder="Question / Front of card"
-        >
-
-        <textarea
-            id="cardAnswer"
-            placeholder="Answer / Back of card"
-        ></textarea>
-
-        <button class="small-btn" onclick="addFlashcard()">
-            ➕ Add Flashcard
-        </button>
-
-    </div>
+<br>
 
 
-    <div id="flashcardQuestArea"></div>
+<div class="card">
+
+<h2>Create Flashcard</h2>
+
+<input
+id="cardQuestion"
+placeholder="Question">
+
+<textarea
+id="cardAnswer"
+placeholder="Answer"></textarea>
+
+<button
+class="primary"
+onclick="addFlashcard()">
+
+Add Flashcard
+
+</button>
+
+</div>
 
 
-    <div class="card" style="margin-top:20px;">
+<br>
 
-        <h2>My Saved Cards</h2>
+<div
+id="flashcardList">
 
-        <div id="savedCards"></div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      TIMER
-========================= -->
+===================================================== -->
 
-<section id="timer" class="page">
+<section
+id="timer"
+class="page">
 
-    <div class="page-title">
-        <h1>⏱️ Focus Session</h1>
-        <p>Finish the timer to unlock your Focus Quest XP.</p>
-    </div>
+<h1>⏱️ Focus Timer</h1>
 
+<br>
 
-    <div class="timer-shell">
+<div class="timerBox">
 
-        <div class="timer-mode">
+<select
+id="timerMode"
+onchange="changeTimerMode()"
+style="max-width:250px">
 
-            <button
-                id="pomodoroBtn"
-                class="active"
-                onclick="setTimerMode('pomodoro')"
-            >
-                🍅 Pomodoro
-            </button>
+<option value="pomodoro">
+Pomodoro — 25 minutes
+</option>
 
-            <button
-                id="normalBtn"
-                onclick="setTimerMode('normal')"
-            >
-                ⏱️ Normal
-            </button>
+<option value="normal">
+Normal — 10 minutes
+</option>
 
-        </div>
+</select>
 
 
-        <div class="timer-number" id="timerDisplay">
-            25:00
-        </div>
+<div
+id="timerDisplay"
+class="timerDisplay">
 
-        <div class="timer-label" id="timerLabel">
-            Study for 25 minutes
-        </div>
+25:00
 
-
-        <div class="timer-controls">
-
-            <button
-                class="timer-start"
-                id="timerStartButton"
-                onclick="toggleTimer()"
-            >
-                Start
-            </button>
-
-            <button
-                class="timer-reset"
-                onclick="resetTimer()"
-            >
-                Reset
-            </button>
-
-        </div>
-
-        <div
-            id="timerReward"
-            style="margin-top:25px;color:var(--green);font-weight:bold;"
-        ></div>
-
-    </div>
-
-</section>
+</div>
 
 
-<!-- =========================
-     STUDY ROOMS
-========================= -->
-
-<section id="rooms" class="page">
-
-    <div class="page-title">
-        <h1>👥 Study Rooms</h1>
-        <p>Study together with your friends.</p>
-    </div>
+<p id="timerStatus">
+Ready to study.
+</p>
 
 
-    <div class="grid grid-2">
+<div class="timerControls">
 
-        <div class="card">
+<button
+class="primary"
+onclick="startTimer()">
 
-            <h2>🏠 Create a Friend Room</h2>
+Start
 
-            <p style="color:var(--muted);margin-bottom:15px;">
-                Create a room and invite your friends with a code.
-            </p>
+</button>
 
-            <div class="room-form">
+<button
+class="secondary"
+onclick="pauseTimer()">
 
-                <input
-                    id="roomName"
-                    placeholder="Room name"
-                >
+Pause
 
-                <select id="roomSubject">
+</button>
 
-                    <option>General Study</option>
-                    <option>Maths</option>
-                    <option>English</option>
-                    <option>Science</option>
-                    <option>History</option>
-                    <option>Geography</option>
-                    <option>Spanish</option>
-                    <option>Computing</option>
+<button
+class="secondary"
+onclick="resetTimer()">
 
-                </select>
+Reset
 
-                <input
-                    id="roomGoal"
-                    placeholder="Study goal"
-                >
+</button>
 
-            </div>
+</div>
 
-            <button class="small-btn" onclick="createRoom()">
-                ➕ Create Room
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>🔑 Join a Room</h2>
-
-            <p style="color:var(--muted);margin-bottom:15px;">
-                Enter your friend's room code.
-            </p>
-
-            <input
-                id="joinCode"
-                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;"
-                placeholder="Example: SQ4821"
-            >
-
-            <button
-                class="small-btn"
-                style="margin-top:10px;"
-                onclick="joinRoom()"
-            >
-                Join Room
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div id="roomArea" style="margin-top:20px;"></div>
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     LIVE ROOMS
+===================================================== -->
+
+<section
+id="rooms"
+class="page">
+
+<h1>🌐 Live Study Rooms</h1>
+
+<br>
+
+
+<div class="card">
+
+<h2>Create Room</h2>
+
+<input
+id="roomName"
+placeholder="Room name">
+
+<textarea
+id="roomDescription"
+placeholder="What are you studying?">
+
+</textarea>
+
+<label>
+
+<input
+type="checkbox"
+id="roomPrivate"
+checked
+style="width:auto">
+
+Friends/private room
+
+</label>
+
+<br><br>
+
+<button
+class="primary"
+onclick="createRoom()">
+
+Create Room
+
+</button>
+
+</div>
+
+
+<br>
+
+<h2>Available Rooms</h2>
+
+<br>
+
+<div
+id="roomList">
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
      LIVE TUTORING
-========================= -->
+===================================================== -->
 
-<section id="tutoring" class="page">
+<section
+id="tutoring"
+class="page">
 
-    <div class="page-title">
-        <h1>🎓 Live Tutoring</h1>
-        <p>Interactive lessons designed to make learning more engaging.</p>
-    </div>
+<h1>👩‍🏫 Live Tutoring</h1>
 
-
-    <div class="grid grid-3">
-
-        <div class="feature-card">
-            <div class="feature-icon">🖥️</div>
-            <h3>Screen Sharing</h3>
-            <p>
-                Tutors can share worksheets, presentations,
-                examples and lesson material.
-            </p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">📝</div>
-            <h3>Digital Whiteboard</h3>
-            <p>
-                Work through equations, diagrams and explanations
-                together.
-            </p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">❓</div>
-            <h3>Questions</h3>
-            <p>
-                Students can submit questions while the lesson is running.
-            </p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h3>Polls</h3>
-            <p>
-                Tutors can quickly check whether students understand
-                the lesson.
-            </p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">🧠</div>
-            <h3>Live Quizzes</h3>
-            <p>
-                Everyone answers questions together and can earn
-                Study Quest XP.
-            </p>
-        </div>
-
-        <div class="feature-card">
-            <div class="feature-icon">💬</div>
-            <h3>Moderated Q&A</h3>
-            <p>
-                Questions can be reviewed before appearing in the
-                lesson.
-            </p>
-        </div>
-
-    </div>
+<br>
 
 
-    <div class="card" style="margin-top:20px;">
+<div class="card">
 
-        <h2>📝 Digital Whiteboard</h2>
+<h2>Create Tutoring Session</h2>
 
-        <div class="tutor-board">
-            <div>
-                <div style="font-size:40px;">📝</div>
-                <strong>Whiteboard Area</strong>
-                <p style="margin-top:5px;">
-                    Interactive whiteboard coming to the live version.
-                </p>
-            </div>
-        </div>
+<input
+id="tutorTitle"
+placeholder="Session title">
 
-    </div>
+<textarea
+id="tutorDescription"
+placeholder="Describe what students will learn...">
+
+</textarea>
 
 
-    <div class="grid grid-2" style="margin-top:20px;">
+<textarea
+id="tutorPayment"
+placeholder="Optional tutor support/payment information.">
 
-        <div class="card">
-
-            <h2>📊 Example Poll</h2>
-
-            <p style="margin-bottom:12px;">
-                What is 12 × 5?
-            </p>
-
-            <div
-                class="poll-option"
-                onclick="votePoll(this)"
-            >
-                A) 50
-            </div>
-
-            <div
-                class="poll-option"
-                onclick="votePoll(this)"
-            >
-                B) 60
-            </div>
-
-            <div
-                class="poll-option"
-                onclick="votePoll(this)"
-            >
-                C) 70
-            </div>
-
-        </div>
+</textarea>
 
 
-        <div class="card">
+<button
+class="primary"
+onclick="createTutoringRoom()">
 
-            <h2>💬 Moderated Q&A</h2>
+Create Tutoring Session
 
-            <input
-                id="questionInput"
-                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;"
-                placeholder="Ask a question..."
-            >
+</button>
 
-            <button
-                class="small-btn"
-                style="margin-top:10px;"
-                onclick="submitQuestion()"
-            >
-                Submit Question
-            </button>
-
-            <div
-                id="questionStatus"
-                style="margin-top:12px;color:var(--green);font-size:14px;"
-            ></div>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="card" style="margin-top:20px;">
+<br>
 
-        <h2>💙 Supporting Tutors</h2>
+<h2>Live Tutoring Sessions</h2>
 
-        <p style="color:var(--muted);line-height:1.6;">
-            Study Quest can provide ways for families and guardians
-            to support tutors and help keep educational content available.
-            In a real version, payments would be handled securely by
-            the platform and adults rather than students sending money
-            directly.
-        </p>
+<br>
 
-    </div>
+<div
+id="tutoringList">
+
+</div>
 
 </section>
 
 
-<!-- =========================
-     LEARN
-========================= -->
+<!-- =====================================================
+     LIVE ROOM VIEW
+===================================================== -->
 
-<section id="learn" class="page">
+<section
+id="liveRoomPage"
+class="page">
 
-    <div class="page-title">
-        <h1>📚 Learn</h1>
-        <p>Resources and activities for your next Study Quest.</p>
-    </div>
+<div class="liveRoom">
+
+<h1 id="liveRoomTitle">
+Live Study Room
+</h1>
+
+<p id="liveRoomDescription">
+</p>
 
 
-    <div class="grid grid-3">
+<div class="roomTools">
 
-        <div class="feature-card">
-            <div class="feature-icon">📖</div>
-            <h3>Revision Guides</h3>
-            <p>
-                Organise useful revision material by subject.
-            </p>
-        </div>
+<button
+class="primary"
+onclick="toggleCamera()">
 
-        <div class="feature-card">
-            <div class="feature-icon">🧠</div>
-            <h3>Practice</h3>
-            <p>
-                Use questions and quizzes to test your knowledge.
-            </p>
-        </div>
+📷 Camera
 
-        <div class="feature-card">
-            <div class="feature-icon">🎥</div>
-            <h3>Learning Videos</h3>
-            <p>
-                Add educational videos and resources later.
-            </p>
-        </div>
+</button>
 
-    </div>
+<button
+class="primary"
+onclick="toggleMicrophone()">
+
+🎤 Microphone
+
+</button>
+
+<button
+class="secondary"
+onclick="shareScreen()">
+
+🖥️ Share Screen
+
+</button>
+
+<button
+class="secondary"
+onclick="leaveRoom()">
+
+Leave Room
+
+</button>
+
+</div>
+
+
+<div
+id="videoGrid"
+class="videoGrid">
+
+<video
+id="localVideo"
+autoplay
+muted
+playsinline>
+</video>
+
+</div>
+
+
+<br>
+
+
+<h2>📝 Collaborative Whiteboard</h2>
+
+<br>
+
+<canvas
+id="whiteboard">
+</canvas>
+
+
+<br>
+
+<button
+class="secondary"
+onclick="clearWhiteboard()">
+
+Clear Whiteboard
+
+</button>
+
+</div>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      PROGRESS
-========================= -->
+===================================================== -->
 
-<section id="progress" class="page">
+<section
+id="progress"
+class="page">
 
-    <div class="page-title">
-        <h1>📈 Progress</h1>
-        <p>See how far you've come.</p>
-    </div>
+<h1>📈 My Progress</h1>
 
+<br>
 
-    <div class="grid grid-3">
+<div class="grid">
 
-        <div class="stat-card">
-            <div class="stat-label">TOTAL XP</div>
-            <div class="stat-value" id="progressXP">0</div>
-        </div>
+<div class="card">
 
-        <div class="stat-card">
-            <div class="stat-label">CURRENT LEVEL</div>
-            <div class="stat-value" id="progressLevel">1</div>
-        </div>
+<h2>⭐ XP</h2>
 
-        <div class="stat-card">
-            <div class="stat-label">QUESTS</div>
-            <div class="stat-value" id="progressQuests">0</div>
-        </div>
+<p id="progressXP">
+0
+</p>
 
-    </div>
+</div>
 
 
-    <div class="card" style="margin-top:20px;">
+<div class="card">
 
-        <h2>⭐ XP Progress</h2>
+<h2>🔥 Streak</h2>
 
-        <div
-            style="height:18px;background:#e6eef6;border-radius:99px;margin-top:15px;overflow:hidden;"
-        >
-            <div
-                id="progressBar"
-                style="height:100%;width:0%;background:var(--blue);border-radius:99px;"
-            ></div>
-        </div>
+<p id="progressStreak">
+1
+</p>
 
-        <p
-            id="progressText"
-            style="color:var(--muted);margin-top:10px;"
-        >
-            0 XP
-        </p>
+</div>
 
-    </div>
+
+<div class="card">
+
+<h2>🏆 Quests</h2>
+
+<p id="progressQuests">
+0
+</p>
+
+</div>
+
+</div>
 
 </section>
 
 
-        </main>
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<section
+id="settings"
+class="page">
+
+<h1>⚙️ Settings</h1>
+
+<br>
 
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+<div class="card">
 
-<aside class="sidebar">
+<h2>🎤 Camera & Microphone</h2>
 
-    <div class="sidebar-card">
+<br>
 
-        <div class="sidebar-title">
+<label>
+Camera
+</label>
 
-            <h3>👥 Friends</h3>
-
-            <button
-                class="icon-btn"
-                onclick="openFriendModal()"
-            >
-                +
-            </button>
-
-        </div>
+<select id="cameraSelect">
+</select>
 
 
-        <div id="friendSidebarList"></div>
+<label>
+Microphone
+</label>
 
-    </div>
-
-
-    <div class="sidebar-card">
-
-        <div class="sidebar-title">
-
-            <h3>🔴 Live Study</h3>
-
-        </div>
-
-        <div class="room-mini">
-
-            <strong>Maths Focus Room</strong>
-
-            <p>
-                🟢 4 studying now
-            </p>
-
-            <button
-                class="small-btn"
-                style="margin-top:9px;width:100%;"
-                onclick="showPage('rooms')"
-            >
-                Join
-            </button>
-
-        </div>
+<select id="microphoneSelect">
+</select>
 
 
-        <div class="room-mini">
+<label>
 
-            <strong>Science Revision</strong>
+<input
+type="checkbox"
+id="cameraDefault"
+style="width:auto">
 
-            <p>
-                🟢 2 studying now
-            </p>
+Camera on by default
 
-            <button
-                class="small-btn secondary"
-                style="margin-top:9px;width:100%;"
-                onclick="showPage('rooms')"
-            >
-                View
-            </button>
-
-        </div>
-
-    </div>
+</label>
 
 
-    <div class="sidebar-card">
+<br>
 
-        <div class="sidebar-title">
-            <h3>⚡ Quick Actions</h3>
-        </div>
 
-        <button
-            class="small-btn"
-            style="width:100%;margin-bottom:8px;"
-            onclick="showPage('flashcards')"
-        >
-            🃏 Flashcards
-        </button>
+<label>
 
-        <button
-            class="small-btn"
-            style="width:100%;margin-bottom:8px;"
-            onclick="showPage('timer')"
-        >
-            ⏱️ Focus
-        </button>
+<input
+type="checkbox"
+id="microphoneDefault"
+style="width:auto">
 
-        <button
-            class="small-btn secondary"
-            style="width:100%;"
-            onclick="showPage('rooms')"
-        >
-            👥 Study Together
-        </button>
+Microphone on by default
 
-    </div>
+</label>
 
-</aside>
 
-    </div>
+<br><br>
+
+<button
+class="primary"
+onclick="saveSettings()">
+
+Save Device Settings
+
+</button>
 
 </div>
 
 
-<!-- =========================
-     FRIEND MODAL
-========================= -->
+<br>
 
-<div class="modal" id="friendModal">
 
-    <div class="modal-box">
+<div class="card">
 
-        <button
-            class="modal-close"
-            onclick="closeFriendModal()"
-        >
-            ✕
-        </button>
+<h2>🔔 Notifications</h2>
 
-        <h2>👥 Add Friends</h2>
+<label>
 
-        <p style="color:var(--muted);margin-bottom:15px;">
-            Search for a Study Quest username.
-        </p>
+<input
+type="checkbox"
+id="notifications"
+style="width:auto">
 
-        <div class="friend-search">
+Enable notifications
 
-            <input
-                id="friendSearch"
-                placeholder="Username"
-            >
-
-            <button
-                class="small-btn"
-                onclick="searchFriend()"
-            >
-                Search
-            </button>
-
-        </div>
-
-        <div id="friendResults"></div>
-
-        <div style="margin-top:20px;background:#edf5fd;padding:12px;border-radius:10px;font-size:13px;color:var(--muted);">
-            💡 In this prototype, friend searching is simulated.
-            Real friend requests will require the Study Quest
-            online database.
-        </div>
-
-    </div>
+</label>
 
 </div>
 
 
-<div class="toast" id="toast">
-    XP earned!
+<br>
+
+
+<div class="card">
+
+<h2>🔒 Privacy</h2>
+
+<label>
+
+<input
+type="checkbox"
+id="onlineStatus"
+style="width:auto">
+
+Show when I'm online
+
+</label>
+
+<br>
+
+
+<label>
+
+<input
+type="checkbox"
+id="friendRequests"
+style="width:auto">
+
+Allow friend requests
+
+</label>
+
+<br>
+
+
+<label>
+
+<input
+type="checkbox"
+id="roomInvites"
+style="width:auto">
+
+Allow room invitations
+
+</label>
+
+
+<br><br>
+
+<button
+class="primary"
+onclick="saveSettings()">
+
+Save Privacy Settings
+
+</button>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+<!-- =====================================================
+     FRIEND TOOLBAR
+===================================================== -->
+
+<div
+id="friendToolbar"
+class="friendToolbar hidden">
+
+<h2>👥 Friends</h2>
+
+<br>
+
+<input
+id="friendSearch"
+placeholder="Search username">
+
+<button
+class="primary"
+style="width:100%"
+onclick="sendFriendRequest()">
+
+Add Friend
+
+</button>
+
+
+<br><br>
+
+<h3>📨 Requests</h3>
+
+<div
+id="friendRequests">
+
+</div>
+
+
+<br>
+
+<h3>👥 Friends</h3>
+
+<div
+id="friendsList">
+
+</div>
+
 </div>
 
 
 <script>
 
-/* =========================================================
-   STUDY QUEST DATA
-========================================================= */
 
-let xp = Number(localStorage.getItem("sq_xp")) || 0;
-let completedQuests = Number(localStorage.getItem("sq_completed")) || 0;
-let streak = Number(localStorage.getItem("sq_streak")) || 1;
+/* =====================================================
+   SUPABASE
+===================================================== */
 
-let completed = JSON.parse(
-    localStorage.getItem("sq_completed_quests") ||
-    '{"memory":false,"practice":false,"focus":false,"flashcards":false}'
+/*
+
+PUT YOUR TWO SUPABASE VALUES HERE.
+
+DO NOT PUT YOUR SECRET/SERVICE ROLE KEY HERE.
+
+*/
+
+const SUPABASE_URL =
+"PASTE_YOUR_PROJECT_URL_HERE";
+
+const SUPABASE_KEY =
+"PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
+
+const db =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
-let flashcards = JSON.parse(
-    localStorage.getItem("sq_flashcards") || "[]"
-);
 
-let currentUser =
-    localStorage.getItem("sq_current_user") || null;
+let currentUser = null;
 
-
-/* =========================================================
-   LEVELS
-========================================================= */
-
-const levels = [
-
-    {level:1,name:"Beginner",min:0,max:100},
-    {level:2,name:"Learner",min:100,max:200},
-    {level:3,name:"Explorer",min:200,max:400},
-    {level:4,name:"Improving",min:400,max:700},
-    {level:5,name:"Learner",min:700,max:1100},
-    {level:6,name:"Dedicated",min:1100,max:1600},
-    {level:7,name:"Focused",min:1600,max:2250},
-    {level:8,name:"Scholar",min:2250,max:3000},
-    {level:9,name:"Expert",min:3000,max:4000},
-    {level:10,name:"Legend",min:4000,max:5000},
-    {level:11,name:"Study Master",min:5000,max:7500}
-
-];
-
-function getLevel(){
-
-    for(let i=levels.length-1;i>=0;i--){
-
-        if(xp >= levels[i].min){
-            return levels[i];
-        }
-
-    }
-
-    return levels[0];
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-function showAuth(type){
-
-    document.getElementById("loginForm").style.display =
-        type === "login" ? "block" : "none";
-
-    document.getElementById("signupForm").style.display =
-        type === "signup" ? "block" : "none";
-
-    document.getElementById("loginTab").classList.toggle(
-        "active",
-        type === "login"
-    );
-
-    document.getElementById("signupTab").classList.toggle(
-        "active",
-        type === "signup"
-    );
-
-}
-
-
-function signup(){
-
-    const username =
-        document.getElementById("signupUsername").value.trim();
-
-    const password =
-        document.getElementById("signupPassword").value;
-
-    if(!username || !password){
-
-        showToast("Please fill in both fields.");
-        return;
-
-    }
-
-    const accounts =
-        JSON.parse(localStorage.getItem("sq_accounts") || "{}");
-
-    if(accounts[username]){
-
-        showToast("That username already exists.");
-        return;
-
-    }
-
-    accounts[username] = {
-        password:password
-    };
-
-    localStorage.setItem(
-        "sq_accounts",
-        JSON.stringify(accounts)
-    );
-
-    localStorage.setItem(
-        "sq_current_user",
-        username
-    );
-
-    currentUser = username;
-
-    showToast("Account created!");
-
-    openApp();
-
-}
-
-
-function login(){
-
-    const username =
-        document.getElementById("loginUsername").value.trim();
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-    const accounts =
-        JSON.parse(localStorage.getItem("sq_accounts") || "{}");
-
-    if(
-        !accounts[username] ||
-        accounts[username].password !== password
-    ){
-
-        showToast("Incorrect username or password.");
-        return;
-
-    }
-
-    localStorage.setItem(
-        "sq_current_user",
-        username
-    );
-
-    currentUser = username;
-
-    openApp();
-
-}
-
-
-function logout(){
-
-    localStorage.removeItem("sq_current_user");
-
-    currentUser = null;
-
-    document.getElementById("app").style.display = "none";
-    document.getElementById("authPage").style.display = "flex";
-
-}
-
-
-/* =========================================================
-   APP OPEN
-========================================================= */
-
-function openApp(){
-
-    document.getElementById("authPage").style.display = "none";
-    document.getElementById("app").style.display = "block";
-
-    document.getElementById("usernameDisplay").textContent =
-        currentUser;
-
-    document.getElementById("userAvatar").textContent =
-        currentUser.charAt(0).toUpperCase();
-
-    updateScreen();
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showPage(pageId,button){
-
-    document.querySelectorAll(".page").forEach(page=>{
-        page.classList.remove("active");
-    });
-
-    document.getElementById(pageId).classList.add("active");
-
-    document.querySelectorAll(".nav-btn").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    if(pageId === "flashcards"){
-        renderFlashcards();
-    }
-
-    if(pageId === "rooms"){
-        renderRoomArea();
-    }
-
-}
-
-
-/* =========================================================
-   QUESTS
-========================================================= */
-
-const questData = [
-
-    {
-        id:"memory",
-        icon:"🧠",
-        name:"Memory Challenge",
-        description:"Complete a memory activity.",
-        reward:50
-    },
-
-    {
-        id:"practice",
-        icon:"📝",
-        name:"Practice Questions",
-        description:"Complete a set of practice questions.",
-        reward:75
-    },
-
-    {
-        id:"focus",
-        icon:"⏱️",
-        name:"Focus Session",
-        description:"Finish a focus timer.",
-        reward:50
-    },
-
-    {
-        id:"flashcards",
-        icon:"🃏",
-        name:"Flashcard Quest",
-        description:"Revise all your saved flashcards.",
-        reward:50
-    }
-
-];
-
-
-function questButton(quest){
-
-    if(completed[quest.id]){
-
-        return `
-            <button class="small-btn" disabled>
-                ✓ Completed
-            </button>
-        `;
-
-    }
-
-    if(quest.id === "focus"){
-
-        return `
-            <button
-                class="small-btn"
-                onclick="showPage('timer')"
-            >
-                Start Timer
-            </button>
-        `;
-
-    }
-
-    if(quest.id === "flashcards"){
-
-        return `
-            <button
-                class="small-btn"
-                onclick="showPage('flashcards')"
-            >
-                Start Quest
-            </button>
-        `;
-
-    }
-
-    return `
-        <button
-            class="small-btn"
-            onclick="completeQuest('${quest.id}',${quest.reward})"
-        >
-            Claim XP
-        </button>
-    `;
-
-}
-
-
-function renderQuestList(targetId){
-
-    const target =
-        document.getElementById(targetId);
-
-    target.innerHTML = "";
-
-    questData.forEach(quest=>{
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "quest-card" +
-            (completed[quest.id] ? " completed" : "");
-
-        div.innerHTML = `
-
-            <div class="quest-icon">
-                ${quest.icon}
-            </div>
-
-            <div class="quest-info">
-
-                <h3>
-                    ${quest.name}
-                </h3>
-
-                <p>
-                    ${quest.description}
-                </p>
-
-            </div>
-
-            <div class="quest-reward">
-                +${quest.reward} XP
-            </div>
-
-            ${questButton(quest)}
-
-        `;
-
-        target.appendChild(div);
-
-    });
-
-}
-
-
-function completeQuest(id,reward){
-
-    if(completed[id]){
-        return;
-    }
-
-    completed[id] = true;
-
-    xp += reward;
-    completedQuests++;
-
-    saveGame();
-
-    updateScreen();
-
-    showToast(`+${reward} XP! Quest complete 🎉`);
-
-}
-
-
-function saveGame(){
-
-    localStorage.setItem("sq_xp",xp);
-    localStorage.setItem("sq_completed",completedQuests);
-    localStorage.setItem("sq_streak",streak);
-
-    localStorage.setItem(
-        "sq_completed_quests",
-        JSON.stringify(completed)
-    );
-
-}
-
-
-/* =========================================================
-   SCREEN UPDATE
-========================================================= */
-
-function updateScreen(){
-
-    const level = getLevel();
-
-    document.getElementById("totalXP").textContent = xp;
-    document.getElementById("streakDisplay").textContent = streak;
-    document.getElementById("questDisplay").textContent = completedQuests;
-    document.getElementById("levelDisplay").textContent = level.level;
-
-    document.getElementById("levelName").textContent =
-        level.name;
-
-    document.getElementById("progressXP").textContent =
-        xp;
-
-    document.getElementById("progressLevel").textContent =
-        level.level;
-
-    document.getElementById("progressQuests").textContent =
-        completedQuests;
-
-    const current =
-        xp - level.min;
-
-    const needed =
-        level.max - level.min;
-
-    const percent =
-        Math.min(
-            100,
-            Math.max(
-                0,
-                (current / needed) * 100
-            )
-        );
-
-    document.getElementById("xpFill").style.width =
-        percent + "%";
-
-    document.getElementById("levelXP").textContent =
-        `${current} / ${needed} XP`;
-
-    document.getElementById("progressBar").style.width =
-        percent + "%";
-
-    document.getElementById("progressText").textContent =
-        `${xp} total XP`;
-
-    renderQuestList("dashboardQuests");
-    renderQuestList("questPageList");
-    renderBadges();
-    renderFlashcards();
-    renderFriends();
-
-}
-
-
-/* =========================================================
-   BADGES
-========================================================= */
-
-function renderBadges(){
-
-    const badges = [
-
-        {
-            icon:"🎯",
-            name:"First Quest",
-            unlocked:completedQuests >= 1
-        },
-
-        {
-            icon:"🏹",
-            name:"Quest Hunter",
-            unlocked:completedQuests >= 3
-        },
-
-        {
-            icon:"🧠",
-            name:"Brain Power",
-            unlocked:xp >= 200
-        },
-
-        {
-            icon:"🔥",
-            name:"On Fire",
-            unlocked:streak >= 3
-        },
-
-        {
-            icon:"📚",
-            name:"Scholar",
-            unlocked:xp >= 1000
-        },
-
-        {
-            icon:"👑",
-            name:"Study Master",
-            unlocked:xp >= 5000
-        }
-
-    ];
-
-    const grid =
-        document.getElementById("badgeGrid");
-
-    grid.innerHTML = "";
-
-    badges.forEach(badge=>{
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "badge" +
-            (badge.unlocked ? "" : " locked");
-
-        div.innerHTML = `
-
-            <div class="badge-icon">
-                ${badge.icon}
-            </div>
-
-            <strong>
-                ${badge.name}
-            </strong>
-
-            <p style="font-size:12px;color:var(--muted);margin-top:5px;">
-                ${badge.unlocked ? "Unlocked" : "Locked"}
-            </p>
-
-        `;
-
-        grid.appendChild(div);
-
-    });
-
-}
-
-
-/* =========================================================
-   FLASHCARDS
-========================================================= */
-
-function addFlashcard(){
-
-    const question =
-        document.getElementById("cardQuestion").value.trim();
-
-    const answer =
-        document.getElementById("cardAnswer").value.trim();
-
-    if(!question || !answer){
-
-        showToast("Add both a question and answer.");
-        return;
-
-    }
-
-    flashcards.push({
-        question,
-        answer
-    });
-
-    localStorage.setItem(
-        "sq_flashcards",
-        JSON.stringify(flashcards)
-    );
-
-    document.getElementById("cardQuestion").value = "";
-    document.getElementById("cardAnswer").value = "";
-
-    renderFlashcards();
-
-    showToast("Flashcard created 🃏");
-
-}
-
-
-let flashcardIndex = 0;
-let showingAnswer = false;
-
-
-function renderFlashcards(){
-
-    const saved =
-        document.getElementById("savedCards");
-
-    const questArea =
-        document.getElementById("flashcardQuestArea");
-
-    if(!saved || !questArea){
-        return;
-    }
-
-    saved.innerHTML = "";
-
-    if(flashcards.length === 0){
-
-        saved.innerHTML = `
-            <p style="color:var(--muted);">
-                You haven't created any flashcards yet.
-            </p>
-        `;
-
-    }else{
-
-        flashcards.forEach((card,index)=>{
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "flashcard-list-item";
-
-            item.innerHTML = `
-
-                <strong>
-                    ${escapeHTML(card.question)}
-                </strong>
-
-                <p>
-                    ${escapeHTML(card.answer)}
-                </p>
-
-                <button
-                    class="small-btn secondary"
-                    style="margin-top:8px;"
-                    onclick="deleteFlashcard(${index})"
-                >
-                    Delete
-                </button>
-
-            `;
-
-            saved.appendChild(item);
-
-        });
-
-    }
-
-
-    if(flashcards.length === 0){
-
-        questArea.innerHTML = `
-            <div class="card">
-                <h2>🃏 Flashcard Quest</h2>
-                <p style="color:var(--muted);margin-top:8px;">
-                    Create some flashcards first, then come back
-                    to start your quest.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(completed.flashcards){
-
-        questArea.innerHTML = `
-            <div class="card">
-                <h2>🎉 Flashcard Quest Complete!</h2>
-                <p style="color:var(--muted);margin-top:8px;">
-                    You've completed today's flashcard quest.
-                </p>
-
-                <div style="margin-top:15px;color:var(--green);font-weight:bold;">
-                    ✓ +50 XP already claimed
-                </div>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    if(flashcardIndex >= flashcards.length){
-        flashcardIndex = 0;
-    }
-
-
-    const card =
-        flashcards[flashcardIndex];
-
-    questArea.innerHTML = `
-
-        <div class="card">
-
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-
-                <div>
-                    <h2>🃏 Flashcard Quest</h2>
-
-                    <p style="color:var(--muted);margin-top:5px;">
-                        Card ${flashcardIndex + 1}
-                        of ${flashcards.length}
-                    </p>
-                </div>
-
-                <strong style="color:var(--blue);">
-                    +50 XP
-                </strong>
-
-            </div>
-
-
-            <div
-                class="flashcard"
-                onclick="flipFlashcard()"
-                style="margin-top:20px;"
-            >
-
-                <div class="fc-label">
-                    ${showingAnswer ? "ANSWER" : "QUESTION"}
-                </div>
-
-                <div class="fc-text">
-                    ${
-                        showingAnswer
-                        ? escapeHTML(card.answer)
-                        : escapeHTML(card.question)
-                    }
-                </div>
-
-                <div style="margin-top:20px;font-size:12px;opacity:.75;">
-                    Tap the card to ${
-                        showingAnswer
-                        ? "see the question"
-                        : "show the answer"
-                    }
-                </div>
-
-            </div>
-
-
-            <div class="flashcard-controls">
-
-                <button
-                    class="small-btn secondary"
-                    onclick="previousFlashcard()"
-                >
-                    ← Previous
-                </button>
-
-                <button
-                    class="small-btn"
-                    onclick="flipFlashcard()"
-                >
-                    ${
-                        showingAnswer
-                        ? "Show Question"
-                        : "Show Answer"
-                    }
-                </button>
-
-                <button
-                    class="small-btn"
-                    onclick="nextFlashcard()"
-                >
-                    Next →
-                </button>
-
-            </div>
-
-
-            <div style="text-align:center;margin-top:18px;">
-
-                <button
-                    class="small-btn green"
-                    onclick="finishFlashcardQuest()"
-                >
-                    ✓ I've Finished Revising
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-}
-
-
-function flipFlashcard(){
-
-    showingAnswer = !showingAnswer;
-
-    renderFlashcards();
-
-}
-
-
-function nextFlashcard(){
-
-    flashcardIndex++;
-
-    if(flashcardIndex >= flashcards.length){
-
-        flashcardIndex = 0;
-
-    }
-
-    showingAnswer = false;
-
-    renderFlashcards();
-
-}
-
-
-function previousFlashcard(){
-
-    flashcardIndex--;
-
-    if(flashcardIndex < 0){
-
-        flashcardIndex =
-            flashcards.length - 1;
-
-    }
-
-    showingAnswer = false;
-
-    renderFlashcards();
-
-}
-
-
-function finishFlashcardQuest(){
-
-    if(flashcards.length === 0){
-
-        showToast("Create some flashcards first.");
-        return;
-
-    }
-
-    if(completed.flashcards){
-        return;
-    }
-
-    completed.flashcards = true;
-
-    xp += 50;
-    completedQuests++;
-
-    saveGame();
-
-    updateScreen();
-
-    showToast("+50 XP! Flashcard Quest complete 🎉");
-
-}
-
-
-function deleteFlashcard(index){
-
-    flashcards.splice(index,1);
-
-    localStorage.setItem(
-        "sq_flashcards",
-        JSON.stringify(flashcards)
-    );
-
-    if(flashcardIndex >= flashcards.length){
-        flashcardIndex = 0;
-    }
-
-    renderFlashcards();
-
-}
-
-
-function escapeHTML(text){
-
-    return String(text)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-let timerMode = "pomodoro";
+let profile = null;
 
 let timerSeconds = 25 * 60;
 
-let timerRunning = false;
-
 let timerInterval = null;
 
-let timerFinished = false;
+let currentRoom = null;
+
+let localStream = null;
+
+let screenStream = null;
+
+let roomChannel = null;
 
 
-function setTimerMode(mode){
+/* =====================================================
+   AUTH
+===================================================== */
 
-    if(timerRunning){
-        return;
-    }
-
-    timerMode = mode;
-
-    document
-        .getElementById("pomodoroBtn")
-        .classList.toggle(
-            "active",
-            mode === "pomodoro"
-        );
+function showSignup(){
 
     document
-        .getElementById("normalBtn")
-        .classList.toggle(
-            "active",
-            mode === "normal"
+    .getElementById("loginBox")
+    .classList.add("hidden");
+
+    document
+    .getElementById("signupBox")
+    .classList.remove("hidden");
+
+}
+
+
+function showLogin(){
+
+    document
+    .getElementById("signupBox")
+    .classList.add("hidden");
+
+    document
+    .getElementById("loginBox")
+    .classList.remove("hidden");
+
+}
+
+
+async function signup(){
+
+    const username =
+    document
+    .getElementById("signupUsername")
+    .value
+    .trim();
+
+    const email =
+    document
+    .getElementById("signupEmail")
+    .value
+    .trim();
+
+    const password =
+    document
+    .getElementById("signupPassword")
+    .value;
+
+
+    if(!username || !email || !password){
+
+        alert("Fill everything in.");
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        alert("Password must be at least 6 characters.");
+
+        return;
+
+    }
+
+
+    const {data,error} =
+    await db.auth.signUp({
+
+        email:email,
+
+        password:password,
+
+        options:{
+            data:{
+                username:username
+            }
+        }
+
+    });
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    if(data.user){
+
+        const {error:profileError} =
+        await db
+        .from("profiles")
+        .insert({
+
+            id:data.user.id,
+
+            username:username,
+
+            display_name:username
+
+        });
+
+
+        if(profileError){
+
+            console.log(profileError);
+
+        }
+
+    }
+
+
+    alert(
+        "Account created! If email confirmation is enabled, check your email."
+    );
+
+}
+
+
+async function login(){
+
+    const email =
+    document
+    .getElementById("loginEmail")
+    .value
+    .trim();
+
+    const password =
+    document
+    .getElementById("loginPassword")
+    .value;
+
+
+    const {data,error} =
+    await db.auth.signInWithPassword({
+
+        email:email,
+
+        password:password
+
+    });
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    currentUser=data.user;
+
+    await loadApp();
+
+}
+
+
+async function logout(){
+
+    await db.auth.signOut();
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+async function loadProfile(){
+
+    const {data,error} =
+    await db
+    .from("profiles")
+    .select("*")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+
+    if(error){
+
+        console.log(error);
+
+        return;
+
+    }
+
+
+    profile=data;
+
+
+    if(!profile){
+
+        const username =
+        currentUser.user_metadata?.username ||
+        "StudyQuestUser";
+
+
+        const result =
+        await db
+        .from("profiles")
+        .insert({
+
+            id:currentUser.id,
+
+            username:username,
+
+            display_name:username
+
+        })
+        .select()
+        .single();
+
+
+        profile=result.data;
+
+    }
+
+
+    document
+    .getElementById("welcomeName")
+    .textContent=
+    profile.display_name;
+
+
+    updateStats();
+
+}
+
+
+function updateStats(){
+
+    if(!profile)
+        return;
+
+
+    document
+    .getElementById("xpStat")
+    .textContent=
+    profile.xp;
+
+
+    document
+    .getElementById("streakStat")
+    .textContent=
+    profile.streak;
+
+
+    document
+    .getElementById("questStat")
+    .textContent=
+    profile.quests_completed;
+
+
+    document
+    .getElementById("progressXP")
+    .textContent=
+    profile.xp;
+
+
+    document
+    .getElementById("progressStreak")
+    .textContent=
+    profile.streak;
+
+
+    document
+    .getElementById("progressQuests")
+    .textContent=
+    profile.quests_completed;
+
+
+    const level=
+    getLevel(profile.xp);
+
+
+    document
+    .getElementById("levelText")
+    .textContent=
+    "Level "+
+    level.level+
+    " — "+
+    level.name;
+
+
+    document
+    .getElementById("xpBar")
+    .style.width=
+    level.percent+"%";
+
+}
+
+
+function getLevel(xp){
+
+    const levels=[
+
+        [0,"Beginner"],
+
+        [100,"Learner"],
+
+        [200,"Explorer"],
+
+        [400,"Improving"],
+
+        [700,"Dedicated"],
+
+        [1100,"Focused"],
+
+        [1600,"Scholar"],
+
+        [2250,"Expert"],
+
+        [3000,"Legend"],
+
+        [4000,"Study Master"]
+
+    ];
+
+
+    let current=
+    levels[0];
+
+
+    for(const level of levels){
+
+        if(xp>=level[0])
+            current=level;
+
+    }
+
+
+    const next=
+    levels.find(
+        level=>level[0]>xp
+    );
+
+
+    let percent=100;
+
+
+    if(next){
+
+        percent=
+        (
+            (xp-current[0])/
+            (next[0]-current[0])
+        )*100;
+
+    }
+
+
+    return{
+
+        level:
+        levels.indexOf(current)+1,
+
+        name:
+        current[1],
+
+        percent:
+        Math.max(
+            0,
+            Math.min(100,percent)
+        )
+
+    };
+
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+async function claimXP(amount){
+
+    if(!profile)
+        return;
+
+
+    profile.xp += amount;
+
+    profile.quests_completed++;
+
+
+    const {error} =
+    await db
+    .from("profiles")
+    .update({
+
+        xp:profile.xp,
+
+        quests_completed:
+        profile.quests_completed
+
+    })
+    .eq("id",currentUser.id);
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    updateStats();
+
+
+    alert(
+        "+"+
+        amount+
+        " XP ⭐"
+    );
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showPage(page){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(
+        p=>p.classList.remove("active")
+    );
+
+
+    document
+    .getElementById(page)
+    .classList.add("active");
+
+
+    if(page==="flashcards")
+        loadFlashcards();
+
+
+    if(page==="rooms")
+        loadRooms();
+
+
+    if(page==="tutoring")
+        loadTutoring();
+
+
+    if(page==="settings")
+        loadSettings();
+
+}
+
+
+/* =====================================================
+   FLASHCARDS
+===================================================== */
+
+async function addFlashcard(){
+
+    const question =
+    document
+    .getElementById("cardQuestion")
+    .value
+    .trim();
+
+
+    const answer =
+    document
+    .getElementById("cardAnswer")
+    .value
+    .trim();
+
+
+    if(!question || !answer){
+
+        alert(
+            "Fill in the question and answer."
         );
 
-    resetTimer();
-
-}
-
-
-function resetTimer(){
-
-    clearInterval(timerInterval);
-
-    timerRunning = false;
-
-    timerFinished = false;
-
-    if(timerMode === "pomodoro"){
-
-        timerSeconds = 25 * 60;
-
-        document.getElementById("timerLabel").textContent =
-            "Study for 25 minutes";
-
-    }else{
-
-        timerSeconds = 10 * 60;
-
-        document.getElementById("timerLabel").textContent =
-            "Focus for 10 minutes";
-
-    }
-
-    document.getElementById("timerStartButton").textContent =
-        "Start";
-
-    document.getElementById("timerReward").textContent = "";
-
-    updateTimerDisplay();
-
-}
-
-
-function toggleTimer(){
-
-    if(timerFinished){
         return;
+
     }
 
-    if(timerRunning){
 
-        clearInterval(timerInterval);
+    const {error} =
+    await db
+    .from("flashcards")
+    .insert({
 
-        timerRunning = false;
+        user_id:currentUser.id,
 
-        document.getElementById("timerStartButton").textContent =
-            "Resume";
+        question:question,
+
+        answer:answer
+
+    });
+
+
+    if(error){
+
+        alert(error.message);
 
         return;
 
     }
 
-    timerRunning = true;
 
-    document.getElementById("timerStartButton").textContent =
-        "Pause";
+    document
+    .getElementById("cardQuestion")
+    .value="";
 
-    timerInterval =
-        setInterval(runTimer,1000);
+
+    document
+    .getElementById("cardAnswer")
+    .value="";
+
+
+    loadFlashcards();
 
 }
 
 
-function runTimer(){
+async function loadFlashcards(){
 
-    if(timerSeconds <= 0){
+    const {data,error} =
+    await db
+    .from("flashcards")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .order("created_at");
 
-        finishTimer();
+
+    if(error){
+
+        console.log(error);
 
         return;
 
     }
 
-    timerSeconds--;
-
-    updateTimerDisplay();
-
-}
-
-
-function updateTimerDisplay(){
-
-    const minutes =
-        Math.floor(timerSeconds / 60)
-        .toString()
-        .padStart(2,"0");
-
-    const seconds =
-        (timerSeconds % 60)
-        .toString()
-        .padStart(2,"0");
-
-    document.getElementById("timerDisplay").textContent =
-        `${minutes}:${seconds}`;
-
-}
-
-
-function finishTimer(){
-
-    clearInterval(timerInterval);
-
-    timerRunning = false;
-
-    timerFinished = true;
-
-    timerSeconds = 0;
-
-    updateTimerDisplay();
-
-    document.getElementById("timerStartButton").textContent =
-        "Finished";
-
-    document.getElementById("timerLabel").textContent =
-        "Focus session complete! 🎉";
-
-    document.getElementById("timerReward").textContent =
-        completed.focus
-        ? "✓ Focus Quest already completed"
-        : "🔥 Your +50 XP reward is ready!";
-
-    if(!completed.focus){
-
-        completed.focus = true;
-
-        xp += 50;
-
-        completedQuests++;
-
-        saveGame();
-
-        updateScreen();
-
-        showToast("+50 XP! Focus Quest complete 🔥");
-
-    }
-
-}
-
-
-/* =========================================================
-   FRIENDS
-========================================================= */
-
-let friends = JSON.parse(
-    localStorage.getItem("sq_friends") ||
-    '[{"name":"Alex","online":true},{"name":"Mia","online":true},{"name":"Jay","online":false}]'
-);
-
-
-function renderFriends(){
 
     const list =
-        document.getElementById("friendSidebarList");
+    document
+    .getElementById("flashcardList");
 
-    if(!list){
-        return;
-    }
 
-    list.innerHTML = "";
+    list.innerHTML="";
 
-    friends.forEach(friend=>{
 
-        const div =
-            document.createElement("div");
+    (data||[]).forEach(card=>{
 
-        div.className = "friend";
+        const div=
+        document.createElement("div");
 
-        div.innerHTML = `
 
-            <div class="friend-avatar">
-                ${friend.name.charAt(0).toUpperCase()}
+        div.className=
+        "flashcard";
+
+
+        div.innerHTML=`
+
+            <h3>
+            ${escapeHTML(card.question)}
+            </h3>
+
+            <div class="answer">
+            ${escapeHTML(card.answer)}
             </div>
 
-            <div class="friend-info">
+            <br>
 
-                <div class="friend-name">
-                    ${escapeHTML(friend.name)}
-                </div>
+            <button
+            class="danger"
+            onclick="deleteFlashcard('${card.id}')">
 
-                <div class="friend-status">
+            Delete
 
-                    <span class="${
-                        friend.online
-                        ? "online-dot"
-                        : "offline-dot"
-                    }"></span>
-
-                    ${
-                        friend.online
-                        ? " Online"
-                        : " Offline"
-                    }
-
-                </div>
-
-            </div>
+            </button>
 
         `;
+
 
         list.appendChild(div);
 
@@ -3110,525 +2037,1505 @@ function renderFriends(){
 }
 
 
-function openFriendModal(){
+async function deleteFlashcard(id){
 
+    await db
+    .from("flashcards")
+    .delete()
+    .eq("id",id);
+
+
+    loadFlashcards();
+
+}
+
+
+function escapeHTML(text){
+
+    const div=
+    document.createElement("div");
+
+
+    div.textContent=text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+function changeTimerMode(){
+
+    pauseTimer();
+
+
+    const mode =
     document
-        .getElementById("friendModal")
-        .classList.add("show");
+    .getElementById("timerMode")
+    .value;
+
+
+    timerSeconds =
+    mode==="pomodoro"
+    ?25*60
+    :10*60;
+
+
+    updateTimerDisplay();
 
 }
 
 
-function closeFriendModal(){
+function updateTimerDisplay(){
 
-    document
-        .getElementById("friendModal")
-        .classList.remove("show");
-
-}
-
-
-function searchFriend(){
-
-    const search =
-        document
-            .getElementById("friendSearch")
-            .value
-            .trim();
-
-    const results =
-        document.getElementById("friendResults");
-
-    if(!search){
-
-        results.innerHTML = "";
-        return;
-
-    }
-
-    results.innerHTML = `
-
-        <div class="friend-result">
-
-            <div>
-
-                <strong>
-                    ${escapeHTML(search)}
-                </strong>
-
-                <div style="font-size:12px;color:var(--muted);">
-                    Study Quest user
-                </div>
-
-            </div>
-
-            <button
-                class="small-btn"
-                onclick="addFriend('${escapeHTML(search)}')"
-            >
-                Add
-            </button>
-
-        </div>
-
-    `;
-
-}
-
-
-function addFriend(name){
-
-    if(
-        friends.some(
-            friend =>
-                friend.name.toLowerCase() ===
-                name.toLowerCase()
-        )
-    ){
-
-        showToast("Already in your friends list.");
-        return;
-
-    }
-
-    friends.push({
-        name:name,
-        online:false
-    });
-
-    localStorage.setItem(
-        "sq_friends",
-        JSON.stringify(friends)
+    const minutes=
+    Math.floor(
+        timerSeconds/60
     );
 
-    renderFriends();
 
-    showToast(`${name} added as a friend! 👥`);
-
-    closeFriendModal();
-
-}
+    const seconds=
+    timerSeconds%60;
 
 
-/* =========================================================
-   STUDY ROOMS
-========================================================= */
+    document
+    .getElementById("timerDisplay")
+    .textContent=
 
-let currentRoom = null;
+        String(minutes)
+        .padStart(2,"0")
 
-let roomTimerSeconds = 0;
+        +
 
-let roomInterval = null;
+        ":"
 
+        +
 
-function generateRoomCode(){
-
-    return "SQ" +
-        Math.floor(
-            1000 +
-            Math.random() * 9000
-        );
+        String(seconds)
+        .padStart(2,"0");
 
 }
 
 
-function createRoom(){
+function startTimer(){
+
+    if(timerInterval)
+        return;
+
+
+    document
+    .getElementById("timerStatus")
+    .textContent=
+    "Focus mode active 🔥";
+
+
+    timerInterval=
+    setInterval(async()=>{
+
+        timerSeconds--;
+
+
+        updateTimerDisplay();
+
+
+        if(timerSeconds<=0){
+
+            pauseTimer();
+
+
+            document
+            .getElementById("timerStatus")
+            .textContent=
+            "Session complete! 🎉";
+
+
+            await claimXP(50);
+
+        }
+
+    },1000);
+
+}
+
+
+function pauseTimer(){
+
+    clearInterval(timerInterval);
+
+    timerInterval=null;
+
+}
+
+
+function resetTimer(){
+
+    pauseTimer();
+
+
+    const mode =
+    document
+    .getElementById("timerMode")
+    .value;
+
+
+    timerSeconds =
+    mode==="pomodoro"
+    ?25*60
+    :10*60;
+
+
+    updateTimerDisplay();
+
+
+    document
+    .getElementById("timerStatus")
+    .textContent=
+    "Ready to study.";
+
+}
+
+
+/* =====================================================
+   ROOMS
+===================================================== */
+
+async function createRoom(){
 
     const name =
-        document.getElementById("roomName")
-            .value.trim()
-        || "My Study Room";
-
-    const subject =
-        document.getElementById("roomSubject")
-            .value;
-
-    const goal =
-        document.getElementById("roomGoal")
-            .value.trim()
-        || "Study together";
-
-    currentRoom = {
-
-        name,
-        subject,
-        goal,
-        code:generateRoomCode()
-
-    };
-
-    roomTimerSeconds = 25 * 60;
-
-    renderRoomArea();
-
-    showToast("Study room created 🏠");
-
-}
+    document
+    .getElementById("roomName")
+    .value
+    .trim();
 
 
-function joinRoom(){
+    const description =
+    document
+    .getElementById("roomDescription")
+    .value
+    .trim();
 
-    const code =
-        document.getElementById("joinCode")
-            .value
-            .trim()
-            .toUpperCase();
 
-    if(!code){
+    const privateRoom =
+    document
+    .getElementById("roomPrivate")
+    .checked;
 
-        showToast("Enter a room code.");
+
+    if(!name){
+
+        alert(
+            "Give your room a name."
+        );
+
         return;
 
     }
 
-    currentRoom = {
 
-        name:"Friend's Study Room",
-        subject:"General Study",
-        goal:"Study together",
-        code:code
+    const {data,error} =
+    await db
+    .from("rooms")
+    .insert({
 
-    };
+        host_id:currentUser.id,
 
-    roomTimerSeconds = 25 * 60;
+        name:name,
 
-    renderRoomArea();
+        description:description,
 
-    showToast("Joined study room! 👥");
+        room_type:"study",
+
+        private:privateRoom
+
+    })
+    .select()
+    .single();
+
+
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    await db
+    .from("room_members")
+    .insert({
+
+        room_id:data.id,
+
+        user_id:currentUser.id
+
+    });
+
+
+    document
+    .getElementById("roomName")
+    .value="";
+
+
+    document
+    .getElementById("roomDescription")
+    .value="";
+
+
+    loadRooms();
 
 }
 
 
-function renderRoomArea(){
+async function loadRooms(){
 
-    const area =
-        document.getElementById("roomArea");
+    const {data,error} =
+    await db
+    .from("rooms")
+    .select("*")
+    .eq("room_type","study")
+    .order(
+        "created_at",
+        {ascending:false}
+    );
 
-    if(!area){
+
+    if(error){
+
+        console.log(error);
+
         return;
+
     }
 
-    if(!currentRoom){
 
-        area.innerHTML = `
+    const list=
+    document
+    .getElementById("roomList");
 
-            <div class="card">
 
-                <h2>🔴 Live Study Rooms</h2>
+    list.innerHTML="";
 
-                <p style="color:var(--muted);margin-top:6px;">
-                    Create a room or join one with a code.
-                </p>
 
-            </div>
+    (data||[]).forEach(room=>{
+
+        const div=
+        document.createElement("div");
+
+
+        div.className="room";
+
+
+        div.innerHTML=`
+
+            <h2>
+            🏠 ${escapeHTML(room.name)}
+            </h2>
+
+            <p>
+            ${escapeHTML(room.description)}
+            </p>
+
+            <br>
+
+            <p>
+            ${
+                room.private
+                ?"🔒 Friends/private"
+                :"🌎 Public"
+            }
+            </p>
+
+            <br>
+
+            <button
+            class="primary"
+            onclick="joinRoom('${room.id}')">
+
+            Join Room
+
+            </button>
 
         `;
 
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   TUTORING
+===================================================== */
+
+async function createTutoringRoom(){
+
+    const title=
+    document
+    .getElementById("tutorTitle")
+    .value
+    .trim();
+
+
+    const description=
+    document
+    .getElementById("tutorDescription")
+    .value
+    .trim();
+
+
+    const payment=
+    document
+    .getElementById("tutorPayment")
+    .value
+    .trim();
+
+
+    if(!title){
+
+        alert(
+            "Give the session a title."
+        );
+
         return;
 
     }
 
 
-    area.innerHTML = `
+    const {error}=
+    await db
+    .from("rooms")
+    .insert({
 
-        <div class="live-room">
+        host_id:currentUser.id,
 
-            <div class="live-header">
+        name:title,
 
-                <div>
+        description:description,
 
-                    <div class="live-dot">
-                        🔴 LIVE STUDY
-                    </div>
+        tutor_payment_info:payment,
 
-                    <h2 style="margin-top:5px;">
-                        ${escapeHTML(currentRoom.name)}
-                    </h2>
+        room_type:"tutoring",
 
-                    <p style="opacity:.7;margin-top:4px;">
-                        ${escapeHTML(currentRoom.subject)}
-                        ·
-                        ${escapeHTML(currentRoom.goal)}
-                    </p>
+        private:true
 
-                </div>
-
-                <div>
-                    <strong>
-                        Code
-                    </strong>
-
-                    <div style="font-size:20px;font-weight:bold;">
-                        ${currentRoom.code}
-                    </div>
-                </div>
-
-            </div>
+    });
 
 
-            <div class="live-timer" id="roomTimer">
-                25:00
-            </div>
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
 
 
-            <div style="text-align:center;margin-bottom:25px;">
-
-                <button
-                    class="small-btn"
-                    onclick="toggleRoomTimer()"
-                >
-                    ▶ Start / Pause
-                </button>
-
-                <button
-                    class="small-btn secondary"
-                    onclick="resetRoomTimer()"
-                >
-                    Reset
-                </button>
-
-            </div>
+    document
+    .getElementById("tutorTitle")
+    .value="";
 
 
-            <h3 style="margin-bottom:10px;">
-                👥 Studying
-            </h3>
-
-            <div class="participants">
-
-                <div class="participant">
-                    👤 ${escapeHTML(currentUser)}
-                </div>
-
-                <div class="participant">
-                    👤 Alex
-                </div>
-
-                <div class="participant">
-                    👤 Mia
-                </div>
-
-            </div>
+    document
+    .getElementById("tutorDescription")
+    .value="";
 
 
-            <div style="margin-top:25px;">
+    document
+    .getElementById("tutorPayment")
+    .value="";
 
-                <strong>
-                    🔥 Team Streak: 4 days
-                </strong>
+
+    loadTutoring();
+
+}
+
+
+async function loadTutoring(){
+
+    const {data,error}=
+    await db
+    .from("rooms")
+    .select("*")
+    .eq("room_type","tutoring")
+    .order(
+        "created_at",
+        {ascending:false}
+    );
+
+
+    if(error){
+
+        console.log(error);
+
+        return;
+
+    }
+
+
+    const list=
+    document
+    .getElementById("tutoringList");
+
+
+    list.innerHTML="";
+
+
+    (data||[]).forEach(room=>{
+
+        const div=
+        document.createElement("div");
+
+
+        div.className="room";
+
+
+        div.innerHTML=`
+
+            <h2>
+            👩‍🏫 ${escapeHTML(room.name)}
+            </h2>
+
+            <p>
+            ${escapeHTML(room.description)}
+            </p>
+
+            ${
+                room.tutor_payment_info
+                ?
+                `
+                <br>
+
+                <p>
+
+                <b>
+                Tutor support information:
+                </b>
 
                 <br>
 
-                <strong>
-                    ⭐ Room XP: 350
-                </strong>
+                ${escapeHTML(
+                    room.tutor_payment_info
+                )}
 
-            </div>
+                </p>
+                `
+                :
+                ""
+            }
+
+            <br>
+
+            <button
+            class="primary"
+            onclick="joinRoom('${room.id}')">
+
+            Join Tutoring Room
+
+            </button>
+
+        `;
 
 
-            <div class="reactions">
+        list.appendChild(div);
 
-                <button onclick="roomReact('👍')">
-                    👍
-                </button>
-
-                <button onclick="roomReact('💪')">
-                    💪
-                </button>
-
-                <button onclick="roomReact('🔥')">
-                    🔥
-                </button>
-
-                <button onclick="roomReact('🎯')">
-                    🎯
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-    updateRoomTimerDisplay();
+    });
 
 }
 
 
-function toggleRoomTimer(){
+/* =====================================================
+   FRIENDS
+===================================================== */
 
-    if(roomInterval){
+function toggleFriends(){
 
-        clearInterval(roomInterval);
+    document
+    .getElementById("friendToolbar")
+    .classList.toggle("hidden");
 
-        roomInterval = null;
+
+    loadFriends();
+
+}
+
+
+async function sendFriendRequest(){
+
+    const username=
+    document
+    .getElementById("friendSearch")
+    .value
+    .trim();
+
+
+    if(!username)
+        return;
+
+
+    const {data:user,error}=
+    await db
+    .from("profiles")
+    .select("id,username")
+    .eq("username",username)
+    .maybeSingle();
+
+
+    if(error || !user){
+
+        alert("User not found.");
 
         return;
 
     }
 
-    roomInterval =
-        setInterval(()=>{
 
-            if(roomTimerSeconds <= 0){
+    if(user.id===currentUser.id){
 
-                clearInterval(roomInterval);
-                roomInterval = null;
+        alert(
+            "You can't add yourself."
+        );
 
-                showToast("Study room timer finished! 🎉");
+        return;
 
-                return;
+    }
+
+
+    const {error:requestError}=
+    await db
+    .from("friend_requests")
+    .insert({
+
+        sender_id:currentUser.id,
+
+        receiver_id:user.id
+
+    });
+
+
+    if(requestError){
+
+        alert(requestError.message);
+
+        return;
+
+    }
+
+
+    alert(
+        "Friend request sent! 📨"
+    );
+
+
+    document
+    .getElementById("friendSearch")
+    .value="";
+
+}
+
+
+async function loadFriends(){
+
+    const {data:requests}=
+    await db
+    .from("friend_requests")
+    .select("*")
+    .eq(
+        "receiver_id",
+        currentUser.id
+    )
+    .eq(
+        "status",
+        "pending"
+    );
+
+
+    const requestBox=
+    document
+    .getElementById("friendRequests");
+
+
+    requestBox.innerHTML="";
+
+
+    for(const request of requests||[]){
+
+        const {data:user}=
+        await db
+        .from("profiles")
+        .select("username")
+        .eq("id",request.sender_id)
+        .maybeSingle();
+
+
+        if(!user)
+            continue;
+
+
+        const div=
+        document.createElement("div");
+
+
+        div.className="friendRow";
+
+
+        div.innerHTML=`
+
+            <span>
+            ${escapeHTML(user.username)}
+            </span>
+
+            <button
+            class="primary"
+            onclick="acceptFriend('${request.id}','${request.sender_id}')">
+
+            Accept
+
+            </button>
+
+        `;
+
+
+        requestBox.appendChild(div);
+
+    }
+
+
+    const {data:friendships}=
+    await db
+    .from("friendships")
+    .select("*")
+    .or(
+        `user_id.eq.${currentUser.id},friend_id.eq.${currentUser.id}`
+    );
+
+
+    const friendsBox=
+    document
+    .getElementById("friendsList");
+
+
+    friendsBox.innerHTML="";
+
+
+    for(const friendship of friendships||[]){
+
+        const friendId=
+        friendship.user_id===currentUser.id
+        ?
+        friendship.friend_id
+        :
+        friendship.user_id;
+
+
+        const {data:user}=
+        await db
+        .from("profiles")
+        .select("username")
+        .eq("id",friendId)
+        .maybeSingle();
+
+
+        if(!user)
+            continue;
+
+
+        const div=
+        document.createElement("div");
+
+
+        div.className="friendRow";
+
+
+        div.innerHTML=`
+
+            <span>
+            <span class="online"></span>
+            ${escapeHTML(user.username)}
+            </span>
+
+        `;
+
+
+        friendsBox.appendChild(div);
+
+    }
+
+}
+
+
+async function acceptFriend(
+    requestId,
+    senderId
+){
+
+    await db
+    .from("friend_requests")
+    .update({
+        status:"accepted"
+    })
+    .eq("id",requestId);
+
+
+    await db
+    .from("friendships")
+    .upsert({
+
+        user_id:currentUser.id,
+
+        friend_id:senderId
+
+    });
+
+
+    await db
+    .from("friendships")
+    .upsert({
+
+        user_id:senderId,
+
+        friend_id:currentUser.id
+
+    });
+
+
+    loadFriends();
+
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+async function loadDevices(){
+
+    try{
+
+        const permissionStream=
+        await navigator
+        .mediaDevices
+        .getUserMedia({
+            video:true,
+            audio:true
+        });
+
+
+        permissionStream
+        .getTracks()
+        .forEach(track=>track.stop());
+
+
+        const devices=
+        await navigator
+        .mediaDevices
+        .enumerateDevices();
+
+
+        const camera=
+        document
+        .getElementById("cameraSelect");
+
+
+        const microphone=
+        document
+        .getElementById("microphoneSelect");
+
+
+        camera.innerHTML="";
+        microphone.innerHTML="";
+
+
+        devices.forEach(device=>{
+
+            const option=
+            document
+            .createElement("option");
+
+
+            option.value=
+            device.deviceId;
+
+
+            option.textContent=
+            device.label ||
+            (
+                device.kind==="videoinput"
+                ?
+                "Camera"
+                :
+                "Microphone"
+            );
+
+
+            if(
+                device.kind===
+                "videoinput"
+            ){
+
+                camera.appendChild(option);
 
             }
 
-            roomTimerSeconds--;
 
-            updateRoomTimerDisplay();
+            if(
+                device.kind===
+                "audioinput"
+            ){
 
-        },1000);
+                microphone.appendChild(option);
 
-}
+            }
 
-
-function resetRoomTimer(){
-
-    clearInterval(roomInterval);
-
-    roomInterval = null;
-
-    roomTimerSeconds = 25 * 60;
-
-    updateRoomTimerDisplay();
-
-}
-
-
-function updateRoomTimerDisplay(){
-
-    const display =
-        document.getElementById("roomTimer");
-
-    if(!display){
-        return;
-    }
-
-    const minutes =
-        Math.floor(roomTimerSeconds / 60)
-            .toString()
-            .padStart(2,"0");
-
-    const seconds =
-        (roomTimerSeconds % 60)
-            .toString()
-            .padStart(2,"0");
-
-    display.textContent =
-        `${minutes}:${seconds}`;
-
-}
-
-
-function roomReact(emoji){
-
-    showToast(`You reacted ${emoji}`);
-
-}
-
-
-/* =========================================================
-   LIVE TUTORING
-========================================================= */
-
-function votePoll(element){
-
-    document
-        .querySelectorAll(".poll-option")
-        .forEach(option=>{
-            option.style.background = "";
         });
 
-    element.style.background =
-        "#dceeff";
+    }catch(error){
 
-    showToast("Vote submitted 📊");
+        console.log(error);
+
+        alert(
+            "Camera/microphone permission is needed to list your devices."
+        );
+
+    }
 
 }
 
 
-function submitQuestion(){
+async function loadSettings(){
 
-    const input =
-        document.getElementById("questionInput");
+    await loadDevices();
 
-    const status =
-        document.getElementById("questionStatus");
 
-    if(!input.value.trim()){
+    const {data}=
+    await db
+    .from("user_settings")
+    .select("*")
+    .eq(
+        "user_id",
+        currentUser.id
+    )
+    .maybeSingle();
 
-        status.textContent =
-            "Write a question first.";
+
+    if(data){
+
+        document
+        .getElementById("cameraDefault")
+        .checked=
+        data.camera_enabled;
+
+
+        document
+        .getElementById("microphoneDefault")
+        .checked=
+        data.microphone_enabled;
+
+
+        document
+        .getElementById("notifications")
+        .checked=
+        data.notifications_enabled;
+
+
+        document
+        .getElementById("onlineStatus")
+        .checked=
+        data.show_online_status;
+
+
+        document
+        .getElementById("friendRequests")
+        .checked=
+        data.friend_requests_enabled;
+
+
+        document
+        .getElementById("roomInvites")
+        .checked=
+        data.room_invites_enabled;
+
+    }
+
+}
+
+
+async function saveSettings(){
+
+    const settings={
+
+        user_id:
+        currentUser.id,
+
+        camera_enabled:
+        document
+        .getElementById("cameraDefault")
+        .checked,
+
+        microphone_enabled:
+        document
+        .getElementById("microphoneDefault")
+        .checked,
+
+        notifications_enabled:
+        document
+        .getElementById("notifications")
+        .checked,
+
+        show_online_status:
+        document
+        .getElementById("onlineStatus")
+        .checked,
+
+        friend_requests_enabled:
+        document
+        .getElementById("friendRequests")
+        .checked,
+
+        room_invites_enabled:
+        document
+        .getElementById("roomInvites")
+        .checked
+
+    };
+
+
+    const {error}=
+    await db
+    .from("user_settings")
+    .upsert(settings);
+
+
+    if(error){
+
+        alert(error.message);
 
         return;
 
     }
 
-    status.textContent =
-        "✓ Question submitted for moderation.";
 
-    input.value = "";
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimeout;
-
-function showToast(message){
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent =
-        message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toastTimeout);
-
-    toastTimeout =
-        setTimeout(()=>{
-
-            toast.classList.remove("show");
-
-        },2500);
+    alert(
+        "Settings saved! ⚙️"
+    );
 
 }
 
 
-/* =========================================================
-   STARTUP
-========================================================= */
+/* =====================================================
+   REAL-TIME ROOM
+===================================================== */
 
-if(currentUser){
+async function joinRoom(roomId){
 
-    openApp();
+    const {data:room,error}=
+    await db
+    .from("rooms")
+    .select("*")
+    .eq("id",roomId)
+    .single();
 
-}else{
 
-    document.getElementById("authPage").style.display =
-        "flex";
+    if(error){
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+    await db
+    .from("room_members")
+    .upsert({
+
+        room_id:roomId,
+
+        user_id:currentUser.id
+
+    });
+
+
+    currentRoom=room;
+
+
+    document
+    .getElementById("liveRoomTitle")
+    .textContent=
+    room.name;
+
+
+    document
+    .getElementById("liveRoomDescription")
+    .textContent=
+    room.description;
+
+
+    showPage("liveRoomPage");
+
+
+    await startCamera();
+
+
+    roomChannel=
+    db.channel(
+        "study-room-"+roomId
+    );
+
+
+    roomChannel.on(
+
+        "presence",
+
+        {
+            event:"sync"
+        },
+
+        ()=>{
+
+            console.log(
+                "Live users:",
+                roomChannel.presenceState()
+            );
+
+        }
+
+    );
+
+
+    roomChannel.on(
+
+        "broadcast",
+
+        {
+            event:"whiteboard"
+        },
+
+        event=>{
+
+            drawRemoteLine(
+                event.payload
+            );
+
+        }
+
+    );
+
+
+    await roomChannel.subscribe(
+        async status=>{
+
+            if(status==="SUBSCRIBED"){
+
+                await roomChannel.track({
+
+                    user_id:
+                    currentUser.id,
+
+                    username:
+                    profile.username
+
+                });
+
+            }
+
+        }
+    );
 
 }
 
 
-/* =========================================================
-   INITIAL TIMER
-========================================================= */
+async function startCamera(){
 
-resetTimer();
+    try{
+
+        localStream=
+        await navigator
+        .mediaDevices
+        .getUserMedia({
+
+            video:true,
+
+            audio:true
+
+        });
+
+
+        const video=
+        document
+        .getElementById("localVideo");
+
+
+        video.srcObject=
+        localStream;
+
+
+    }catch(error){
+
+        console.log(error);
+
+        alert(
+            "Camera/microphone permission was not given."
+        );
+
+    }
+
+}
+
+
+function toggleCamera(){
+
+    if(!localStream)
+        return;
+
+
+    const track=
+    localStream
+    .getVideoTracks()[0];
+
+
+    if(track){
+
+        track.enabled=
+        !track.enabled;
+
+    }
+
+}
+
+
+function toggleMicrophone(){
+
+    if(!localStream)
+        return;
+
+
+    const track=
+    localStream
+    .getAudioTracks()[0];
+
+
+    if(track){
+
+        track.enabled=
+        !track.enabled;
+
+    }
+
+}
+
+
+async function shareScreen(){
+
+    try{
+
+        screenStream=
+        await navigator
+        .mediaDevices
+        .getDisplayMedia({
+            video:true
+        });
+
+
+        const video=
+        document
+        .getElementById("localVideo");
+
+
+        video.srcObject=
+        screenStream;
+
+
+        screenStream
+        .getVideoTracks()[0]
+        .addEventListener(
+            "ended",
+            async()=>{
+
+                video.srcObject=
+                localStream;
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+async function leaveRoom(){
+
+    if(roomChannel){
+
+        await roomChannel.untrack();
+
+        await db.removeChannel(
+            roomChannel
+        );
+
+        roomChannel=null;
+
+    }
+
+
+    if(localStream){
+
+        localStream
+        .getTracks()
+        .forEach(
+            track=>track.stop()
+        );
+
+        localStream=null;
+
+    }
+
+
+    if(currentRoom){
+
+        await db
+        .from("room_members")
+        .delete()
+        .eq(
+            "room_id",
+            currentRoom.id
+        )
+        .eq(
+            "user_id",
+            currentUser.id
+        );
+
+    }
+
+
+    currentRoom=null;
+
+    showPage("rooms");
+
+}
+
+
+/* =====================================================
+   WHITEBOARD
+===================================================== */
+
+const canvas=
+document.getElementById(
+    "whiteboard"
+);
+
+const ctx=
+canvas.getContext("2d");
+
+
+let drawing=false;
+
+let lastX=0;
+
+let lastY=0;
+
+
+function resizeCanvas(){
+
+    canvas.width=
+    canvas.clientWidth;
+
+    canvas.height=
+    400;
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+resizeCanvas();
+
+
+canvas.addEventListener(
+    "pointerdown",
+    event=>{
+
+        drawing=true;
+
+        lastX=
+        event.offsetX;
+
+        lastY=
+        event.offsetY;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "pointerup",
+    ()=>{
+
+        drawing=false;
+
+    }
+);
+
+
+canvas.addEventListener(
+    "pointermove",
+    event=>{
+
+        if(!drawing)
+            return;
+
+
+        const x=
+        event.offsetX;
+
+        const y=
+        event.offsetY;
+
+
+        drawLine(
+            lastX,
+            lastY,
+            x,
+            y
+        );
+
+
+        if(roomChannel){
+
+            roomChannel.send({
+
+                type:"broadcast",
+
+                event:"whiteboard",
+
+                payload:{
+
+                    x1:lastX,
+
+                    y1:lastY,
+
+                    x2:x,
+
+                    y2:y
+
+                }
+
+            });
+
+        }
+
+
+        lastX=x;
+
+        lastY=y;
+
+    }
+);
+
+
+function drawLine(
+    x1,
+    y1,
+    x2,
+    y2
+){
+
+    ctx.beginPath();
+
+    ctx.moveTo(x1,y1);
+
+    ctx.lineTo(x2,y2);
+
+    ctx.stroke();
+
+}
+
+
+function drawRemoteLine(line){
+
+    drawLine(
+        line.x1,
+        line.y1,
+        line.x2,
+        line.y2
+    );
+
+}
+
+
+function clearWhiteboard(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+}
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+async function loadApp(){
+
+    document
+    .getElementById("authPage")
+    .classList.add("hidden");
+
+
+    document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+    await loadProfile();
+
+    await loadSettings();
+
+    await loadFriends();
+
+    updateTimerDisplay();
+
+}
+
+
+async function startup(){
+
+    const {data}=
+    await db.auth.getSession();
+
+
+    if(data.session){
+
+        currentUser=
+        data.session.user;
+
+        await loadApp();
+
+    }
+
+}
+
+
+startup();
 
 </script>
 

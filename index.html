@@ -1,1343 +1,1815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Study Quest</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f7ff;
-            color: #18233a;
-            min-height: 100vh;
-        }
-
-        /* =========================
-           TOP NAVIGATION
-        ========================= */
-
-        .navbar {
-            width: 100%;
-            background: white;
-            border-bottom: 1px solid #e5e9f2;
-            padding: 16px 6%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 22px;
-            font-weight: 800;
-            color: #315bea;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: #315bea;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 21px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-button {
-            border: none;
-            background: transparent;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #65708a;
-            cursor: pointer;
-        }
-
-        .nav-button:hover {
-            background: #f0f3ff;
-            color: #315bea;
-        }
-
-        /* =========================
-           MAIN CONTAINER
-        ========================= */
-
-        .container {
-            width: 88%;
-            max-width: 1250px;
-            margin: 35px auto 60px;
-        }
-
-        /* =========================
-           WELCOME
-        ========================= */
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .welcome h1 {
-            font-size: 34px;
-            margin-bottom: 7px;
-        }
-
-        .welcome p {
-            color: #69748c;
-            font-size: 16px;
-        }
-
-        /* =========================
-           STATS
-        ========================= */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            border: 1px solid #e6eaf2;
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: 0 5px 20px rgba(30, 50, 100, 0.04);
-        }
-
-        .stat-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .stat-title {
-            color: #727d94;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .stat-icon {
-            font-size: 22px;
-        }
-
-        .stat-number {
-            font-size: 29px;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        /* =========================
-           XP CARD
-        ========================= */
-
-        .level-card {
-            background: linear-gradient(135deg, #315bea, #6047d8);
-            color: white;
-            border-radius: 22px;
-            padding: 27px;
-            margin-bottom: 25px;
-            box-shadow: 0 12px 30px rgba(49, 91, 234, 0.2);
-        }
-
-        .level-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .level-title {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .xp-text {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .xp-bar {
-            width: 100%;
-            height: 13px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .xp-fill {
-            height: 100%;
-            width: 0%;
-            background: white;
-            border-radius: 20px;
-            transition: width 0.5s ease;
-        }
-
-        .level-bottom {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 13px;
-            opacity: 0.85;
-        }
-
-        /* =========================
-           GRID
-        ========================= */
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 22px;
-        }
-
-        .section-card {
-            background: white;
-            border: 1px solid #e6eaf2;
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: 0 5px 20px rgba(30, 50, 100, 0.04);
-        }
-
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 18px;
-        }
-
-        .section-title h2 {
-            font-size: 21px;
-        }
-
-        .section-title span {
-            color: #7a8499;
-            font-size: 13px;
-        }
-
-        /* =========================
-           QUESTS
-        ========================= */
-
-        .quest {
-            border: 1px solid #e5e9f2;
-            border-radius: 16px;
-            padding: 17px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 12px;
-            transition: 0.2s;
-        }
-
-        .quest:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 7px 20px rgba(30, 50, 100, 0.07);
-        }
-
-        .quest-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .quest-icon {
-            width: 45px;
-            height: 45px;
-            background: #eef2ff;
-            border-radius: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .quest-info h3 {
-            font-size: 15px;
-            margin-bottom: 5px;
-        }
-
-        .quest-info p {
-            font-size: 12px;
-            color: #7b859a;
-        }
-
-        .quest-xp {
-            font-size: 12px;
-            color: #315bea;
-            font-weight: 800;
-            margin-bottom: 7px;
-            text-align: right;
-        }
-
-        .quest-button {
-            border: none;
-            background: #315bea;
-            color: white;
-            padding: 9px 14px;
-            border-radius: 9px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .quest-button:hover {
-            background: #244bd0;
-        }
-
-        .quest.completed {
-            opacity: 0.55;
-        }
-
-        .quest.completed .quest-button {
-            background: #20a464;
-        }
-
-        /* =========================
-           BADGES
-        ========================= */
-
-        .badges {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .badge {
-            border: 1px solid #e5e9f2;
-            border-radius: 15px;
-            padding: 15px 8px;
-            text-align: center;
-        }
-
-        .badge-icon {
-            font-size: 28px;
-            margin-bottom: 7px;
-        }
-
-        .badge-name {
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .badge.locked {
-            opacity: 0.35;
-            filter: grayscale(1);
-        }
-
-        /* =========================
-           PROGRESS
-        ========================= */
-
-        .progress-item {
-            margin-bottom: 18px;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            margin-bottom: 7px;
-        }
-
-        .progress-label span:last-child {
-            color: #7b859a;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #edf0f6;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #315bea;
-            border-radius: 20px;
-        }
-
-        /* =========================
-           DAILY GOAL
-        ========================= */
-
-        .goal {
-            margin-top: 20px;
-            padding: 18px;
-            background: #f6f8ff;
-            border-radius: 15px;
-        }
-
-        .goal h3 {
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
-
-        .goal p {
-            color: #707b91;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-
-        /* =========================
-           TOAST
-        ========================= */
-
-        .toast {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #18233a;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 13px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: 0.3s;
-            z-index: 999;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-            text-align: center;
-            color: #8a93a6;
-            font-size: 12px;
-            margin-top: 45px;
-        }
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 800px) {
-
-            .navbar {
-                padding: 13px 5%;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .container {
-                width: 92%;
-                margin-top: 25px;
-            }
-
-            .welcome h1 {
-                font-size: 28px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quest {
-                align-items: flex-start;
-            }
-
-            .quest-left {
-                align-items: flex-start;
-            }
-
-            .badges {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Study Quest</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #eef4ff;
+    color: #172554;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    height: 70px;
+    background: #102a56;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.logo-mark {
+    width: 38px;
+    height: 38px;
+
+    background: #3b82f6;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-buttons button {
+    background: transparent;
+    border: none;
+    color: #dbeafe;
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav-buttons button:hover {
+    background: #1d4275;
+    color: white;
+}
+
+.logout-btn {
+    background: #ef4444 !important;
+    color: white !important;
+}
+
+/* =========================
+   PAGE SYSTEM
+========================= */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* =========================
+   AUTH PAGE
+========================= */
+
+#authPage {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(135deg, #102a56, #173f7a);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 420px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+.auth-logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-logo .logo-mark {
+    margin: auto;
+    width: 55px;
+    height: 55px;
+    font-size: 25px;
+}
+
+.auth-logo h1 {
+    margin-top: 12px;
+    color: #102a56;
+}
+
+.auth-logo p {
+    margin-top: 6px;
+    color: #64748b;
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+    color: #102a56;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    color: #334155;
+}
+
+.input-group input {
+    width: 100%;
+
+    padding: 13px;
+
+    border: 2px solid #dbe4f0;
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+.input-group input:focus {
+    border-color: #3b82f6;
+}
+
+.primary-btn {
+    width: 100%;
+
+    background: #2563eb;
+    color: white;
+
+    border: none;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background: #1d4ed8;
+}
+
+.switch-auth {
+    text-align: center;
+    margin-top: 18px;
+
+    color: #64748b;
+    font-size: 14px;
+}
+
+.switch-auth button {
+    background: none;
+    border: none;
+
+    color: #2563eb;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+
+    display: none;
+
+    font-size: 14px;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+
+.container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 35px 25px;
+}
+
+.hero {
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #102a56;
+}
+
+.hero p {
+    color: #64748b;
+    margin-top: 8px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
+
+    border: 1px solid #dbe7f5;
+}
+
+.stat-title {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+
+    margin-top: 7px;
+
+    color: #102a56;
+}
+
+/* =========================
+   XP
+========================= */
+
+.xp-card {
+    margin-bottom: 25px;
+}
+
+.xp-top {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.xp-title {
+    font-weight: bold;
+}
+
+.xp-number {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.xp-bar {
+    height: 13px;
+
+    background: #dbeafe;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.xp-fill {
+    height: 100%;
+
+    width: 0%;
+
+    background: #2563eb;
+
+    border-radius: 20px;
+
+    transition: width 0.4s ease;
+}
+
+.next-level {
+    margin-top: 9px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+/* =========================
+   QUESTS
+========================= */
+
+.section-title {
+    margin-bottom: 15px;
+
+    color: #102a56;
+}
+
+.quest-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.quest {
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    border: 1px solid #dbe7f5;
+
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+}
+
+.quest h3 {
+    color: #102a56;
+    margin-bottom: 8px;
+}
+
+.quest p {
+    color: #64748b;
+
+    margin-bottom: 15px;
+}
+
+.quest button {
+    border: none;
+
+    background: #2563eb;
+    color: white;
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.quest button:hover {
+    background: #1d4ed8;
+}
+
+.quest button.completed {
+    background: #16a34a;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badges {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.badge {
+    background: white;
+
+    border: 1px solid #dbe7f5;
+
+    border-radius: 14px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    opacity: 0.45;
+}
+
+.badge.unlocked {
+    opacity: 1;
+
+    border-color: #60a5fa;
+}
+
+.badge-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.badge h3 {
+    font-size: 15px;
+}
+
+.badge p {
+    font-size: 12px;
+
+    color: #64748b;
+
+    margin-top: 5px;
+}
+
+/* =========================
+   SIMPLE PAGES
+========================= */
+
+.big-card {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    border: 1px solid #dbe7f5;
+
+    box-shadow: 0 5px 18px rgba(15,23,42,0.06);
+}
+
+.big-card h1 {
+    color: #102a56;
+
+    margin-bottom: 10px;
+}
+
+.big-card p {
+    color: #64748b;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+#toast {
+    position: fixed;
+
+    bottom: 25px;
+    right: 25px;
+
+    background: #102a56;
+    color: white;
+
+    padding: 14px 20px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+
+    display: none;
+
+    z-index: 1000;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 750px) {
+
+    .navbar {
+        padding: 0 15px;
+    }
+
+    .nav-buttons {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .quest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .badges {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 26px;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+
+<!-- =========================
+     LOGIN / SIGNUP PAGE
+========================= -->
+
+<div id="authPage">
+
+    <div class="auth-box">
+
+        <div class="auth-logo">
+
+            <div class="logo-mark">
+                SQ
+            </div>
+
+            <h1>Study Quest</h1>
+
+            <p>Learn. Level up. Improve.</p>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <h2>Welcome back 👋</h2>
+
+            <div id="loginError" class="error-message"></div>
+
+            <div class="input-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    id="loginUsername"
+                    placeholder="Enter your username"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                >
+
+            </div>
+
+            <button class="primary-btn" onclick="login()">
+                Log In
+            </button>
+
+            <div class="switch-auth">
+
+                Don't have an account?
+
+                <button onclick="showSignup()">
+                    Sign Up
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIGNUP -->
+
+        <div id="signupForm" style="display:none;">
+
+            <h2>Create your account 🚀</h2>
+
+            <div id="signupError" class="error-message"></div>
+
+            <div class="input-group">
+
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    id="signupUsername"
+                    placeholder="Choose a username"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    id="signupPassword"
+                    placeholder="Create a password"
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    id="signupConfirm"
+                    placeholder="Confirm your password"
+                >
+
+            </div>
+
+            <button class="primary-btn" onclick="signup()">
+                Create Account
+            </button>
+
+            <div class="switch-auth">
+
+                Already have an account?
+
+                <button onclick="showLogin()">
+                    Log In
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN APP
+========================= -->
+
+<div id="app" style="display:none;">
+
+
+    <!-- NAVBAR -->
 
     <nav class="navbar">
 
         <div class="logo">
-            <div class="logo-icon">🎓</div>
+
+            <div class="logo-mark">
+                SQ
+            </div>
+
             Study Quest
+
         </div>
 
-        <div class="nav-links">
-            <button class="nav-button">Dashboard</button>
-            <button class="nav-button">Quests</button>
-            <button class="nav-button">Learn</button>
-            <button class="nav-button">Progress</button>
+
+        <div class="nav-buttons">
+
+            <button onclick="showPage('dashboard')">
+                Dashboard
+            </button>
+
+            <button onclick="showPage('quests')">
+                Quests
+            </button>
+
+            <button onclick="showPage('learn')">
+                Learn
+            </button>
+
+            <button onclick="showPage('progress')">
+                Progress
+            </button>
+
+            <button class="logout-btn" onclick="logout()">
+                Log Out
+            </button>
+
         </div>
 
     </nav>
 
 
     <!-- =========================
-         MAIN CONTENT
-    ========================== -->
+         DASHBOARD
+    ========================= -->
 
-    <main class="container">
+    <section id="dashboard" class="page active">
 
-        <section class="welcome">
-            <h1>Welcome to Study Quest 👋</h1>
-            <p>Learn. Level up. Improve.</p>
-        </section>
+        <div class="container">
 
+            <div class="hero">
 
-        <!-- =========================
-             STAT CARDS
-        ========================== -->
+                <h1>
+                    Welcome to Study Quest, <span id="playerName"></span> 👋
+                </h1>
 
-        <section class="stats">
-
-            <div class="stat-card">
-
-                <div class="stat-top">
-                    <span class="stat-title">Total XP</span>
-                    <span class="stat-icon">⭐</span>
-                </div>
-
-                <div class="stat-number" id="totalXP">0</div>
-
-                <span class="stat-title">Keep completing quests!</span>
+                <p>
+                    Learn. Level up. Improve.
+                </p>
 
             </div>
 
 
-            <div class="stat-card">
+            <!-- STATS -->
 
-                <div class="stat-top">
-                    <span class="stat-title">Current Streak</span>
-                    <span class="stat-icon">🔥</span>
+            <div class="stats">
+
+                <div class="card">
+
+                    <div class="stat-title">
+                        Total XP
+                    </div>
+
+                    <div class="stat-number" id="xpDisplay">
+                        0
+                    </div>
+
                 </div>
 
-                <div class="stat-number" id="streak">0</div>
 
-                <span class="stat-title">days</span>
+                <div class="card">
+
+                    <div class="stat-title">
+                        Current Streak
+                    </div>
+
+                    <div class="stat-number">
+                        🔥 <span id="streakDisplay">1</span>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="stat-title">
+                        Quests Complete
+                    </div>
+
+                    <div class="stat-number" id="completedDisplay">
+                        0
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <div class="stat-card">
+            <!-- LEVEL -->
 
-                <div class="stat-top">
-                    <span class="stat-title">Quests Complete</span>
-                    <span class="stat-icon">🎯</span>
+            <div class="card xp-card">
+
+                <div class="xp-top">
+
+                    <div class="xp-title" id="levelTitle">
+                        Level 1 — Beginner
+                    </div>
+
+                    <div class="xp-number">
+                        <span id="xpText">0</span> XP
+                    </div>
+
                 </div>
 
-                <div class="stat-number" id="completedCount">0</div>
 
-                <span class="stat-title">Great work!</span>
+                <div class="xp-bar">
+
+                    <div
+                        id="xpFill"
+                        class="xp-fill">
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="next-level"
+                    id="nextLevel">
+                    100 XP until Level 2
+                </div>
 
             </div>
 
-        </section>
 
+            <!-- DAILY QUESTS -->
 
-        <!-- =========================
-             LEVEL / XP
-        ========================== -->
+            <h2 class="section-title">
+                Today's Quests ⚔️
+            </h2>
 
-        <section class="level-card">
+            <div class="quest-grid">
 
-            <div class="level-header">
 
-                <div class="level-title" id="levelTitle">
-                    Level 1 — Beginner
-                </div>
+                <div class="quest">
 
-                <div class="xp-text">
-                    <span id="currentXP">0</span> / 500 XP
-                </div>
-
-            </div>
-
-            <div class="xp-bar">
-                <div class="xp-fill" id="xpFill"></div>
-            </div>
-
-            <div class="level-bottom">
-                <span>⭐ Keep going!</span>
-                <span id="nextLevel">500 XP to Level 2</span>
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             MAIN GRID
-        ========================== -->
-
-        <section class="main-grid">
-
-
-            <!-- =========================
-                 QUEST SECTION
-            ========================== -->
-
-            <div class="section-card">
-
-                <div class="section-title">
-
-                    <h2>🎯 Today's Quests</h2>
-
-                    <span id="questStatus">
-                        0 / 4 complete
-                    </span>
-
-                </div>
-
-
-                <!-- QUEST 1 -->
-
-                <div class="quest" id="quest1">
-
-                    <div class="quest-left">
-
-                        <div class="quest-icon">
-                            🧠
-                        </div>
-
-                        <div class="quest-info">
-
-                            <h3>Memory Challenge</h3>
-
-                            <p>
-                                Learn and recall 5 facts.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="quest-xp">
-                            +50 XP
-                        </div>
-
-                        <button
-                            class="quest-button"
-                            onclick="completeQuest(1, 50)">
-                            Start
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- QUEST 2 -->
-
-                <div class="quest" id="quest2">
-
-                    <div class="quest-left">
-
-                        <div class="quest-icon">
-                            📚
-                        </div>
-
-                        <div class="quest-info">
-
-                            <h3>Practice Questions</h3>
-
-                            <p>
-                                Complete 10 practice questions.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="quest-xp">
-                            +75 XP
-                        </div>
-
-                        <button
-                            class="quest-button"
-                            onclick="completeQuest(2, 75)">
-                            Start
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- QUEST 3 -->
-
-                <div class="quest" id="quest3">
-
-                    <div class="quest-left">
-
-                        <div class="quest-icon">
-                            ⏱️
-                        </div>
-
-                        <div class="quest-info">
-
-                            <h3>Focus Session</h3>
-
-                            <p>
-                                Focus on one task for 25 minutes.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="quest-xp">
-                            +50 XP
-                        </div>
-
-                        <button
-                            class="quest-button"
-                            onclick="completeQuest(3, 50)">
-                            Start
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- QUEST 4 -->
-
-                <div class="quest" id="quest4">
-
-                    <div class="quest-left">
-
-                        <div class="quest-icon">
-                            ✍️
-                        </div>
-
-                        <div class="quest-info">
-
-                            <h3>Flashcard Quest</h3>
-
-                            <p>
-                                Create 5 useful flashcards.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <div>
-
-                        <div class="quest-xp">
-                            +50 XP
-                        </div>
-
-                        <button
-                            class="quest-button"
-                            onclick="completeQuest(4, 50)">
-                            Start
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- DAILY GOAL -->
-
-                <div class="goal">
-
-                    <h3>🎯 Daily Goal</h3>
+                    <h3>🧠 Memory Challenge</h3>
 
                     <p>
-                        Complete all four quests and earn
-                        <strong>225 XP</strong>.
+                        Learn and recall 5 facts.
                     </p>
 
-                    <div class="progress-bar">
+                    <button
+                        id="questBtn1"
+                        onclick="completeQuest(1,50)">
+                        Complete +50 XP
+                    </button>
 
-                        <div
-                            class="progress-fill"
-                            id="dailyProgress"
-                            style="width: 0%;">
-                        </div>
+                </div>
 
-                    </div>
+
+                <div class="quest">
+
+                    <h3>📝 Practice Questions</h3>
+
+                    <p>
+                        Complete 10 practice questions.
+                    </p>
+
+                    <button
+                        id="questBtn2"
+                        onclick="completeQuest(2,75)">
+                        Complete +75 XP
+                    </button>
+
+                </div>
+
+
+                <div class="quest">
+
+                    <h3>⏱️ Focus Session</h3>
+
+                    <p>
+                        Focus on one task for 25 minutes.
+                    </p>
+
+                    <button
+                        id="questBtn3"
+                        onclick="completeQuest(3,50)">
+                        Complete +50 XP
+                    </button>
+
+                </div>
+
+
+                <div class="quest">
+
+                    <h3>🃏 Flashcard Quest</h3>
+
+                    <p>
+                        Create 5 useful flashcards.
+                    </p>
+
+                    <button
+                        id="questBtn4"
+                        onclick="completeQuest(4,50)">
+                        Complete +50 XP
+                    </button>
 
                 </div>
 
             </div>
 
 
-            <!-- =========================
-                 RIGHT SIDE
-            ========================== -->
+            <!-- BADGES -->
 
-            <div>
+            <h2
+                class="section-title"
+                style="margin-top:35px;">
+                Achievements 🏆
+            </h2>
 
 
-                <!-- BADGES -->
+            <div class="badges">
 
-                <div class="section-card">
 
-                    <div class="section-title">
+                <div
+                    class="badge"
+                    id="badge1">
 
-                        <h2>🏆 Badges</h2>
-
+                    <div class="badge-icon">
+                        ⭐
                     </div>
 
+                    <h3>First Quest</h3>
 
-                    <div class="badges">
-
-                        <div class="badge" id="badgeFirst">
-
-                            <div class="badge-icon">
-                                🌟
-                            </div>
-
-                            <div class="badge-name">
-                                First Quest
-                            </div>
-
-                        </div>
-
-
-                        <div class="badge locked" id="badgeFive">
-
-                            <div class="badge-icon">
-                                🎯
-                            </div>
-
-                            <div class="badge-name">
-                                Quest Hunter
-                            </div>
-
-                        </div>
-
-
-                        <div class="badge locked" id="badgeTen">
-
-                            <div class="badge-icon">
-                                🧠
-                            </div>
-
-                            <div class="badge-name">
-                                Brain Power
-                            </div>
-
-                        </div>
-
-
-                        <div class="badge locked" id="badgeStreak">
-
-                            <div class="badge-icon">
-                                🔥
-                            </div>
-
-                            <div class="badge-name">
-                                On Fire
-                            </div>
-
-                        </div>
-
-
-                        <div class="badge locked">
-
-                            <div class="badge-icon">
-                                🏆
-                            </div>
-
-                            <div class="badge-name">
-                                Scholar
-                            </div>
-
-                        </div>
-
-
-                        <div class="badge locked">
-
-                            <div class="badge-icon">
-                                💎
-                            </div>
-
-                            <div class="badge-name">
-                                Study Master
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <p>Complete your first quest.</p>
 
                 </div>
 
 
-                <!-- PROGRESS -->
+                <div
+                    class="badge"
+                    id="badge2">
 
-                <div class="section-card" style="margin-top:22px;">
-
-                    <div class="section-title">
-
-                        <h2>📊 Progress</h2>
-
+                    <div class="badge-icon">
+                        ⚔️
                     </div>
 
+                    <h3>Quest Hunter</h3>
 
-                    <div class="progress-item">
+                    <p>Complete 3 quests.</p>
 
-                        <div class="progress-label">
+                </div>
 
-                            <span>Daily quests</span>
 
-                            <span id="progressText">
-                                0%
-                            </span>
+                <div
+                    class="badge"
+                    id="badge3">
 
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div
-                                class="progress-fill"
-                                id="progressBar"
-                                style="width:0%;">
-                            </div>
-
-                        </div>
-
+                    <div class="badge-icon">
+                        🧠
                     </div>
 
+                    <h3>Brain Power</h3>
 
-                    <div class="progress-item">
+                    <p>Earn 200 XP.</p>
 
-                        <div class="progress-label">
+                </div>
 
-                            <span>Next level</span>
 
-                            <span id="levelProgressText">
-                                0%
-                            </span>
+                <div
+                    class="badge"
+                    id="badge4">
 
-                        </div>
-
-                        <div class="progress-bar">
-
-                            <div
-                                class="progress-fill"
-                                id="levelProgressBar"
-                                style="width:0%;">
-                            </div>
-
-                        </div>
-
+                    <div class="badge-icon">
+                        🔥
                     </div>
+
+                    <h3>On Fire</h3>
+
+                    <p>Reach a 7-day streak.</p>
+
+                </div>
+
+
+                <div
+                    class="badge"
+                    id="badge5">
+
+                    <div class="badge-icon">
+                        🎓
+                    </div>
+
+                    <h3>Scholar</h3>
+
+                    <p>Reach Level 5.</p>
+
+                </div>
+
+
+                <div
+                    class="badge"
+                    id="badge6">
+
+                    <div class="badge-icon">
+                        👑
+                    </div>
+
+                    <h3>Study Master</h3>
+
+                    <p>Reach Level 11.</p>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
-
-        <!-- =========================
-             FOOTER
-        ========================== -->
-
-        <footer>
-            Study Quest © 2026 · Learn. Level Up. Improve.
-        </footer>
-
-    </main>
+    </section>
 
 
     <!-- =========================
-         TOAST MESSAGE
-    ========================== -->
+         QUESTS PAGE
+    ========================= -->
 
-    <div class="toast" id="toast">
-        +50 XP earned! ⭐
-    </div>
+    <section id="quests" class="page">
+
+        <div class="container">
+
+            <div class="big-card">
+
+                <h1>⚔️ Quests</h1>
+
+                <p>
+                    Your full quest system will live here.
+                    Soon we'll turn these into actual interactive
+                    challenges instead of simply pressing Complete.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
     <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+         LEARN PAGE
+    ========================= -->
 
-    <script>
+    <section id="learn" class="page">
 
-        /* ==================================
-           GAME DATA
-        ================================== */
+        <div class="container">
 
-        let xp = 0;
+            <div class="big-card">
 
-        let completedQuests = 0;
+                <h1>📚 Learn</h1>
 
-        let streak = 1;
+                <p>
+                    This will become your learning centre.
+                    We'll eventually add subjects, videos,
+                    revision guides, flashcards and interactive lessons.
+                </p>
 
-        let completed = {
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROGRESS PAGE
+    ========================= -->
+
+    <section id="progress" class="page">
+
+        <div class="container">
+
+            <div class="big-card">
+
+                <h1>📊 Your Progress</h1>
+
+                <p>
+                    Your XP, levels, quests, streaks and achievements
+                    will eventually be displayed here with detailed
+                    progress charts.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =================================
+   ACCOUNT SYSTEM
+================================= */
+
+function showSignup() {
+
+    document.getElementById("loginForm").style.display = "none";
+
+    document.getElementById("signupForm").style.display = "block";
+
+}
+
+
+function showLogin() {
+
+    document.getElementById("signupForm").style.display = "none";
+
+    document.getElementById("loginForm").style.display = "block";
+
+}
+
+
+/* =================================
+   SIGN UP
+================================= */
+
+function signup() {
+
+    const username =
+        document.getElementById("signupUsername").value.trim();
+
+    const password =
+        document.getElementById("signupPassword").value;
+
+    const confirm =
+        document.getElementById("signupConfirm").value;
+
+    const error =
+        document.getElementById("signupError");
+
+
+    error.style.display = "none";
+
+
+    if (username.length < 3) {
+
+        error.innerText =
+            "Username must be at least 3 characters.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    if (password.length < 4) {
+
+        error.innerText =
+            "Password must be at least 4 characters.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    if (password !== confirm) {
+
+        error.innerText =
+            "Passwords don't match.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    const existingUser =
+        localStorage.getItem("studyQuestUser_" + username);
+
+
+    if (existingUser) {
+
+        error.innerText =
+            "That username already exists.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    const account = {
+
+        username: username,
+
+        password: password,
+
+        xp: 0,
+
+        streak: 1,
+
+        completedQuests: 0,
+
+        completed: {
+
             1: false,
             2: false,
             3: false,
             4: false
-        };
-
-
-        /* ==================================
-           LEVEL SYSTEM
-        ================================== */
-
-        function getLevel() {
-
-            if (xp >= 5000) {
-                return {
-                    number: 11,
-                    name: "Study Master",
-                    start: 5000,
-                    next: 7500
-                };
-            }
-
-            if (xp >= 4000) {
-                return {
-                    number: 10,
-                    name: "Legend",
-                    start: 4000,
-                    next: 5000
-                };
-            }
-
-            if (xp >= 3000) {
-                return {
-                    number: 9,
-                    name: "Expert",
-                    start: 3000,
-                    next: 4000
-                };
-            }
-
-            if (xp >= 2250) {
-                return {
-                    number: 8,
-                    name: "Scholar",
-                    start: 2250,
-                    next: 3000
-                };
-            }
-
-            if (xp >= 1600) {
-                return {
-                    number: 7,
-                    name: "Focused",
-                    start: 1600,
-                    next: 2250
-                };
-            }
-
-            if (xp >= 1100) {
-                return {
-                    number: 6,
-                    name: "Dedicated",
-                    start: 1100,
-                    next: 1600
-                };
-            }
-
-            if (xp >= 700) {
-                return {
-                    number: 5,
-                    name: "Learner",
-                    start: 700,
-                    next: 1100
-                };
-            }
-
-            if (xp >= 400) {
-                return {
-                    number: 4,
-                    name: "Improving",
-                    start: 400,
-                    next: 700
-                };
-            }
-
-            if (xp >= 200) {
-                return {
-                    number: 3,
-                    name: "Explorer",
-                    start: 200,
-                    next: 400
-                };
-            }
-
-            if (xp >= 100) {
-                return {
-                    number: 2,
-                    name: "Learner",
-                    start: 100,
-                    next: 200
-                };
-            }
-
-            return {
-                number: 1,
-                name: "Beginner",
-                start: 0,
-                next: 100
-            };
-        }
-
-
-        /* ==================================
-           UPDATE SCREEN
-        ================================== */
-
-        function updateScreen() {
-
-            document.getElementById("totalXP").textContent = xp;
-
-            document.getElementById("currentXP").textContent = xp;
-
-            document.getElementById("streak").textContent = streak;
-
-            document.getElementById("completedCount").textContent =
-                completedQuests;
-
-
-            /* LEVEL */
-
-            let level = getLevel();
-
-            document.getElementById("levelTitle").textContent =
-                "Level " + level.number + " — " + level.name;
-
-
-            /* XP BAR */
-
-            let levelXP =
-                xp - level.start;
-
-            let requiredXP =
-                level.next - level.start;
-
-            let percentage =
-                (levelXP / requiredXP) * 100;
-
-            if (percentage > 100) {
-                percentage = 100;
-            }
-
-            document.getElementById("xpFill").style.width =
-                percentage + "%";
-
-
-            document.getElementById("nextLevel").textContent =
-                Math.max(0, level.next - xp) +
-                " XP to Level " +
-                (level.number + 1);
-
-
-            /* QUEST PROGRESS */
-
-            let questPercentage =
-                (completedQuests / 4) * 100;
-
-            document.getElementById("dailyProgress").style.width =
-                questPercentage + "%";
-
-            document.getElementById("progressBar").style.width =
-                questPercentage + "%";
-
-            document.getElementById("progressText").textContent =
-                Math.round(questPercentage) + "%";
-
-
-            document.getElementById("questStatus").textContent =
-                completedQuests + " / 4 complete";
-
-
-            /* LEVEL PROGRESS */
-
-            document.getElementById("levelProgressBar").style.width =
-                percentage + "%";
-
-            document.getElementById("levelProgressText").textContent =
-                Math.round(percentage) + "%";
-
-
-            /* BADGES */
-
-            if (completedQuests >= 1) {
-
-                document
-                    .getElementById("badgeFirst")
-                    .classList.remove("locked");
-
-            }
-
-
-            if (completedQuests >= 5) {
-
-                document
-                    .getElementById("badgeFive")
-                    .classList.remove("locked");
-
-            }
-
-
-            if (completedQuests >= 10) {
-
-                document
-                    .getElementById("badgeTen")
-                    .classList.remove("locked");
-
-            }
-
-
-            if (streak >= 7) {
-
-                document
-                    .getElementById("badgeStreak")
-                    .classList.remove("locked");
-
-            }
 
         }
 
-
-        /* ==================================
-           COMPLETE QUEST
-        ================================== */
-
-        function completeQuest(number, reward) {
-
-            if (completed[number]) {
-
-                showToast("You already completed this quest! ✅");
-
-                return;
-            }
+    };
 
 
-            completed[number] = true;
-
-            completedQuests++;
-
-            xp += reward;
-
-
-            let quest =
-                document.getElementById("quest" + number);
-
-            quest.classList.add("completed");
+    localStorage.setItem(
+        "studyQuestUser_" + username,
+        JSON.stringify(account)
+    );
 
 
-            let button =
-                quest.querySelector(".quest-button");
-
-            button.textContent = "Complete ✓";
-
-
-            updateScreen();
+    localStorage.setItem(
+        "studyQuestCurrentUser",
+        username
+    );
 
 
-            showToast("+" + reward + " XP earned! ⭐");
+    showToast("Account created! Welcome to Study Quest 🚀");
 
 
-            /* LEVEL UP MESSAGE */
+    loadAccount();
 
-            if (xp === 100 ||
-                xp === 200 ||
-                xp === 400 ||
-                xp === 700 ||
-                xp === 1100 ||
-                xp === 1600 ||
-                xp === 2250 ||
-                xp === 3000 ||
-                xp === 4000 ||
-                xp === 5000) {
+}
 
-                setTimeout(function() {
 
-                    showToast(
-                        "LEVEL UP! 🎉 You're now Level " +
-                        getLevel().number
-                    );
+/* =================================
+   LOGIN
+================================= */
 
-                }, 1000);
+function login() {
 
-            }
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+    const error =
+        document.getElementById("loginError");
+
+
+    error.style.display = "none";
+
+
+    const stored =
+        localStorage.getItem(
+            "studyQuestUser_" + username
+        );
+
+
+    if (!stored) {
+
+        error.innerText =
+            "Username or password is incorrect.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    const account =
+        JSON.parse(stored);
+
+
+    if (account.password !== password) {
+
+        error.innerText =
+            "Username or password is incorrect.";
+
+        error.style.display = "block";
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "studyQuestCurrentUser",
+        username
+    );
+
+
+    loadAccount();
+
+}
+
+
+/* =================================
+   LOAD ACCOUNT
+================================= */
+
+function loadAccount() {
+
+    const username =
+        localStorage.getItem(
+            "studyQuestCurrentUser"
+        );
+
+
+    if (!username) {
+
+        return;
+
+    }
+
+
+    const stored =
+        localStorage.getItem(
+            "studyQuestUser_" + username
+        );
+
+
+    if (!stored) {
+
+        return;
+
+    }
+
+
+    const account =
+        JSON.parse(stored);
+
+
+    /* Load game variables */
+
+    xp = account.xp;
+
+    streak = account.streak;
+
+    completedQuests =
+        account.completedQuests;
+
+    completed =
+        account.completed;
+
+
+    document.getElementById(
+        "playerName"
+    ).innerText = username;
+
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
+
+
+    updateScreen();
+
+}
+
+
+/* =================================
+   SAVE ACCOUNT
+================================= */
+
+function saveAccount() {
+
+    const username =
+        localStorage.getItem(
+            "studyQuestCurrentUser"
+        );
+
+
+    if (!username) return;
+
+
+    const account = {
+
+        username: username,
+
+        password:
+            JSON.parse(
+                localStorage.getItem(
+                    "studyQuestUser_" + username
+                )
+            ).password,
+
+        xp: xp,
+
+        streak: streak,
+
+        completedQuests:
+            completedQuests,
+
+        completed:
+            completed
+
+    };
+
+
+    localStorage.setItem(
+
+        "studyQuestUser_" + username,
+
+        JSON.stringify(account)
+
+    );
+
+}
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+function logout() {
+
+    localStorage.removeItem(
+        "studyQuestCurrentUser"
+    );
+
+
+    document.getElementById(
+        "app"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "flex";
+
+
+    showLogin();
+
+}
+
+
+/* =================================
+   GAME VARIABLES
+================================= */
+
+let xp = 0;
+
+let completedQuests = 0;
+
+let streak = 1;
+
+
+let completed = {
+
+    1: false,
+    2: false,
+    3: false,
+    4: false
+
+};
+
+
+/* =================================
+   LEVEL SYSTEM
+================================= */
+
+function getLevel() {
+
+    if (xp < 100)
+        return [1, "Beginner", 100];
+
+    if (xp < 200)
+        return [2, "Learner", 200];
+
+    if (xp < 400)
+        return [3, "Explorer", 400];
+
+    if (xp < 700)
+        return [4, "Improving", 700];
+
+    if (xp < 1100)
+        return [5, "Learner", 1100];
+
+    if (xp < 1600)
+        return [6, "Dedicated", 1600];
+
+    if (xp < 2250)
+        return [7, "Focused", 2250];
+
+    if (xp < 3000)
+        return [8, "Scholar", 3000];
+
+    if (xp < 4000)
+        return [9, "Expert", 4000];
+
+    if (xp < 5000)
+        return [10, "Legend", 5000];
+
+    return [11, "Study Master", 7500];
+
+}
+
+
+/* =================================
+   UPDATE SCREEN
+================================= */
+
+function updateScreen() {
+
+    const level =
+        getLevel();
+
+
+    document.getElementById(
+        "xpDisplay"
+    ).innerText = xp;
+
+
+    document.getElementById(
+        "xpText"
+    ).innerText = xp;
+
+
+    document.getElementById(
+        "streakDisplay"
+    ).innerText = streak;
+
+
+    document.getElementById(
+        "completedDisplay"
+    ).innerText = completedQuests;
+
+
+    document.getElementById(
+        "levelTitle"
+    ).innerText =
+        "Level " + level[0] +
+        " — " + level[1];
+
+
+    let previousXP = 0;
+
+
+    if (level[0] === 2)
+        previousXP = 100;
+
+    else if (level[0] === 3)
+        previousXP = 200;
+
+    else if (level[0] === 4)
+        previousXP = 400;
+
+    else if (level[0] === 5)
+        previousXP = 700;
+
+    else if (level[0] === 6)
+        previousXP = 1100;
+
+    else if (level[0] === 7)
+        previousXP = 1600;
+
+    else if (level[0] === 8)
+        previousXP = 2250;
+
+    else if (level[0] === 9)
+        previousXP = 3000;
+
+    else if (level[0] === 10)
+        previousXP = 4000;
+
+    else if (level[0] === 11)
+        previousXP = 5000;
+
+
+    const levelXP =
+        level[2] - previousXP;
+
+
+    const currentXP =
+        xp - previousXP;
+
+
+    let percentage =
+        (currentXP / levelXP) * 100;
+
+
+    if (percentage > 100)
+        percentage = 100;
+
+
+    if (percentage < 0)
+        percentage = 0;
+
+
+    document.getElementById(
+        "xpFill"
+    ).style.width =
+        percentage + "%";
+
+
+    if (level[0] < 11) {
+
+        document.getElementById(
+            "nextLevel"
+        ).innerText =
+            (level[2] - xp) +
+            " XP until Level " +
+            (level[0] + 1);
+
+    } else {
+
+        document.getElementById(
+            "nextLevel"
+        ).innerText =
+            "You've reached Study Master 👑";
+
+    }
+
+
+    /* Quest buttons */
+
+    for (let i = 1; i <= 4; i++) {
+
+        const button =
+            document.getElementById(
+                "questBtn" + i
+            );
+
+
+        if (completed[i]) {
+
+            button.innerText =
+                "Completed ✓";
+
+            button.classList.add(
+                "completed"
+            );
+
+            button.disabled = true;
 
         }
 
-
-        /* ==================================
-           TOAST
-        ================================== */
-
-        function showToast(message) {
-
-            let toast =
-                document.getElementById("toast");
-
-            toast.textContent = message;
-
-            toast.classList.add("show");
+    }
 
 
-            setTimeout(function() {
+    /* Badges */
 
-                toast.classList.remove("show");
-
-            }, 2500);
-
-        }
+    if (completedQuests >= 1)
+        document.getElementById("badge1")
+            .classList.add("unlocked");
 
 
-        /* ==================================
-           START
-        ================================== */
+    if (completedQuests >= 3)
+        document.getElementById("badge2")
+            .classList.add("unlocked");
 
-        updateScreen();
 
-    </script>
+    if (xp >= 200)
+        document.getElementById("badge3")
+            .classList.add("unlocked");
+
+
+    if (streak >= 7)
+        document.getElementById("badge4")
+            .classList.add("unlocked");
+
+
+    if (level[0] >= 5)
+        document.getElementById("badge5")
+            .classList.add("unlocked");
+
+
+    if (level[0] >= 11)
+        document.getElementById("badge6")
+            .classList.add("unlocked");
+
+
+    saveAccount();
+
+}
+
+
+/* =================================
+   COMPLETE QUEST
+================================= */
+
+function completeQuest(number, reward) {
+
+    if (completed[number])
+        return;
+
+
+    completed[number] = true;
+
+    completedQuests++;
+
+    xp += reward;
+
+
+    updateScreen();
+
+
+    showToast(
+        "+" + reward + " XP! Quest complete! 🎉"
+    );
+
+
+}
+
+
+/* =================================
+   PAGE NAVIGATION
+================================= */
+
+function showPage(pageID) {
+
+    const pages =
+        document.querySelectorAll(".page");
+
+
+    pages.forEach(page => {
+
+        page.classList.remove("active");
+
+    });
+
+
+    document.getElementById(
+        pageID
+    ).classList.add("active");
+
+}
+
+
+/* =================================
+   TOAST
+================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+
+    toast.innerText =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(() => {
+
+        toast.style.display =
+            "none";
+
+    }, 2500);
+
+}
+
+
+/* =================================
+   AUTO LOGIN
+================================= */
+
+window.onload = function() {
+
+    const currentUser =
+        localStorage.getItem(
+            "studyQuestCurrentUser"
+        );
+
+
+    if (currentUser) {
+
+        loadAccount();
+
+    }
+
+};
+
+</script>
 
 </body>
 </html>

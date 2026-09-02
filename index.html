@@ -1,1121 +1,1192 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Study Quest</title>
 
-
 <style>
-
-/* =========================================
-   GENERAL
-========================================= */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    background: #eef4ff;
-    color: #172554;
+:root{
+    --blue:#0757b8;
+    --blue2:#0b70df;
+    --dark:#063b80;
+    --light:#eef6ff;
+    --white:#ffffff;
+    --text:#17324d;
+    --muted:#6d7f91;
+    --border:#d8e6f5;
+    --green:#16a05d;
+    --red:#d94848;
+    --shadow:0 8px 25px rgba(8,60,120,.10);
 }
 
-button {
-    font-family: inherit;
+body{
+    background:#f4f8fc;
+    color:var(--text);
+    min-height:100vh;
 }
 
+/* =========================
+   AUTH
+========================= */
 
-/* =========================================
-   LOGO
-========================================= */
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    font-size: 21px;
-    font-weight: bold;
+#authPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(135deg,#063b80,#0b70df);
 }
 
-.logo-mark {
-    width: 38px;
-    height: 38px;
-
-    background: #3b82f6;
-    color: white;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 14px;
-    font-weight: 900;
+.auth-box{
+    background:white;
+    width:100%;
+    max-width:430px;
+    padding:35px;
+    border-radius:22px;
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
 }
 
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-.navbar {
-    height: 70px;
-
-    background: #102a56;
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 30px;
-
-    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-
-    position: sticky;
-    top: 0;
-
-    z-index: 100;
+.logo-big{
+    text-align:center;
+    margin-bottom:25px;
 }
 
-.nav-buttons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+.sq-logo{
+    width:58px;
+    height:58px;
+    background:var(--blue);
+    color:white;
+    border-radius:16px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:900;
+    box-shadow:0 8px 20px rgba(7,87,184,.25);
 }
 
-.nav-buttons button {
-    border: none;
-
-    background: transparent;
-    color: #dbeafe;
-
-    padding: 10px 13px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 14px;
+.logo-big h1{
+    margin-top:12px;
+    color:var(--dark);
 }
 
-.nav-buttons button:hover {
-    background: #1d4275;
-    color: white;
+.logo-big p{
+    color:var(--muted);
+    margin-top:5px;
 }
 
-.logout-btn {
-    background: #ef4444 !important;
-    color: white !important;
+.auth-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
 }
 
-
-/* =========================================
-   PAGES
-========================================= */
-
-.page {
-    display: none;
+.auth-tabs button{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    cursor:pointer;
+    background:#edf4fb;
+    color:var(--text);
+    font-weight:bold;
 }
 
-.page.active {
-    display: block;
+.auth-tabs button.active{
+    background:var(--blue);
+    color:white;
 }
 
-.container {
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 35px 25px;
+.form-group{
+    margin-bottom:15px;
 }
 
-
-/* =========================================
-   AUTHENTICATION
-========================================= */
-
-#authPage {
-    min-height: 100vh;
-
-    background: linear-gradient(
-        135deg,
-        #102a56,
-        #173f7a
-    );
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    font-size:14px;
 }
 
-.auth-box {
-    width: 100%;
-    max-width: 420px;
-
-    background: white;
-
-    padding: 35px;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,0.25);
+.form-group input{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
 }
 
-.auth-logo {
-    text-align: center;
-
-    margin-bottom: 25px;
+.form-group input:focus{
+    border-color:var(--blue2);
 }
 
-.auth-logo .logo-mark {
-    width: 58px;
-    height: 58px;
-
-    margin: auto;
-
-    font-size: 19px;
+.primary-btn{
+    width:100%;
+    border:none;
+    background:var(--blue);
+    color:white;
+    padding:14px;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
 }
 
-.auth-logo h1 {
-    margin-top: 13px;
-
-    color: #102a56;
+.primary-btn:hover{
+    background:var(--dark);
 }
 
-.auth-logo p {
-    margin-top: 6px;
-
-    color: #64748b;
+.auth-note{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:15px;
+    line-height:1.5;
 }
 
-.auth-box h2 {
-    color: #102a56;
+/* =========================
+   APP
+========================= */
 
-    margin-bottom: 20px;
+#app{
+    display:none;
 }
 
-.input-group {
-    margin-bottom: 16px;
+.navbar{
+    height:70px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    padding:0 22px;
+    gap:25px;
+    position:sticky;
+    top:0;
+    z-index:50;
 }
 
-.input-group label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    color: #334155;
+.nav-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:900;
+    color:var(--dark);
+    font-size:19px;
+    white-space:nowrap;
 }
 
-.input-group input {
-    width: 100%;
-
-    padding: 13px;
-
-    border: 2px solid #dbe4f0;
-
-    border-radius: 10px;
-
-    outline: none;
-
-    font-size: 15px;
+.nav-logo .sq-logo{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    font-size:15px;
 }
 
-.input-group input:focus {
-    border-color: #3b82f6;
+.nav-links{
+    display:flex;
+    gap:5px;
+    overflow-x:auto;
 }
 
-.primary-btn {
-    width: 100%;
-
-    background: #2563eb;
-
-    color: white;
-
-    border: none;
-
-    padding: 14px;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
+.nav-links button{
+    border:none;
+    background:transparent;
+    color:#50677d;
+    padding:10px 12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    white-space:nowrap;
 }
 
-.primary-btn:hover {
-    background: #1d4ed8;
+.nav-links button:hover,
+.nav-links button.active{
+    background:#e9f3ff;
+    color:var(--blue);
 }
 
-.switch-auth {
-    text-align: center;
-
-    margin-top: 18px;
-
-    color: #64748b;
-
-    font-size: 14px;
+.nav-user{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.switch-auth button {
-    border: none;
-
-    background: none;
-
-    color: #2563eb;
-
-    font-weight: bold;
-
-    cursor: pointer;
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--blue);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
 }
 
-.error-message {
-    background: #fee2e2;
-
-    color: #b91c1c;
-
-    padding: 10px;
-
-    border-radius: 8px;
-
-    margin-bottom: 15px;
-
-    display: none;
-
-    font-size: 14px;
+.logout-btn{
+    border:none;
+    background:#edf4fb;
+    color:var(--dark);
+    padding:9px 12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
+/* =========================
+   LAYOUT
+========================= */
 
-/* =========================================
-   HERO
-========================================= */
-
-.hero {
-    margin-bottom: 30px;
+.layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 300px;
+    gap:20px;
+    max-width:1500px;
+    margin:auto;
+    padding:25px;
 }
 
-.hero h1 {
-    font-size: 32px;
-
-    color: #102a56;
+.main-content{
+    min-width:0;
 }
 
-.hero p {
-    color: #64748b;
-
-    margin-top: 8px;
+.sidebar{
+    position:sticky;
+    top:95px;
+    height:fit-content;
 }
 
+.page{
+    display:none;
+}
 
-/* =========================================
+.page.active{
+    display:block;
+}
+
+/* =========================
+   HEADERS
+========================= */
+
+.page-title{
+    margin-bottom:20px;
+}
+
+.page-title h1{
+    font-size:28px;
+    color:var(--dark);
+}
+
+.page-title p{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* =========================
    CARDS
-========================================= */
+========================= */
 
-.card,
-.big-card,
-.quest,
-.flashcard {
-    background: white;
-
-    border: 1px solid #dbe7f5;
-
-    border-radius: 16px;
-
-    box-shadow:
-        0 5px 18px rgba(15,23,42,0.06);
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    box-shadow:var(--shadow);
 }
 
-.card {
-    padding: 22px;
+.card h2{
+    color:var(--dark);
+    margin-bottom:8px;
 }
 
-.big-card {
-    padding: 30px;
+.card h3{
+    color:var(--dark);
 }
 
-.big-card h1 {
-    color: #102a56;
-
-    margin-bottom: 10px;
+.grid{
+    display:grid;
+    gap:15px;
 }
 
-.big-card p {
-    color: #64748b;
-
-    line-height: 1.6;
+.grid-2{
+    grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
+.grid-3{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
 
-/* =========================================
+.grid-4{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+/* =========================
    STATS
-========================================= */
+========================= */
 
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 18px;
-
-    margin-bottom: 25px;
+.stat-card{
+    background:white;
+    border:1px solid var(--border);
+    padding:18px;
+    border-radius:15px;
 }
 
-.stat-title {
-    color: #64748b;
-
-    font-size: 14px;
+.stat-label{
+    color:var(--muted);
+    font-size:13px;
+    font-weight:bold;
 }
 
-.stat-number {
-    font-size: 28px;
-
-    font-weight: bold;
-
-    margin-top: 7px;
-
-    color: #102a56;
+.stat-value{
+    font-size:27px;
+    color:var(--dark);
+    font-weight:900;
+    margin-top:5px;
 }
 
+.stat-icon{
+    font-size:24px;
+    margin-bottom:7px;
+}
 
-/* =========================================
+/* =========================
    XP
-========================================= */
+========================= */
 
-.xp-card {
-    margin-bottom: 30px;
+.level-box{
+    margin-top:20px;
+    background:linear-gradient(135deg,#063b80,#0b70df);
+    color:white;
+    border-radius:18px;
+    padding:23px;
 }
 
-.xp-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    margin-bottom: 10px;
+.level-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:12px;
 }
 
-.xp-title {
-    font-weight: bold;
-
-    color: #102a56;
+.xp-track{
+    height:13px;
+    background:rgba(255,255,255,.25);
+    border-radius:99px;
+    overflow:hidden;
 }
 
-.xp-number {
-    color: #2563eb;
-
-    font-weight: bold;
+.xp-fill{
+    height:100%;
+    width:0%;
+    background:white;
+    border-radius:99px;
+    transition:.4s;
 }
 
-.xp-bar {
-    height: 13px;
-
-    background: #dbeafe;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-.xp-fill {
-    height: 100%;
-
-    width: 0%;
-
-    background: #2563eb;
-
-    border-radius: 20px;
-
-    transition: width 0.4s ease;
-}
-
-.next-level {
-    margin-top: 9px;
-
-    color: #64748b;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
+/* =========================
    QUESTS
-========================================= */
+========================= */
 
-.section-title {
-    color: #102a56;
-
-    margin-bottom: 15px;
+.quest-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:18px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:15px;
+    margin-bottom:12px;
 }
 
-.quest-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 18px;
+.quest-icon{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+    background:#e9f3ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    flex-shrink:0;
 }
 
-.quest {
-    padding: 22px;
+.quest-info{
+    flex:1;
 }
 
-.quest h3 {
-    color: #102a56;
-
-    margin-bottom: 8px;
+.quest-info h3{
+    color:var(--dark);
+    margin-bottom:4px;
 }
 
-.quest p {
-    color: #64748b;
-
-    margin-bottom: 15px;
-
-    line-height: 1.5;
+.quest-info p{
+    color:var(--muted);
+    font-size:13px;
 }
 
-.quest button {
-    border: none;
-
-    background: #2563eb;
-
-    color: white;
-
-    padding: 10px 15px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-weight: bold;
+.quest-reward{
+    font-weight:bold;
+    color:var(--blue);
+    margin-right:8px;
 }
 
-.quest button:hover {
-    background: #1d4ed8;
+.small-btn{
+    border:none;
+    background:var(--blue);
+    color:white;
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.quest button.completed {
-    background: #16a34a;
+.small-btn:hover{
+    background:var(--dark);
 }
 
+.small-btn.secondary{
+    background:#e9f3ff;
+    color:var(--blue);
+}
 
-/* =========================================
+.small-btn.green{
+    background:var(--green);
+}
+
+.small-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.completed{
+    opacity:.65;
+}
+
+.completed .small-btn{
+    background:#dfe8ef;
+    color:#687a89;
+}
+
+/* =========================
    BADGES
-========================================= */
+========================= */
 
-.badges {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
+.badge{
+    text-align:center;
+    padding:18px 10px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:white;
 }
 
-.badge {
-    background: white;
-
-    border: 1px solid #dbe7f5;
-
-    border-radius: 14px;
-
-    padding: 18px;
-
-    text-align: center;
-
-    opacity: 0.45;
+.badge-icon{
+    font-size:30px;
+    margin-bottom:7px;
 }
 
-.badge.unlocked {
-    opacity: 1;
-
-    border-color: #60a5fa;
+.badge.locked{
+    filter:grayscale(1);
+    opacity:.45;
 }
 
-.badge-icon {
-    font-size: 30px;
-
-    margin-bottom: 8px;
-}
-
-.badge h3 {
-    font-size: 15px;
-
-    color: #102a56;
-}
-
-.badge p {
-    font-size: 12px;
-
-    color: #64748b;
-
-    margin-top: 5px;
-}
-
-
-/* =========================================
+/* =========================
    FLASHCARDS
-========================================= */
+========================= */
 
-.flashcard-create {
-    margin-bottom: 30px;
+.flashcard-create{
+    margin-bottom:20px;
 }
 
-#flashcardList {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 18px;
+.flashcard-create input,
+.flashcard-create textarea,
+.room-form input,
+.room-form select{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:10px;
+    outline:none;
 }
 
-.flashcard {
-    padding: 22px;
+.flashcard-create textarea{
+    resize:vertical;
+    min-height:90px;
 }
 
-.flashcard-question {
-    font-size: 18px;
-
-    font-weight: bold;
-
-    color: #102a56;
-
-    margin-bottom: 12px;
+.flashcard{
+    min-height:230px;
+    background:linear-gradient(135deg,#063b80,#0b70df);
+    color:white;
+    border-radius:18px;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    cursor:pointer;
 }
 
-.flashcard-answer {
-    color: #64748b;
-
-    margin-bottom: 15px;
-
-    line-height: 1.5;
+.flashcard .fc-label{
+    font-size:13px;
+    opacity:.8;
+    margin-bottom:12px;
 }
 
-.flashcard-actions {
-    display: flex;
-
-    gap: 8px;
+.flashcard .fc-text{
+    font-size:25px;
+    font-weight:bold;
+    line-height:1.35;
 }
 
-.flashcard-actions button {
-    border: none;
-
-    padding: 9px 13px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-weight: bold;
+.flashcard-controls{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
 }
 
-.delete-card {
-    background: #fee2e2;
-
-    color: #b91c1c;
+.flashcard-list-item{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:15px;
+    margin-top:10px;
 }
 
-.delete-card:hover {
-    background: #fecaca;
+.flashcard-list-item strong{
+    color:var(--dark);
 }
 
+.flashcard-list-item p{
+    color:var(--muted);
+    margin-top:5px;
+}
 
-/* =========================================
+/* =========================
    TIMER
-========================================= */
+========================= */
 
-.timer-page {
-    min-height:
-        calc(100vh - 70px);
-
-    background: #eef4ff;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
+.timer-shell{
+    min-height:600px;
+    border-radius:22px;
+    background:white;
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow:var(--shadow);
 }
 
-.timer-type {
-    display: flex;
-
-    gap: 10px;
-
-    margin-bottom: 35px;
+.timer-mode{
+    display:flex;
+    gap:8px;
+    margin-bottom:30px;
 }
 
-.timer-type button {
-    border: none;
-
-    background: white;
-
-    color: #102a56;
-
-    padding: 10px 18px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-weight: bold;
+.timer-mode button{
+    border:none;
+    padding:11px 16px;
+    border-radius:10px;
+    background:#eaf3fc;
+    color:var(--dark);
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.timer-type button:hover {
-    background: #dbeafe;
+.timer-mode button.active{
+    background:var(--blue);
+    color:white;
 }
 
-#timerLabel {
-    color: #2563eb;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    letter-spacing: 3px;
-
-    margin-bottom: 10px;
+.timer-number{
+    font-size:105px;
+    font-weight:900;
+    color:var(--dark);
+    letter-spacing:2px;
+    line-height:1;
 }
 
-#timerDisplay {
-    font-size:
-        clamp(80px, 18vw, 180px);
-
-    font-weight: bold;
-
-    color: #102a56;
-
-    line-height: 1;
-
-    margin:
-        15px 0 30px;
+.timer-label{
+    color:var(--muted);
+    margin-top:15px;
+    font-size:16px;
 }
 
-.timer-buttons {
-    display: flex;
-
-    gap: 12px;
+.timer-controls{
+    display:flex;
+    gap:10px;
+    margin-top:30px;
 }
 
-.timer-buttons button {
-    border: none;
-
-    background: #2563eb;
-
-    color: white;
-
-    padding: 12px 22px;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
+.timer-controls button{
+    border:none;
+    padding:13px 22px;
+    border-radius:11px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
-.timer-buttons button:hover {
-    background: #1d4ed8;
+.timer-start{
+    background:var(--blue);
+    color:white;
 }
 
-#timerStatus {
-    margin-top: 20px;
-
-    color: #64748b;
-
-    font-size: 14px;
+.timer-reset{
+    background:#eaf1f7;
+    color:var(--dark);
 }
 
+/* =========================
+   SIDEBAR
+========================= */
 
-/* =========================================
-   PROGRESS
-========================================= */
-
-.progress-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 20px;
+.sidebar-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:var(--shadow);
 }
 
-.progress-stat {
-    text-align: center;
-
-    padding: 25px;
+.sidebar-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:13px;
 }
 
-.progress-stat h2 {
-    font-size: 35px;
-
-    color: #2563eb;
-
-    margin-bottom: 5px;
+.sidebar-title h3{
+    color:var(--dark);
 }
 
-.progress-stat p {
-    color: #64748b;
+.icon-btn{
+    border:none;
+    background:#e9f3ff;
+    color:var(--blue);
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
 }
 
+.friend{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 0;
+    border-bottom:1px solid #edf2f6;
+}
 
-/* =========================================
+.friend:last-child{
+    border-bottom:none;
+}
+
+.friend-avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#dcecff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    color:var(--dark);
+}
+
+.friend-info{
+    flex:1;
+}
+
+.friend-name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.friend-status{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.online-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#19a964;
+    display:inline-block;
+}
+
+.offline-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#aab5bf;
+    display:inline-block;
+}
+
+.room-mini{
+    padding:12px;
+    background:#f1f7fd;
+    border-radius:11px;
+    margin-top:9px;
+}
+
+.room-mini strong{
+    color:var(--dark);
+}
+
+.room-mini p{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+/* =========================
+   FRIENDS
+========================= */
+
+.friend-search{
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.friend-search input{
+    flex:1;
+    padding:11px;
+    border:1px solid var(--border);
+    border-radius:9px;
+}
+
+.friend-result{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid var(--border);
+    padding:12px;
+    border-radius:11px;
+    margin-top:8px;
+}
+
+/* =========================
+   ROOMS
+========================= */
+
+.room-code{
+    font-size:28px;
+    letter-spacing:5px;
+    font-weight:900;
+    color:var(--blue);
+    background:#edf5fd;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    margin:15px 0;
+}
+
+.room-actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.room-actions button{
+    border:none;
+    padding:12px 16px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.live-room{
+    background:#071e38;
+    color:white;
+    min-height:500px;
+    border-radius:20px;
+    padding:22px;
+}
+
+.live-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.live-dot{
+    color:#ff5555;
+    font-weight:bold;
+}
+
+.live-timer{
+    font-size:52px;
+    font-weight:900;
+    text-align:center;
+    margin:40px 0;
+}
+
+.participants{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.participant{
+    background:#102e4c;
+    padding:9px 12px;
+    border-radius:20px;
+}
+
+.reactions{
+    display:flex;
+    gap:8px;
+    margin-top:20px;
+}
+
+.reactions button{
+    border:none;
+    background:#173d61;
+    color:white;
+    padding:10px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+/* =========================
+   TUTORING
+========================= */
+
+.feature-card{
+    padding:20px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+.feature-card .feature-icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.feature-card h3{
+    margin-bottom:6px;
+}
+
+.feature-card p{
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+}
+
+.tutor-board{
+    min-height:260px;
+    border:2px dashed #bdd4eb;
+    background:#fbfdff;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted);
+    text-align:center;
+}
+
+.poll-option{
+    margin-top:8px;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.poll-option:hover{
+    background:#edf5fd;
+}
+
+/* =========================
    TOAST
-========================================= */
+========================= */
 
-#toast {
-    position: fixed;
-
-    bottom: 25px;
-
-    right: 25px;
-
-    background: #102a56;
-
-    color: white;
-
-    padding: 14px 20px;
-
-    border-radius: 10px;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,0.2);
-
-    display: none;
-
-    z-index: 1000;
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:#063b80;
+    color:white;
+    padding:13px 20px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transition:.3s;
+    z-index:100;
+    opacity:0;
+    font-weight:bold;
 }
 
+.toast.show{
+    transform:translateX(-50%) translateY(0);
+    opacity:1;
+}
 
-/* =========================================
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(3,30,60,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:80;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.modal-box h2{
+    color:var(--dark);
+    margin-bottom:15px;
+}
+
+.modal-close{
+    float:right;
+    border:none;
+    background:#edf4fb;
+    padding:7px 10px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* =========================
    MOBILE
-========================================= */
+========================= */
 
-@media (max-width: 800px) {
-
-    .navbar {
-        padding: 0 15px;
+@media(max-width:1000px){
+    .layout{
+        grid-template-columns:1fr;
     }
 
-    .nav-buttons {
-        display: none;
+    .sidebar{
+        position:static;
+        display:grid;
+        grid-template-columns:repeat(2,1fr);
+        gap:15px;
     }
 
-    .stats {
-        grid-template-columns: 1fr;
+    .sidebar-card{
+        margin-bottom:0;
     }
-
-    .quest-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .badges {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    #flashcardList {
-        grid-template-columns: 1fr;
-    }
-
-    .progress-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hero h1 {
-        font-size: 26px;
-    }
-
 }
 
+@media(max-width:700px){
+    .navbar{
+        padding:0 12px;
+        gap:10px;
+    }
+
+    .nav-logo span:last-child{
+        display:none;
+    }
+
+    .nav-user .logout-btn{
+        display:none;
+    }
+
+    .layout{
+        padding:15px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        grid-template-columns:1fr;
+    }
+
+    .timer-number{
+        font-size:70px;
+    }
+
+    .timer-shell{
+        min-height:500px;
+    }
+
+    .quest-card{
+        align-items:flex-start;
+        flex-wrap:wrap;
+    }
+
+    .quest-info{
+        min-width:150px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =================================================
-     LOGIN / SIGN UP
-================================================= -->
+<!-- =========================
+     LOGIN / SIGNUP
+========================= -->
 
 <div id="authPage">
 
     <div class="auth-box">
 
-
-        <div class="auth-logo">
-
-            <div class="logo-mark">
-                SQ
-            </div>
-
+        <div class="logo-big">
+            <div class="sq-logo">SQ</div>
             <h1>Study Quest</h1>
-
-            <p>
-                Learn. Level up. Improve.
-            </p>
-
+            <p>Learn. Quest. Level up.</p>
         </div>
 
+        <div class="auth-tabs">
+            <button id="loginTab" class="active" onclick="showAuth('login')">
+                Login
+            </button>
 
-        <!-- LOGIN -->
+            <button id="signupTab" onclick="showAuth('signup')">
+                Sign Up
+            </button>
+        </div>
 
         <div id="loginForm">
 
-            <h2>
-                Welcome back 👋
-            </h2>
-
-            <div
-                id="loginError"
-                class="error-message">
+            <div class="form-group">
+                <label>Username</label>
+                <input id="loginUsername" type="text" placeholder="Enter username">
             </div>
 
-
-            <div class="input-group">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="loginUsername"
-                    placeholder="Enter your username">
-
+            <div class="form-group">
+                <label>Password</label>
+                <input id="loginPassword" type="password" placeholder="Enter password">
             </div>
 
-
-            <div class="input-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="Enter your password">
-
-            </div>
-
-
-            <button
-                class="primary-btn"
-                onclick="login()">
-
-                Log In
-
+            <button class="primary-btn" onclick="login()">
+                Login
             </button>
-
-
-            <div class="switch-auth">
-
-                Don't have an account?
-
-                <button
-                    onclick="showSignup()">
-
-                    Sign Up
-
-                </button>
-
-            </div>
 
         </div>
 
+        <div id="signupForm" style="display:none;">
 
-        <!-- SIGN UP -->
-
-        <div
-            id="signupForm"
-            style="display:none;">
-
-            <h2>
-                Create your account 🚀
-            </h2>
-
-
-            <div
-                id="signupError"
-                class="error-message">
+            <div class="form-group">
+                <label>Username</label>
+                <input id="signupUsername" type="text" placeholder="Choose a username">
             </div>
 
-
-            <div class="input-group">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    type="text"
-                    id="signupUsername"
-                    placeholder="Choose a username">
-
+            <div class="form-group">
+                <label>Password</label>
+                <input id="signupPassword" type="password" placeholder="Choose a password">
             </div>
 
-
-            <div class="input-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="signupPassword"
-                    placeholder="Create a password">
-
-            </div>
-
-
-            <div class="input-group">
-
-                <label>
-                    Confirm Password
-                </label>
-
-                <input
-                    type="password"
-                    id="signupConfirm"
-                    placeholder="Confirm your password">
-
-            </div>
-
-
-            <button
-                class="primary-btn"
-                onclick="signup()">
-
+            <button class="primary-btn" onclick="signup()">
                 Create Account
-
             </button>
 
-
-            <div class="switch-auth">
-
-                Already have an account?
-
-                <button
-                    onclick="showLogin()">
-
-                    Log In
-
-                </button>
-
-            </div>
-
         </div>
+
+        <p class="auth-note">
+            This is a prototype account system for the website.
+            Do not use a real password here. A real public version
+            should use secure authentication and a proper database.
+        </p>
 
     </div>
 
 </div>
 
 
-
-<!-- =================================================
+<!-- =========================
      MAIN APP
-================================================= -->
+========================= -->
 
-<div
-    id="app"
-    style="display:none;">
-
-
-    <!-- NAVBAR -->
+<div id="app">
 
     <nav class="navbar">
 
+        <div class="nav-logo">
+            <div class="sq-logo">SQ</div>
+            <span>Study Quest</span>
+        </div>
 
-        <div class="logo">
+        <div class="nav-links">
 
-            <div class="logo-mark">
-                SQ
-            </div>
+            <button class="nav-btn active" onclick="showPage('dashboard',this)">
+                🏠 Dashboard
+            </button>
 
-            Study Quest
+            <button class="nav-btn" onclick="showPage('quests',this)">
+                🎯 Quests
+            </button>
+
+            <button class="nav-btn" onclick="showPage('flashcards',this)">
+                🃏 My Flashcards
+            </button>
+
+            <button class="nav-btn" onclick="showPage('timer',this)">
+                ⏱️ Focus
+            </button>
+
+            <button class="nav-btn" onclick="showPage('rooms',this)">
+                👥 Study Rooms
+            </button>
+
+            <button class="nav-btn" onclick="showPage('tutoring',this)">
+                🎓 Live Tutoring
+            </button>
+
+            <button class="nav-btn" onclick="showPage('learn',this)">
+                📚 Learn
+            </button>
+
+            <button class="nav-btn" onclick="showPage('progress',this)">
+                📈 Progress
+            </button>
 
         </div>
 
+        <div class="nav-user">
 
-        <div class="nav-buttons">
+            <div class="avatar" id="userAvatar">
+                U
+            </div>
 
-            <button
-                onclick="showPage('dashboard')">
+            <span id="usernameDisplay">
+                User
+            </span>
 
-                Dashboard
-
-            </button>
-
-
-            <button
-                onclick="showPage('quests')">
-
-                Quests
-
-            </button>
-
-
-            <button
-                onclick="showPage('flashcards')">
-
-                My Flashcards
-
-            </button>
-
-
-            <button
-                onclick="showPage('learn')">
-
-                Learn
-
-            </button>
-
-
-            <button
-                onclick="showPage('progress')">
-
-                Progress
-
-            </button>
-
-
-            <button
-                class="logout-btn"
-                onclick="logout()">
-
+            <button class="logout-btn" onclick="logout()">
                 Log Out
-
             </button>
 
         </div>
@@ -1123,1700 +1194,2130 @@ button {
     </nav>
 
 
+    <div class="layout">
 
-    <!-- =================================================
-         DASHBOARD
-    ================================================= -->
-
-    <section
-        id="dashboard"
-        class="page active">
+        <main class="main-content">
 
 
-        <div class="container">
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section id="dashboard" class="page active">
+
+    <div class="page-title">
+        <h1>Welcome to Study Quest 👋</h1>
+        <p>Learn. Level up. Improve.</p>
+    </div>
+
+    <div class="grid grid-4">
+
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-label">TOTAL XP</div>
+            <div class="stat-value" id="totalXP">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-label">STREAK</div>
+            <div class="stat-value" id="streakDisplay">1</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-label">QUESTS COMPLETE</div>
+            <div class="stat-value" id="questDisplay">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-label">LEVEL</div>
+            <div class="stat-value" id="levelDisplay">1</div>
+        </div>
+
+    </div>
 
 
-            <div class="hero">
+    <div class="level-box">
 
-                <h1>
+        <div class="level-top">
 
-                    Welcome to Study Quest,
-                    <span id="playerName"></span>
-                    👋
+            <div>
+                <strong id="levelName">
+                    Beginner
+                </strong>
 
-                </h1>
+                <div style="margin-top:4px;font-size:13px;opacity:.8;">
+                    Study Quest Level
+                </div>
+            </div>
 
-                <p>
-                    Learn. Level up. Improve.
+            <strong id="levelXP">
+                0 / 100 XP
+            </strong>
+
+        </div>
+
+        <div class="xp-track">
+            <div class="xp-fill" id="xpFill"></div>
+        </div>
+
+    </div>
+
+
+    <div style="margin-top:25px;">
+
+        <div class="page-title">
+            <h1 style="font-size:22px;">
+                🎯 Today's Quests
+            </h1>
+
+            <p>
+                Complete quests to earn XP.
+            </p>
+        </div>
+
+        <div id="dashboardQuests"></div>
+
+    </div>
+
+
+    <div style="margin-top:25px;">
+
+        <div class="page-title">
+            <h1 style="font-size:22px;">
+                🏅 Badges
+            </h1>
+        </div>
+
+        <div class="grid grid-3" id="badgeGrid"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QUESTS
+========================= -->
+
+<section id="quests" class="page">
+
+    <div class="page-title">
+        <h1>🎯 Quests</h1>
+        <p>Your daily Study Quest challenges.</p>
+    </div>
+
+    <div class="card">
+
+        <h2>Daily Quest Board</h2>
+
+        <p style="color:var(--muted);margin-bottom:20px;">
+            Complete activities to unlock your XP rewards.
+        </p>
+
+        <div id="questPageList"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FLASHCARDS
+========================= -->
+
+<section id="flashcards" class="page">
+
+    <div class="page-title">
+        <h1>🃏 My Flashcards</h1>
+        <p>Create cards, revise them, then complete your Flashcard Quest.</p>
+    </div>
+
+
+    <div class="card flashcard-create">
+
+        <h2>Create a Flashcard</h2>
+
+        <input
+            id="cardQuestion"
+            placeholder="Question / Front of card"
+        >
+
+        <textarea
+            id="cardAnswer"
+            placeholder="Answer / Back of card"
+        ></textarea>
+
+        <button class="small-btn" onclick="addFlashcard()">
+            ➕ Add Flashcard
+        </button>
+
+    </div>
+
+
+    <div id="flashcardQuestArea"></div>
+
+
+    <div class="card" style="margin-top:20px;">
+
+        <h2>My Saved Cards</h2>
+
+        <div id="savedCards"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TIMER
+========================= -->
+
+<section id="timer" class="page">
+
+    <div class="page-title">
+        <h1>⏱️ Focus Session</h1>
+        <p>Finish the timer to unlock your Focus Quest XP.</p>
+    </div>
+
+
+    <div class="timer-shell">
+
+        <div class="timer-mode">
+
+            <button
+                id="pomodoroBtn"
+                class="active"
+                onclick="setTimerMode('pomodoro')"
+            >
+                🍅 Pomodoro
+            </button>
+
+            <button
+                id="normalBtn"
+                onclick="setTimerMode('normal')"
+            >
+                ⏱️ Normal
+            </button>
+
+        </div>
+
+
+        <div class="timer-number" id="timerDisplay">
+            25:00
+        </div>
+
+        <div class="timer-label" id="timerLabel">
+            Study for 25 minutes
+        </div>
+
+
+        <div class="timer-controls">
+
+            <button
+                class="timer-start"
+                id="timerStartButton"
+                onclick="toggleTimer()"
+            >
+                Start
+            </button>
+
+            <button
+                class="timer-reset"
+                onclick="resetTimer()"
+            >
+                Reset
+            </button>
+
+        </div>
+
+        <div
+            id="timerReward"
+            style="margin-top:25px;color:var(--green);font-weight:bold;"
+        ></div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STUDY ROOMS
+========================= -->
+
+<section id="rooms" class="page">
+
+    <div class="page-title">
+        <h1>👥 Study Rooms</h1>
+        <p>Study together with your friends.</p>
+    </div>
+
+
+    <div class="grid grid-2">
+
+        <div class="card">
+
+            <h2>🏠 Create a Friend Room</h2>
+
+            <p style="color:var(--muted);margin-bottom:15px;">
+                Create a room and invite your friends with a code.
+            </p>
+
+            <div class="room-form">
+
+                <input
+                    id="roomName"
+                    placeholder="Room name"
+                >
+
+                <select id="roomSubject">
+
+                    <option>General Study</option>
+                    <option>Maths</option>
+                    <option>English</option>
+                    <option>Science</option>
+                    <option>History</option>
+                    <option>Geography</option>
+                    <option>Spanish</option>
+                    <option>Computing</option>
+
+                </select>
+
+                <input
+                    id="roomGoal"
+                    placeholder="Study goal"
+                >
+
+            </div>
+
+            <button class="small-btn" onclick="createRoom()">
+                ➕ Create Room
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>🔑 Join a Room</h2>
+
+            <p style="color:var(--muted);margin-bottom:15px;">
+                Enter your friend's room code.
+            </p>
+
+            <input
+                id="joinCode"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;"
+                placeholder="Example: SQ4821"
+            >
+
+            <button
+                class="small-btn"
+                style="margin-top:10px;"
+                onclick="joinRoom()"
+            >
+                Join Room
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="roomArea" style="margin-top:20px;"></div>
+
+</section>
+
+
+<!-- =========================
+     LIVE TUTORING
+========================= -->
+
+<section id="tutoring" class="page">
+
+    <div class="page-title">
+        <h1>🎓 Live Tutoring</h1>
+        <p>Interactive lessons designed to make learning more engaging.</p>
+    </div>
+
+
+    <div class="grid grid-3">
+
+        <div class="feature-card">
+            <div class="feature-icon">🖥️</div>
+            <h3>Screen Sharing</h3>
+            <p>
+                Tutors can share worksheets, presentations,
+                examples and lesson material.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📝</div>
+            <h3>Digital Whiteboard</h3>
+            <p>
+                Work through equations, diagrams and explanations
+                together.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">❓</div>
+            <h3>Questions</h3>
+            <p>
+                Students can submit questions while the lesson is running.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Polls</h3>
+            <p>
+                Tutors can quickly check whether students understand
+                the lesson.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Live Quizzes</h3>
+            <p>
+                Everyone answers questions together and can earn
+                Study Quest XP.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>Moderated Q&A</h3>
+            <p>
+                Questions can be reviewed before appearing in the
+                lesson.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:20px;">
+
+        <h2>📝 Digital Whiteboard</h2>
+
+        <div class="tutor-board">
+            <div>
+                <div style="font-size:40px;">📝</div>
+                <strong>Whiteboard Area</strong>
+                <p style="margin-top:5px;">
+                    Interactive whiteboard coming to the live version.
                 </p>
+            </div>
+        </div>
 
+    </div>
+
+
+    <div class="grid grid-2" style="margin-top:20px;">
+
+        <div class="card">
+
+            <h2>📊 Example Poll</h2>
+
+            <p style="margin-bottom:12px;">
+                What is 12 × 5?
+            </p>
+
+            <div
+                class="poll-option"
+                onclick="votePoll(this)"
+            >
+                A) 50
             </div>
 
-
-            <!-- STATS -->
-
-            <div class="stats">
-
-
-                <div class="card">
-
-                    <div class="stat-title">
-                        Total XP
-                    </div>
-
-                    <div
-                        class="stat-number"
-                        id="xpDisplay">
-
-                        0
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="stat-title">
-                        Current Streak
-                    </div>
-
-                    <div class="stat-number">
-
-                        🔥
-                        <span id="streakDisplay">
-                            1
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="stat-title">
-                        Quests Complete
-                    </div>
-
-                    <div
-                        class="stat-number"
-                        id="completedDisplay">
-
-                        0
-
-                    </div>
-
-                </div>
-
+            <div
+                class="poll-option"
+                onclick="votePoll(this)"
+            >
+                B) 60
             </div>
 
-
-
-            <!-- XP -->
-
-            <div class="card xp-card">
-
-
-                <div class="xp-top">
-
-                    <div
-                        class="xp-title"
-                        id="levelTitle">
-
-                        Level 1 — Beginner
-
-                    </div>
-
-
-                    <div class="xp-number">
-
-                        <span id="xpText">
-                            0
-                        </span>
-
-                        XP
-
-                    </div>
-
-                </div>
-
-
-                <div class="xp-bar">
-
-                    <div
-                        id="xpFill"
-                        class="xp-fill">
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="next-level"
-                    id="nextLevel">
-
-                    100 XP until Level 2
-
-                </div>
-
-            </div>
-
-
-
-            <!-- QUESTS -->
-
-            <h2 class="section-title">
-
-                Today's Quests ⚔️
-
-            </h2>
-
-
-            <div class="quest-grid">
-
-
-                <!-- MEMORY -->
-
-                <div class="quest">
-
-                    <h3>
-                        🧠 Memory Challenge
-                    </h3>
-
-                    <p>
-                        Learn and recall 5 facts.
-                    </p>
-
-                    <button
-                        id="questBtn1"
-                        onclick="completeQuest(1,50)">
-
-                        Claim +50 XP
-
-                    </button>
-
-                </div>
-
-
-                <!-- QUESTIONS -->
-
-                <div class="quest">
-
-                    <h3>
-                        📝 Practice Questions
-                    </h3>
-
-                    <p>
-                        Complete 10 practice questions.
-                    </p>
-
-                    <button
-                        id="questBtn2"
-                        onclick="completeQuest(2,75)">
-
-                        Claim +75 XP
-
-                    </button>
-
-                </div>
-
-
-                <!-- FOCUS -->
-
-                <div class="quest">
-
-                    <h3>
-                        ⏱️ Focus Session
-                    </h3>
-
-                    <p>
-                        Focus on one task using the Study Quest timer.
-                    </p>
-
-                    <button
-                        onclick="showPage('focusTimer')">
-
-                        Start Timer
-
-                    </button>
-
-                </div>
-
-
-                <!-- FLASHCARDS -->
-
-                <div class="quest">
-
-                    <h3>
-                        🃏 Flashcard Quest
-                    </h3>
-
-                    <p>
-                        Create 5 useful flashcards.
-                    </p>
-
-                    <button
-                        onclick="showPage('flashcards')">
-
-                        My Flashcards
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- BADGES -->
-
-            <h2
-                class="section-title"
-                style="margin-top:35px;">
-
-                Achievements 🏆
-
-            </h2>
-
-
-            <div class="badges">
-
-
-                <div
-                    class="badge"
-                    id="badge1">
-
-                    <div class="badge-icon">
-                        ⭐
-                    </div>
-
-                    <h3>
-                        First Quest
-                    </h3>
-
-                    <p>
-                        Complete your first quest.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="badge"
-                    id="badge2">
-
-                    <div class="badge-icon">
-                        ⚔️
-                    </div>
-
-                    <h3>
-                        Quest Hunter
-                    </h3>
-
-                    <p>
-                        Complete 3 quests.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="badge"
-                    id="badge3">
-
-                    <div class="badge-icon">
-                        🧠
-                    </div>
-
-                    <h3>
-                        Brain Power
-                    </h3>
-
-                    <p>
-                        Earn 200 XP.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="badge"
-                    id="badge4">
-
-                    <div class="badge-icon">
-                        🔥
-                    </div>
-
-                    <h3>
-                        On Fire
-                    </h3>
-
-                    <p>
-                        Reach a 7-day streak.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="badge"
-                    id="badge5">
-
-                    <div class="badge-icon">
-                        🎓
-                    </div>
-
-                    <h3>
-                        Scholar
-                    </h3>
-
-                    <p>
-                        Reach Level 5.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="badge"
-                    id="badge6">
-
-                    <div class="badge-icon">
-                        👑
-                    </div>
-
-                    <h3>
-                        Study Master
-                    </h3>
-
-                    <p>
-                        Reach Level 11.
-                    </p>
-
-                </div>
-
+            <div
+                class="poll-option"
+                onclick="votePoll(this)"
+            >
+                C) 70
             </div>
 
         </div>
 
-    </section>
 
+        <div class="card">
 
+            <h2>💬 Moderated Q&A</h2>
 
-    <!-- =================================================
-         QUESTS PAGE
-    ================================================= -->
+            <input
+                id="questionInput"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;"
+                placeholder="Ask a question..."
+            >
 
-    <section
-        id="quests"
-        class="page">
+            <button
+                class="small-btn"
+                style="margin-top:10px;"
+                onclick="submitQuestion()"
+            >
+                Submit Question
+            </button>
 
-
-        <div class="container">
-
-
-            <div class="hero">
-
-                <h1>
-                    ⚔️ Quests
-                </h1>
-
-                <p>
-                    Complete challenges and earn XP.
-                </p>
-
-            </div>
-
-
-            <div class="quest-grid">
-
-
-                <div class="quest">
-
-                    <h3>
-                        🧠 Memory Challenge
-                    </h3>
-
-                    <p>
-                        Learn and recall 5 facts.
-                    </p>
-
-                    <button
-                        onclick="completeQuest(1,50)">
-
-                        Claim +50 XP
-
-                    </button>
-
-                </div>
-
-
-                <div class="quest">
-
-                    <h3>
-                        📝 Practice Questions
-                    </h3>
-
-                    <p>
-                        Complete 10 practice questions.
-                    </p>
-
-                    <button
-                        onclick="completeQuest(2,75)">
-
-                        Claim +75 XP
-
-                    </button>
-
-                </div>
-
-
-                <div class="quest">
-
-                    <h3>
-                        ⏱️ Focus Session
-                    </h3>
-
-                    <p>
-                        Complete a focused study session.
-                    </p>
-
-                    <button
-                        onclick="showPage('focusTimer')">
-
-                        Start Focus
-
-                    </button>
-
-                </div>
-
-
-                <div class="quest">
-
-                    <h3>
-                        🃏 Flashcard Quest
-                    </h3>
-
-                    <p>
-                        Create useful flashcards.
-                    </p>
-
-                    <button
-                        onclick="showPage('flashcards')">
-
-                        Create Flashcards
-
-                    </button>
-
-                </div>
-
-            </div>
+            <div
+                id="questionStatus"
+                style="margin-top:12px;color:var(--green);font-size:14px;"
+            ></div>
 
         </div>
 
-    </section>
+    </div>
 
 
+    <div class="card" style="margin-top:20px;">
 
-    <!-- =================================================
-         FLASHCARDS
-    ================================================= -->
+        <h2>💙 Supporting Tutors</h2>
 
-    <section
-        id="flashcards"
-        class="page">
+        <p style="color:var(--muted);line-height:1.6;">
+            Study Quest can provide ways for families and guardians
+            to support tutors and help keep educational content available.
+            In a real version, payments would be handled securely by
+            the platform and adults rather than students sending money
+            directly.
+        </p>
 
+    </div>
 
-        <div class="container">
-
-
-            <div class="hero">
-
-                <h1>
-                    🃏 My Flashcards
-                </h1>
-
-                <p>
-                    Create your own revision cards.
-                </p>
-
-            </div>
+</section>
 
 
-            <div class="big-card flashcard-create">
+<!-- =========================
+     LEARN
+========================= -->
+
+<section id="learn" class="page">
+
+    <div class="page-title">
+        <h1>📚 Learn</h1>
+        <p>Resources and activities for your next Study Quest.</p>
+    </div>
 
 
-                <h2
-                    style="color:#102a56;
-                           margin-bottom:20px;">
+    <div class="grid grid-3">
 
-                    Create a Flashcard
+        <div class="feature-card">
+            <div class="feature-icon">📖</div>
+            <h3>Revision Guides</h3>
+            <p>
+                Organise useful revision material by subject.
+            </p>
+        </div>
 
-                </h2>
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Practice</h3>
+            <p>
+                Use questions and quizzes to test your knowledge.
+            </p>
+        </div>
 
+        <div class="feature-card">
+            <div class="feature-icon">🎥</div>
+            <h3>Learning Videos</h3>
+            <p>
+                Add educational videos and resources later.
+            </p>
+        </div>
 
-                <div class="input-group">
+    </div>
 
-                    <label>
-                        Question
-                    </label>
-
-                    <input
-                        type="text"
-                        id="flashcardQuestion"
-                        placeholder="e.g. What is photosynthesis?">
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label>
-                        Answer
-                    </label>
-
-                    <input
-                        type="text"
-                        id="flashcardAnswer"
-                        placeholder="e.g. The process plants use to make food.">
-
-                </div>
+</section>
 
 
-                <button
-                    class="primary-btn"
-                    onclick="addFlashcard()">
+<!-- =========================
+     PROGRESS
+========================= -->
 
-                    + Add Flashcard
+<section id="progress" class="page">
 
-                </button>
-
-            </div>
-
-
-            <h2 class="section-title">
-
-                Your Flashcards
-
-            </h2>
+    <div class="page-title">
+        <h1>📈 Progress</h1>
+        <p>See how far you've come.</p>
+    </div>
 
 
-            <div id="flashcardList">
+    <div class="grid grid-3">
 
-            </div>
+        <div class="stat-card">
+            <div class="stat-label">TOTAL XP</div>
+            <div class="stat-value" id="progressXP">0</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">CURRENT LEVEL</div>
+            <div class="stat-value" id="progressLevel">1</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">QUESTS</div>
+            <div class="stat-value" id="progressQuests">0</div>
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:20px;">
+
+        <h2>⭐ XP Progress</h2>
+
+        <div
+            style="height:18px;background:#e6eef6;border-radius:99px;margin-top:15px;overflow:hidden;"
+        >
+            <div
+                id="progressBar"
+                style="height:100%;width:0%;background:var(--blue);border-radius:99px;"
+            ></div>
+        </div>
+
+        <p
+            id="progressText"
+            style="color:var(--muted);margin-top:10px;"
+        >
+            0 XP
+        </p>
+
+    </div>
+
+</section>
+
+
+        </main>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-card">
+
+        <div class="sidebar-title">
+
+            <h3>👥 Friends</h3>
+
+            <button
+                class="icon-btn"
+                onclick="openFriendModal()"
+            >
+                +
+            </button>
 
         </div>
 
-    </section>
+
+        <div id="friendSidebarList"></div>
+
+    </div>
 
 
+    <div class="sidebar-card">
 
-    <!-- =================================================
-         FOCUS TIMER
-    ================================================= -->
+        <div class="sidebar-title">
 
-    <section
-        id="focusTimer"
-        class="page">
-
-
-        <div class="timer-page">
-
-
-            <div class="timer-type">
-
-                <button
-                    onclick="setPomodoro()">
-
-                    Pomodoro
-
-                </button>
-
-
-                <button
-                    onclick="setNormalTimer()">
-
-                    Normal Timer
-
-                </button>
-
-            </div>
-
-
-            <div id="timerLabel">
-
-                POMODORO
-
-            </div>
-
-
-            <div id="timerDisplay">
-
-                25:00
-
-            </div>
-
-
-            <div class="timer-buttons">
-
-
-                <button
-                    onclick="startTimer()">
-
-                    Start
-
-                </button>
-
-
-                <button
-                    onclick="pauseTimer()">
-
-                    Pause
-
-                </button>
-
-
-                <button
-                    onclick="resetTimer()">
-
-                    Reset
-
-                </button>
-
-            </div>
-
-
-            <div id="timerStatus">
-
-                25 min study • 5 min break
-
-            </div>
+            <h3>🔴 Live Study</h3>
 
         </div>
 
-    </section>
+        <div class="room-mini">
 
+            <strong>Maths Focus Room</strong>
 
+            <p>
+                🟢 4 studying now
+            </p>
 
-    <!-- =================================================
-         LEARN
-    ================================================= -->
-
-    <section
-        id="learn"
-        class="page">
-
-
-        <div class="container">
-
-
-            <div class="hero">
-
-                <h1>
-                    📚 Learn
-                </h1>
-
-                <p>
-                    Your learning centre.
-                </p>
-
-            </div>
-
-
-            <div class="big-card">
-
-                <h1>
-                    Coming Soon 🚀
-                </h1>
-
-                <p>
-                    This is where we'll build subjects,
-                    revision guides, study techniques,
-                    videos, lessons and more.
-                </p>
-
-            </div>
+            <button
+                class="small-btn"
+                style="margin-top:9px;width:100%;"
+                onclick="showPage('rooms')"
+            >
+                Join
+            </button>
 
         </div>
 
-    </section>
 
+        <div class="room-mini">
 
+            <strong>Science Revision</strong>
 
-    <!-- =================================================
-         PROGRESS
-    ================================================= -->
+            <p>
+                🟢 2 studying now
+            </p>
 
-    <section
-        id="progress"
-        class="page">
-
-
-        <div class="container">
-
-
-            <div class="hero">
-
-                <h1>
-                    📊 Your Progress
-                </h1>
-
-                <p>
-                    See how far you've come.
-                </p>
-
-            </div>
-
-
-            <div class="progress-grid">
-
-
-                <div class="card progress-stat">
-
-                    <h2 id="progressXP">
-                        0
-                    </h2>
-
-                    <p>
-                        Total XP
-                    </p>
-
-                </div>
-
-
-                <div class="card progress-stat">
-
-                    <h2 id="progressQuests">
-                        0
-                    </h2>
-
-                    <p>
-                        Quests Completed
-                    </p>
-
-                </div>
-
-
-                <div class="card progress-stat">
-
-                    <h2 id="progressStreak">
-                        1
-                    </h2>
-
-                    <p>
-                        Current Streak
-                    </p>
-
-                </div>
-
-
-                <div class="card progress-stat">
-
-                    <h2 id="progressLevel">
-                        1
-                    </h2>
-
-                    <p>
-                        Current Level
-                    </p>
-
-                </div>
-
-            </div>
+            <button
+                class="small-btn secondary"
+                style="margin-top:9px;width:100%;"
+                onclick="showPage('rooms')"
+            >
+                View
+            </button>
 
         </div>
 
-    </section>
+    </div>
+
+
+    <div class="sidebar-card">
+
+        <div class="sidebar-title">
+            <h3>⚡ Quick Actions</h3>
+        </div>
+
+        <button
+            class="small-btn"
+            style="width:100%;margin-bottom:8px;"
+            onclick="showPage('flashcards')"
+        >
+            🃏 Flashcards
+        </button>
+
+        <button
+            class="small-btn"
+            style="width:100%;margin-bottom:8px;"
+            onclick="showPage('timer')"
+        >
+            ⏱️ Focus
+        </button>
+
+        <button
+            class="small-btn secondary"
+            style="width:100%;"
+            onclick="showPage('rooms')"
+        >
+            👥 Study Together
+        </button>
+
+    </div>
+
+</aside>
+
+    </div>
 
 </div>
 
 
+<!-- =========================
+     FRIEND MODAL
+========================= -->
 
-<!-- TOAST -->
+<div class="modal" id="friendModal">
 
-<div id="toast"></div>
+    <div class="modal-box">
 
+        <button
+            class="modal-close"
+            onclick="closeFriendModal()"
+        >
+            ✕
+        </button>
+
+        <h2>👥 Add Friends</h2>
+
+        <p style="color:var(--muted);margin-bottom:15px;">
+            Search for a Study Quest username.
+        </p>
+
+        <div class="friend-search">
+
+            <input
+                id="friendSearch"
+                placeholder="Username"
+            >
+
+            <button
+                class="small-btn"
+                onclick="searchFriend()"
+            >
+                Search
+            </button>
+
+        </div>
+
+        <div id="friendResults"></div>
+
+        <div style="margin-top:20px;background:#edf5fd;padding:12px;border-radius:10px;font-size:13px;color:var(--muted);">
+            💡 In this prototype, friend searching is simulated.
+            Real friend requests will require the Study Quest
+            online database.
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast">
+    XP earned!
+</div>
 
 
 <script>
 
-/* =================================================
-   ACCOUNT SYSTEM
-================================================= */
+/* =========================================================
+   STUDY QUEST DATA
+========================================================= */
 
-function showSignup() {
+let xp = Number(localStorage.getItem("sq_xp")) || 0;
+let completedQuests = Number(localStorage.getItem("sq_completed")) || 0;
+let streak = Number(localStorage.getItem("sq_streak")) || 1;
 
-    document.getElementById(
-        "loginForm"
-    ).style.display = "none";
+let completed = JSON.parse(
+    localStorage.getItem("sq_completed_quests") ||
+    '{"memory":false,"practice":false,"focus":false,"flashcards":false}'
+);
 
-    document.getElementById(
-        "signupForm"
-    ).style.display = "block";
+let flashcards = JSON.parse(
+    localStorage.getItem("sq_flashcards") || "[]"
+);
 
-}
-
-
-function showLogin() {
-
-    document.getElementById(
-        "signupForm"
-    ).style.display = "none";
-
-    document.getElementById(
-        "loginForm"
-    ).style.display = "block";
-
-}
+let currentUser =
+    localStorage.getItem("sq_current_user") || null;
 
 
-/* =================================================
-   SIGN UP
-================================================= */
+/* =========================================================
+   LEVELS
+========================================================= */
 
-function signup() {
+const levels = [
 
-    const username =
-        document.getElementById(
-            "signupUsername"
-        ).value.trim();
+    {level:1,name:"Beginner",min:0,max:100},
+    {level:2,name:"Learner",min:100,max:200},
+    {level:3,name:"Explorer",min:200,max:400},
+    {level:4,name:"Improving",min:400,max:700},
+    {level:5,name:"Learner",min:700,max:1100},
+    {level:6,name:"Dedicated",min:1100,max:1600},
+    {level:7,name:"Focused",min:1600,max:2250},
+    {level:8,name:"Scholar",min:2250,max:3000},
+    {level:9,name:"Expert",min:3000,max:4000},
+    {level:10,name:"Legend",min:4000,max:5000},
+    {level:11,name:"Study Master",min:5000,max:7500}
 
-    const password =
-        document.getElementById(
-            "signupPassword"
-        ).value;
+];
 
-    const confirm =
-        document.getElementById(
-            "signupConfirm"
-        ).value;
+function getLevel(){
 
-    const error =
-        document.getElementById(
-            "signupError"
-        );
+    for(let i=levels.length-1;i>=0;i--){
 
-
-    error.style.display = "none";
-
-
-    if (username.length < 3) {
-
-        error.innerText =
-            "Username must be at least 3 characters.";
-
-        error.style.display = "block";
-
-        return;
-
-    }
-
-
-    if (password.length < 4) {
-
-        error.innerText =
-            "Password must be at least 4 characters.";
-
-        error.style.display = "block";
-
-        return;
-
-    }
-
-
-    if (password !== confirm) {
-
-        error.innerText =
-            "Passwords don't match.";
-
-        error.style.display = "block";
-
-        return;
-
-    }
-
-
-    const existing =
-        localStorage.getItem(
-            "studyQuestUser_" + username
-        );
-
-
-    if (existing) {
-
-        error.innerText =
-            "That username already exists.";
-
-        error.style.display = "block";
-
-        return;
-
-    }
-
-
-    const account = {
-
-        username: username,
-
-        password: password,
-
-        xp: 0,
-
-        streak: 1,
-
-        completedQuests: 0,
-
-        completed: {
-
-            1: false,
-            2: false,
-            3: false,
-            4: false
-
+        if(xp >= levels[i].min){
+            return levels[i];
         }
 
-    };
+    }
+
+    return levels[0];
+}
 
 
-    localStorage.setItem(
+/* =========================================================
+   AUTH
+========================================================= */
 
-        "studyQuestUser_" + username,
+function showAuth(type){
 
-        JSON.stringify(account)
+    document.getElementById("loginForm").style.display =
+        type === "login" ? "block" : "none";
 
+    document.getElementById("signupForm").style.display =
+        type === "signup" ? "block" : "none";
+
+    document.getElementById("loginTab").classList.toggle(
+        "active",
+        type === "login"
     );
 
-
-    localStorage.setItem(
-
-        "studyQuestCurrentUser",
-
-        username
-
-    );
-
-
-    loadAccount();
-
-    showToast(
-        "Account created! Welcome 🚀"
+    document.getElementById("signupTab").classList.toggle(
+        "active",
+        type === "signup"
     );
 
 }
 
 
-/* =================================================
-   LOGIN
-================================================= */
-
-function login() {
+function signup(){
 
     const username =
-        document.getElementById(
-            "loginUsername"
-        ).value.trim();
+        document.getElementById("signupUsername").value.trim();
 
     const password =
-        document.getElementById(
-            "loginPassword"
-        ).value;
+        document.getElementById("signupPassword").value;
 
-    const error =
-        document.getElementById(
-            "loginError"
-        );
+    if(!username || !password){
 
-
-    error.style.display = "none";
-
-
-    const stored =
-        localStorage.getItem(
-            "studyQuestUser_" + username
-        );
-
-
-    if (!stored) {
-
-        error.innerText =
-            "Username or password is incorrect.";
-
-        error.style.display = "block";
-
+        showToast("Please fill in both fields.");
         return;
 
     }
 
+    const accounts =
+        JSON.parse(localStorage.getItem("sq_accounts") || "{}");
 
-    const account =
-        JSON.parse(stored);
+    if(accounts[username]){
 
-
-    if (account.password !== password) {
-
-        error.innerText =
-            "Username or password is incorrect.";
-
-        error.style.display = "block";
-
+        showToast("That username already exists.");
         return;
 
     }
 
+    accounts[username] = {
+        password:password
+    };
 
     localStorage.setItem(
-
-        "studyQuestCurrentUser",
-
-        username
-
+        "sq_accounts",
+        JSON.stringify(accounts)
     );
 
+    localStorage.setItem(
+        "sq_current_user",
+        username
+    );
 
-    loadAccount();
+    currentUser = username;
+
+    showToast("Account created!");
+
+    openApp();
 
 }
 
 
-/* =================================================
-   LOAD ACCOUNT
-================================================= */
-
-function loadAccount() {
+function login(){
 
     const username =
-        localStorage.getItem(
-            "studyQuestCurrentUser"
-        );
+        document.getElementById("loginUsername").value.trim();
 
+    const password =
+        document.getElementById("loginPassword").value;
 
-    if (!username)
+    const accounts =
+        JSON.parse(localStorage.getItem("sq_accounts") || "{}");
+
+    if(
+        !accounts[username] ||
+        accounts[username].password !== password
+    ){
+
+        showToast("Incorrect username or password.");
         return;
 
+    }
 
-    const stored =
-        localStorage.getItem(
-            "studyQuestUser_" + username
-        );
+    localStorage.setItem(
+        "sq_current_user",
+        username
+    );
 
+    currentUser = username;
 
-    if (!stored)
-        return;
+    openApp();
 
-
-    const account =
-        JSON.parse(stored);
-
-
-    xp =
-        account.xp || 0;
-
-    streak =
-        account.streak || 1;
-
-    completedQuests =
-        account.completedQuests || 0;
-
-    completed =
-        account.completed || {
-
-            1:false,
-            2:false,
-            3:false,
-            4:false
-
-        };
+}
 
 
-    document.getElementById(
-        "playerName"
-    ).innerText = username;
+function logout(){
+
+    localStorage.removeItem("sq_current_user");
+
+    currentUser = null;
+
+    document.getElementById("app").style.display = "none";
+    document.getElementById("authPage").style.display = "flex";
+
+}
 
 
-    document.getElementById(
-        "authPage"
-    ).style.display = "none";
+/* =========================================================
+   APP OPEN
+========================================================= */
 
+function openApp(){
 
-    document.getElementById(
-        "app"
-    ).style.display = "block";
+    document.getElementById("authPage").style.display = "none";
+    document.getElementById("app").style.display = "block";
 
+    document.getElementById("usernameDisplay").textContent =
+        currentUser;
+
+    document.getElementById("userAvatar").textContent =
+        currentUser.charAt(0).toUpperCase();
 
     updateScreen();
 
-    displayFlashcards();
-
 }
 
 
-/* =================================================
-   SAVE ACCOUNT
-================================================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-function saveAccount() {
+function showPage(pageId,button){
 
-    const username =
-        localStorage.getItem(
-            "studyQuestCurrentUser"
-        );
+    document.querySelectorAll(".page").forEach(page=>{
+        page.classList.remove("active");
+    });
 
+    document.getElementById(pageId).classList.add("active");
 
-    if (!username)
-        return;
+    document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
 
-
-    const oldAccount =
-        JSON.parse(
-
-            localStorage.getItem(
-                "studyQuestUser_" + username
-            )
-
-        );
-
-
-    const account = {
-
-        username: username,
-
-        password:
-            oldAccount.password,
-
-        xp: xp,
-
-        streak: streak,
-
-        completedQuests:
-            completedQuests,
-
-        completed:
-            completed
-
-    };
-
-
-    localStorage.setItem(
-
-        "studyQuestUser_" + username,
-
-        JSON.stringify(account)
-
-    );
-
-}
-
-
-/* =================================================
-   LOGOUT
-================================================= */
-
-function logout() {
-
-    localStorage.removeItem(
-        "studyQuestCurrentUser"
-    );
-
-
-    document.getElementById(
-        "app"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "authPage"
-    ).style.display = "flex";
-
-
-    showLogin();
-
-}
-
-
-/* =================================================
-   GAME VARIABLES
-================================================= */
-
-let xp = 0;
-
-let completedQuests = 0;
-
-let streak = 1;
-
-
-let completed = {
-
-    1: false,
-    2: false,
-    3: false,
-    4: false
-
-};
-
-
-/* =================================================
-   LEVEL SYSTEM
-================================================= */
-
-function getLevel() {
-
-    if (xp < 100)
-        return [1, "Beginner", 100];
-
-    if (xp < 200)
-        return [2, "Learner", 200];
-
-    if (xp < 400)
-        return [3, "Explorer", 400];
-
-    if (xp < 700)
-        return [4, "Improving", 700];
-
-    if (xp < 1100)
-        return [5, "Learner", 1100];
-
-    if (xp < 1600)
-        return [6, "Dedicated", 1600];
-
-    if (xp < 2250)
-        return [7, "Focused", 2250];
-
-    if (xp < 3000)
-        return [8, "Scholar", 3000];
-
-    if (xp < 4000)
-        return [9, "Expert", 4000];
-
-    if (xp < 5000)
-        return [10, "Legend", 5000];
-
-    return [11, "Study Master", 7500];
-
-}
-
-
-/* =================================================
-   UPDATE SCREEN
-================================================= */
-
-function updateScreen() {
-
-    const level =
-        getLevel();
-
-
-    document.getElementById(
-        "xpDisplay"
-    ).innerText = xp;
-
-
-    document.getElementById(
-        "xpText"
-    ).innerText = xp;
-
-
-    document.getElementById(
-        "streakDisplay"
-    ).innerText = streak;
-
-
-    document.getElementById(
-        "completedDisplay"
-    ).innerText =
-        completedQuests;
-
-
-    document.getElementById(
-        "levelTitle"
-    ).innerText =
-        "Level " +
-        level[0] +
-        " — " +
-        level[1];
-
-
-    let previousXP = 0;
-
-
-    if (level[0] === 2)
-        previousXP = 100;
-
-    else if (level[0] === 3)
-        previousXP = 200;
-
-    else if (level[0] === 4)
-        previousXP = 400;
-
-    else if (level[0] === 5)
-        previousXP = 700;
-
-    else if (level[0] === 6)
-        previousXP = 1100;
-
-    else if (level[0] === 7)
-        previousXP = 1600;
-
-    else if (level[0] === 8)
-        previousXP = 2250;
-
-    else if (level[0] === 9)
-        previousXP = 3000;
-
-    else if (level[0] === 10)
-        previousXP = 4000;
-
-    else if (level[0] === 11)
-        previousXP = 5000;
-
-
-    const levelXP =
-        level[2] - previousXP;
-
-
-    const currentXP =
-        xp - previousXP;
-
-
-    let percentage =
-        (currentXP / levelXP) * 100;
-
-
-    percentage =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                percentage
-            )
-        );
-
-
-    document.getElementById(
-        "xpFill"
-    ).style.width =
-        percentage + "%";
-
-
-    if (level[0] < 11) {
-
-        document.getElementById(
-            "nextLevel"
-        ).innerText =
-
-            (level[2] - xp) +
-            " XP until Level " +
-            (level[0] + 1);
-
+    if(button){
+        button.classList.add("active");
     }
 
-    else {
-
-        document.getElementById(
-            "nextLevel"
-        ).innerText =
-            "You've reached Study Master 👑";
-
+    if(pageId === "flashcards"){
+        renderFlashcards();
     }
 
-
-    /* QUEST BUTTONS */
-
-    for (
-        let i = 1;
-        i <= 4;
-        i++
-    ) {
-
-        const button =
-            document.getElementById(
-                "questBtn" + i
-            );
-
-
-        if (button) {
-
-            if (completed[i]) {
-
-                button.innerText =
-                    "Completed ✓";
-
-                button.classList.add(
-                    "completed"
-                );
-
-                button.disabled = true;
-
-            }
-
-        }
-
-    }
-
-
-    /* BADGES */
-
-    if (completedQuests >= 1)
-
-        document.getElementById(
-            "badge1"
-        ).classList.add("unlocked");
-
-
-    if (completedQuests >= 3)
-
-        document.getElementById(
-            "badge2"
-        ).classList.add("unlocked");
-
-
-    if (xp >= 200)
-
-        document.getElementById(
-            "badge3"
-        ).classList.add("unlocked");
-
-
-    if (streak >= 7)
-
-        document.getElementById(
-            "badge4"
-        ).classList.add("unlocked");
-
-
-    if (level[0] >= 5)
-
-        document.getElementById(
-            "badge5"
-        ).classList.add("unlocked");
-
-
-    if (level[0] >= 11)
-
-        document.getElementById(
-            "badge6"
-        ).classList.add("unlocked");
-
-
-    /* PROGRESS PAGE */
-
-    document.getElementById(
-        "progressXP"
-    ).innerText = xp;
-
-
-    document.getElementById(
-        "progressQuests"
-    ).innerText =
-        completedQuests;
-
-
-    document.getElementById(
-        "progressStreak"
-    ).innerText =
-        streak;
-
-
-    document.getElementById(
-        "progressLevel"
-    ).innerText =
-        level[0];
-
-
-    saveAccount();
-
-}
-
-
-/* =================================================
-   COMPLETE QUEST
-================================================= */
-
-function completeQuest(
-    number,
-    reward
-) {
-
-    if (completed[number])
-        return;
-
-
-    completed[number] = true;
-
-    completedQuests++;
-
-    xp += reward;
-
-
-    updateScreen();
-
-
-    showToast(
-
-        "+" +
-        reward +
-        " XP! Quest complete! 🎉"
-
-    );
-
-}
-
-
-/* =================================================
-   PAGE NAVIGATION
-================================================= */
-
-function showPage(pageID) {
-
-    const pages =
-        document.querySelectorAll(
-            ".page"
-        );
-
-
-    pages.forEach(
-        page => {
-
-            page.classList.remove(
-                "active"
-            );
-
-        }
-    );
-
-
-    const selected =
-        document.getElementById(
-            pageID
-        );
-
-
-    if (selected) {
-
-        selected.classList.add(
-            "active"
-        );
-
+    if(pageId === "rooms"){
+        renderRoomArea();
     }
 
 }
 
 
-/* =================================================
-   FLASHCARD SYSTEM
-================================================= */
+/* =========================================================
+   QUESTS
+========================================================= */
 
-let flashcards =
+const questData = [
 
-    JSON.parse(
+    {
+        id:"memory",
+        icon:"🧠",
+        name:"Memory Challenge",
+        description:"Complete a memory activity.",
+        reward:50
+    },
 
-        localStorage.getItem(
-            "studyQuestFlashcards"
-        )
+    {
+        id:"practice",
+        icon:"📝",
+        name:"Practice Questions",
+        description:"Complete a set of practice questions.",
+        reward:75
+    },
 
-    ) || [];
+    {
+        id:"focus",
+        icon:"⏱️",
+        name:"Focus Session",
+        description:"Finish a focus timer.",
+        reward:50
+    },
+
+    {
+        id:"flashcards",
+        icon:"🃏",
+        name:"Flashcard Quest",
+        description:"Revise all your saved flashcards.",
+        reward:50
+    }
+
+];
 
 
-function saveFlashcards() {
+function questButton(quest){
 
-    localStorage.setItem(
+    if(completed[quest.id]){
 
-        "studyQuestFlashcards",
+        return `
+            <button class="small-btn" disabled>
+                ✓ Completed
+            </button>
+        `;
 
-        JSON.stringify(
-            flashcards
-        )
+    }
 
-    );
+    if(quest.id === "focus"){
+
+        return `
+            <button
+                class="small-btn"
+                onclick="showPage('timer')"
+            >
+                Start Timer
+            </button>
+        `;
+
+    }
+
+    if(quest.id === "flashcards"){
+
+        return `
+            <button
+                class="small-btn"
+                onclick="showPage('flashcards')"
+            >
+                Start Quest
+            </button>
+        `;
+
+    }
+
+    return `
+        <button
+            class="small-btn"
+            onclick="completeQuest('${quest.id}',${quest.reward})"
+        >
+            Claim XP
+        </button>
+    `;
 
 }
 
 
-function addFlashcard() {
+function renderQuestList(targetId){
 
-    const question =
-        document.getElementById(
-            "flashcardQuestion"
-        ).value.trim();
+    const target =
+        document.getElementById(targetId);
 
+    target.innerHTML = "";
 
-    const answer =
-        document.getElementById(
-            "flashcardAnswer"
-        ).value.trim();
+    questData.forEach(quest=>{
 
+        const div =
+            document.createElement("div");
 
-    if (
-        !question ||
-        !answer
-    ) {
+        div.className =
+            "quest-card" +
+            (completed[quest.id] ? " completed" : "");
 
-        showToast(
-            "Add a question and answer first."
-        );
+        div.innerHTML = `
 
-        return;
+            <div class="quest-icon">
+                ${quest.icon}
+            </div>
 
-    }
+            <div class="quest-info">
 
+                <h3>
+                    ${quest.name}
+                </h3>
 
-    flashcards.push({
+                <p>
+                    ${quest.description}
+                </p>
 
-        question: question,
+            </div>
 
-        answer: answer
+            <div class="quest-reward">
+                +${quest.reward} XP
+            </div>
+
+            ${questButton(quest)}
+
+        `;
+
+        target.appendChild(div);
 
     });
 
-
-    saveFlashcards();
-
-    displayFlashcards();
+}
 
 
-    document.getElementById(
-        "flashcardQuestion"
-    ).value = "";
+function completeQuest(id,reward){
+
+    if(completed[id]){
+        return;
+    }
+
+    completed[id] = true;
+
+    xp += reward;
+    completedQuests++;
+
+    saveGame();
+
+    updateScreen();
+
+    showToast(`+${reward} XP! Quest complete 🎉`);
+
+}
 
 
-    document.getElementById(
-        "flashcardAnswer"
-    ).value = "";
+function saveGame(){
 
+    localStorage.setItem("sq_xp",xp);
+    localStorage.setItem("sq_completed",completedQuests);
+    localStorage.setItem("sq_streak",streak);
 
-    showToast(
-        "Flashcard created! 🃏"
+    localStorage.setItem(
+        "sq_completed_quests",
+        JSON.stringify(completed)
     );
 
 }
 
 
-function displayFlashcards() {
+/* =========================================================
+   SCREEN UPDATE
+========================================================= */
 
-    const list =
-        document.getElementById(
-            "flashcardList"
+function updateScreen(){
+
+    const level = getLevel();
+
+    document.getElementById("totalXP").textContent = xp;
+    document.getElementById("streakDisplay").textContent = streak;
+    document.getElementById("questDisplay").textContent = completedQuests;
+    document.getElementById("levelDisplay").textContent = level.level;
+
+    document.getElementById("levelName").textContent =
+        level.name;
+
+    document.getElementById("progressXP").textContent =
+        xp;
+
+    document.getElementById("progressLevel").textContent =
+        level.level;
+
+    document.getElementById("progressQuests").textContent =
+        completedQuests;
+
+    const current =
+        xp - level.min;
+
+    const needed =
+        level.max - level.min;
+
+    const percent =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                (current / needed) * 100
+            )
         );
 
+    document.getElementById("xpFill").style.width =
+        percent + "%";
 
-    if (!list)
+    document.getElementById("levelXP").textContent =
+        `${current} / ${needed} XP`;
+
+    document.getElementById("progressBar").style.width =
+        percent + "%";
+
+    document.getElementById("progressText").textContent =
+        `${xp} total XP`;
+
+    renderQuestList("dashboardQuests");
+    renderQuestList("questPageList");
+    renderBadges();
+    renderFlashcards();
+    renderFriends();
+
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+function renderBadges(){
+
+    const badges = [
+
+        {
+            icon:"🎯",
+            name:"First Quest",
+            unlocked:completedQuests >= 1
+        },
+
+        {
+            icon:"🏹",
+            name:"Quest Hunter",
+            unlocked:completedQuests >= 3
+        },
+
+        {
+            icon:"🧠",
+            name:"Brain Power",
+            unlocked:xp >= 200
+        },
+
+        {
+            icon:"🔥",
+            name:"On Fire",
+            unlocked:streak >= 3
+        },
+
+        {
+            icon:"📚",
+            name:"Scholar",
+            unlocked:xp >= 1000
+        },
+
+        {
+            icon:"👑",
+            name:"Study Master",
+            unlocked:xp >= 5000
+        }
+
+    ];
+
+    const grid =
+        document.getElementById("badgeGrid");
+
+    grid.innerHTML = "";
+
+    badges.forEach(badge=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "badge" +
+            (badge.unlocked ? "" : " locked");
+
+        div.innerHTML = `
+
+            <div class="badge-icon">
+                ${badge.icon}
+            </div>
+
+            <strong>
+                ${badge.name}
+            </strong>
+
+            <p style="font-size:12px;color:var(--muted);margin-top:5px;">
+                ${badge.unlocked ? "Unlocked" : "Locked"}
+            </p>
+
+        `;
+
+        grid.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================================================
+   FLASHCARDS
+========================================================= */
+
+function addFlashcard(){
+
+    const question =
+        document.getElementById("cardQuestion").value.trim();
+
+    const answer =
+        document.getElementById("cardAnswer").value.trim();
+
+    if(!question || !answer){
+
+        showToast("Add both a question and answer.");
         return;
 
+    }
 
-    if (
-        flashcards.length === 0
-    ) {
+    flashcards.push({
+        question,
+        answer
+    });
 
-        list.innerHTML = `
+    localStorage.setItem(
+        "sq_flashcards",
+        JSON.stringify(flashcards)
+    );
 
-            <div class="big-card">
+    document.getElementById("cardQuestion").value = "";
+    document.getElementById("cardAnswer").value = "";
+
+    renderFlashcards();
+
+    showToast("Flashcard created 🃏");
+
+}
+
+
+let flashcardIndex = 0;
+let showingAnswer = false;
+
+
+function renderFlashcards(){
+
+    const saved =
+        document.getElementById("savedCards");
+
+    const questArea =
+        document.getElementById("flashcardQuestArea");
+
+    if(!saved || !questArea){
+        return;
+    }
+
+    saved.innerHTML = "";
+
+    if(flashcards.length === 0){
+
+        saved.innerHTML = `
+            <p style="color:var(--muted);">
+                You haven't created any flashcards yet.
+            </p>
+        `;
+
+    }else{
+
+        flashcards.forEach((card,index)=>{
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "flashcard-list-item";
+
+            item.innerHTML = `
+
+                <strong>
+                    ${escapeHTML(card.question)}
+                </strong>
 
                 <p>
+                    ${escapeHTML(card.answer)}
+                </p>
 
-                    You haven't created
-                    any flashcards yet.
-                    Create your first one above!
+                <button
+                    class="small-btn secondary"
+                    style="margin-top:8px;"
+                    onclick="deleteFlashcard(${index})"
+                >
+                    Delete
+                </button>
 
+            `;
+
+            saved.appendChild(item);
+
+        });
+
+    }
+
+
+    if(flashcards.length === 0){
+
+        questArea.innerHTML = `
+            <div class="card">
+                <h2>🃏 Flashcard Quest</h2>
+                <p style="color:var(--muted);margin-top:8px;">
+                    Create some flashcards first, then come back
+                    to start your quest.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(completed.flashcards){
+
+        questArea.innerHTML = `
+            <div class="card">
+                <h2>🎉 Flashcard Quest Complete!</h2>
+                <p style="color:var(--muted);margin-top:8px;">
+                    You've completed today's flashcard quest.
+                </p>
+
+                <div style="margin-top:15px;color:var(--green);font-weight:bold;">
+                    ✓ +50 XP already claimed
+                </div>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(flashcardIndex >= flashcards.length){
+        flashcardIndex = 0;
+    }
+
+
+    const card =
+        flashcards[flashcardIndex];
+
+    questArea.innerHTML = `
+
+        <div class="card">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+
+                <div>
+                    <h2>🃏 Flashcard Quest</h2>
+
+                    <p style="color:var(--muted);margin-top:5px;">
+                        Card ${flashcardIndex + 1}
+                        of ${flashcards.length}
+                    </p>
+                </div>
+
+                <strong style="color:var(--blue);">
+                    +50 XP
+                </strong>
+
+            </div>
+
+
+            <div
+                class="flashcard"
+                onclick="flipFlashcard()"
+                style="margin-top:20px;"
+            >
+
+                <div class="fc-label">
+                    ${showingAnswer ? "ANSWER" : "QUESTION"}
+                </div>
+
+                <div class="fc-text">
+                    ${
+                        showingAnswer
+                        ? escapeHTML(card.answer)
+                        : escapeHTML(card.question)
+                    }
+                </div>
+
+                <div style="margin-top:20px;font-size:12px;opacity:.75;">
+                    Tap the card to ${
+                        showingAnswer
+                        ? "see the question"
+                        : "show the answer"
+                    }
+                </div>
+
+            </div>
+
+
+            <div class="flashcard-controls">
+
+                <button
+                    class="small-btn secondary"
+                    onclick="previousFlashcard()"
+                >
+                    ← Previous
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="flipFlashcard()"
+                >
+                    ${
+                        showingAnswer
+                        ? "Show Question"
+                        : "Show Answer"
+                    }
+                </button>
+
+                <button
+                    class="small-btn"
+                    onclick="nextFlashcard()"
+                >
+                    Next →
+                </button>
+
+            </div>
+
+
+            <div style="text-align:center;margin-top:18px;">
+
+                <button
+                    class="small-btn green"
+                    onclick="finishFlashcardQuest()"
+                >
+                    ✓ I've Finished Revising
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function flipFlashcard(){
+
+    showingAnswer = !showingAnswer;
+
+    renderFlashcards();
+
+}
+
+
+function nextFlashcard(){
+
+    flashcardIndex++;
+
+    if(flashcardIndex >= flashcards.length){
+
+        flashcardIndex = 0;
+
+    }
+
+    showingAnswer = false;
+
+    renderFlashcards();
+
+}
+
+
+function previousFlashcard(){
+
+    flashcardIndex--;
+
+    if(flashcardIndex < 0){
+
+        flashcardIndex =
+            flashcards.length - 1;
+
+    }
+
+    showingAnswer = false;
+
+    renderFlashcards();
+
+}
+
+
+function finishFlashcardQuest(){
+
+    if(flashcards.length === 0){
+
+        showToast("Create some flashcards first.");
+        return;
+
+    }
+
+    if(completed.flashcards){
+        return;
+    }
+
+    completed.flashcards = true;
+
+    xp += 50;
+    completedQuests++;
+
+    saveGame();
+
+    updateScreen();
+
+    showToast("+50 XP! Flashcard Quest complete 🎉");
+
+}
+
+
+function deleteFlashcard(index){
+
+    flashcards.splice(index,1);
+
+    localStorage.setItem(
+        "sq_flashcards",
+        JSON.stringify(flashcards)
+    );
+
+    if(flashcardIndex >= flashcards.length){
+        flashcardIndex = 0;
+    }
+
+    renderFlashcards();
+
+}
+
+
+function escapeHTML(text){
+
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+let timerMode = "pomodoro";
+
+let timerSeconds = 25 * 60;
+
+let timerRunning = false;
+
+let timerInterval = null;
+
+let timerFinished = false;
+
+
+function setTimerMode(mode){
+
+    if(timerRunning){
+        return;
+    }
+
+    timerMode = mode;
+
+    document
+        .getElementById("pomodoroBtn")
+        .classList.toggle(
+            "active",
+            mode === "pomodoro"
+        );
+
+    document
+        .getElementById("normalBtn")
+        .classList.toggle(
+            "active",
+            mode === "normal"
+        );
+
+    resetTimer();
+
+}
+
+
+function resetTimer(){
+
+    clearInterval(timerInterval);
+
+    timerRunning = false;
+
+    timerFinished = false;
+
+    if(timerMode === "pomodoro"){
+
+        timerSeconds = 25 * 60;
+
+        document.getElementById("timerLabel").textContent =
+            "Study for 25 minutes";
+
+    }else{
+
+        timerSeconds = 10 * 60;
+
+        document.getElementById("timerLabel").textContent =
+            "Focus for 10 minutes";
+
+    }
+
+    document.getElementById("timerStartButton").textContent =
+        "Start";
+
+    document.getElementById("timerReward").textContent = "";
+
+    updateTimerDisplay();
+
+}
+
+
+function toggleTimer(){
+
+    if(timerFinished){
+        return;
+    }
+
+    if(timerRunning){
+
+        clearInterval(timerInterval);
+
+        timerRunning = false;
+
+        document.getElementById("timerStartButton").textContent =
+            "Resume";
+
+        return;
+
+    }
+
+    timerRunning = true;
+
+    document.getElementById("timerStartButton").textContent =
+        "Pause";
+
+    timerInterval =
+        setInterval(runTimer,1000);
+
+}
+
+
+function runTimer(){
+
+    if(timerSeconds <= 0){
+
+        finishTimer();
+
+        return;
+
+    }
+
+    timerSeconds--;
+
+    updateTimerDisplay();
+
+}
+
+
+function updateTimerDisplay(){
+
+    const minutes =
+        Math.floor(timerSeconds / 60)
+        .toString()
+        .padStart(2,"0");
+
+    const seconds =
+        (timerSeconds % 60)
+        .toString()
+        .padStart(2,"0");
+
+    document.getElementById("timerDisplay").textContent =
+        `${minutes}:${seconds}`;
+
+}
+
+
+function finishTimer(){
+
+    clearInterval(timerInterval);
+
+    timerRunning = false;
+
+    timerFinished = true;
+
+    timerSeconds = 0;
+
+    updateTimerDisplay();
+
+    document.getElementById("timerStartButton").textContent =
+        "Finished";
+
+    document.getElementById("timerLabel").textContent =
+        "Focus session complete! 🎉";
+
+    document.getElementById("timerReward").textContent =
+        completed.focus
+        ? "✓ Focus Quest already completed"
+        : "🔥 Your +50 XP reward is ready!";
+
+    if(!completed.focus){
+
+        completed.focus = true;
+
+        xp += 50;
+
+        completedQuests++;
+
+        saveGame();
+
+        updateScreen();
+
+        showToast("+50 XP! Focus Quest complete 🔥");
+
+    }
+
+}
+
+
+/* =========================================================
+   FRIENDS
+========================================================= */
+
+let friends = JSON.parse(
+    localStorage.getItem("sq_friends") ||
+    '[{"name":"Alex","online":true},{"name":"Mia","online":true},{"name":"Jay","online":false}]'
+);
+
+
+function renderFriends(){
+
+    const list =
+        document.getElementById("friendSidebarList");
+
+    if(!list){
+        return;
+    }
+
+    list.innerHTML = "";
+
+    friends.forEach(friend=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className = "friend";
+
+        div.innerHTML = `
+
+            <div class="friend-avatar">
+                ${friend.name.charAt(0).toUpperCase()}
+            </div>
+
+            <div class="friend-info">
+
+                <div class="friend-name">
+                    ${escapeHTML(friend.name)}
+                </div>
+
+                <div class="friend-status">
+
+                    <span class="${
+                        friend.online
+                        ? "online-dot"
+                        : "offline-dot"
+                    }"></span>
+
+                    ${
+                        friend.online
+                        ? " Online"
+                        : " Offline"
+                    }
+
+                </div>
+
+            </div>
+
+        `;
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+function openFriendModal(){
+
+    document
+        .getElementById("friendModal")
+        .classList.add("show");
+
+}
+
+
+function closeFriendModal(){
+
+    document
+        .getElementById("friendModal")
+        .classList.remove("show");
+
+}
+
+
+function searchFriend(){
+
+    const search =
+        document
+            .getElementById("friendSearch")
+            .value
+            .trim();
+
+    const results =
+        document.getElementById("friendResults");
+
+    if(!search){
+
+        results.innerHTML = "";
+        return;
+
+    }
+
+    results.innerHTML = `
+
+        <div class="friend-result">
+
+            <div>
+
+                <strong>
+                    ${escapeHTML(search)}
+                </strong>
+
+                <div style="font-size:12px;color:var(--muted);">
+                    Study Quest user
+                </div>
+
+            </div>
+
+            <button
+                class="small-btn"
+                onclick="addFriend('${escapeHTML(search)}')"
+            >
+                Add
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function addFriend(name){
+
+    if(
+        friends.some(
+            friend =>
+                friend.name.toLowerCase() ===
+                name.toLowerCase()
+        )
+    ){
+
+        showToast("Already in your friends list.");
+        return;
+
+    }
+
+    friends.push({
+        name:name,
+        online:false
+    });
+
+    localStorage.setItem(
+        "sq_friends",
+        JSON.stringify(friends)
+    );
+
+    renderFriends();
+
+    showToast(`${name} added as a friend! 👥`);
+
+    closeFriendModal();
+
+}
+
+
+/* =========================================================
+   STUDY ROOMS
+========================================================= */
+
+let currentRoom = null;
+
+let roomTimerSeconds = 0;
+
+let roomInterval = null;
+
+
+function generateRoomCode(){
+
+    return "SQ" +
+        Math.floor(
+            1000 +
+            Math.random() * 9000
+        );
+
+}
+
+
+function createRoom(){
+
+    const name =
+        document.getElementById("roomName")
+            .value.trim()
+        || "My Study Room";
+
+    const subject =
+        document.getElementById("roomSubject")
+            .value;
+
+    const goal =
+        document.getElementById("roomGoal")
+            .value.trim()
+        || "Study together";
+
+    currentRoom = {
+
+        name,
+        subject,
+        goal,
+        code:generateRoomCode()
+
+    };
+
+    roomTimerSeconds = 25 * 60;
+
+    renderRoomArea();
+
+    showToast("Study room created 🏠");
+
+}
+
+
+function joinRoom(){
+
+    const code =
+        document.getElementById("joinCode")
+            .value
+            .trim()
+            .toUpperCase();
+
+    if(!code){
+
+        showToast("Enter a room code.");
+        return;
+
+    }
+
+    currentRoom = {
+
+        name:"Friend's Study Room",
+        subject:"General Study",
+        goal:"Study together",
+        code:code
+
+    };
+
+    roomTimerSeconds = 25 * 60;
+
+    renderRoomArea();
+
+    showToast("Joined study room! 👥");
+
+}
+
+
+function renderRoomArea(){
+
+    const area =
+        document.getElementById("roomArea");
+
+    if(!area){
+        return;
+    }
+
+    if(!currentRoom){
+
+        area.innerHTML = `
+
+            <div class="card">
+
+                <h2>🔴 Live Study Rooms</h2>
+
+                <p style="color:var(--muted);margin-top:6px;">
+                    Create a room or join one with a code.
                 </p>
 
             </div>
@@ -2828,461 +3329,306 @@ function displayFlashcards() {
     }
 
 
-    list.innerHTML = "";
+    area.innerHTML = `
 
+        <div class="live-room">
 
-    flashcards.forEach(
-        (card, index) => {
+            <div class="live-header">
 
-            list.innerHTML += `
+                <div>
 
-                <div class="flashcard">
-
-                    <div class="flashcard-question">
-
-                        ${escapeHTML(
-                            card.question
-                        )}
-
+                    <div class="live-dot">
+                        🔴 LIVE STUDY
                     </div>
 
+                    <h2 style="margin-top:5px;">
+                        ${escapeHTML(currentRoom.name)}
+                    </h2>
 
-                    <div class="flashcard-answer">
-
-                        ${escapeHTML(
-                            card.answer
-                        )}
-
-                    </div>
-
-
-                    <div class="flashcard-actions">
-
-                        <button
-                            class="delete-card"
-                            onclick="deleteFlashcard(${index})">
-
-                            Delete
-
-                        </button>
-
-                    </div>
+                    <p style="opacity:.7;margin-top:4px;">
+                        ${escapeHTML(currentRoom.subject)}
+                        ·
+                        ${escapeHTML(currentRoom.goal)}
+                    </p>
 
                 </div>
 
-            `;
+                <div>
+                    <strong>
+                        Code
+                    </strong>
 
-        }
-    );
+                    <div style="font-size:20px;font-weight:bold;">
+                        ${currentRoom.code}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="live-timer" id="roomTimer">
+                25:00
+            </div>
+
+
+            <div style="text-align:center;margin-bottom:25px;">
+
+                <button
+                    class="small-btn"
+                    onclick="toggleRoomTimer()"
+                >
+                    ▶ Start / Pause
+                </button>
+
+                <button
+                    class="small-btn secondary"
+                    onclick="resetRoomTimer()"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+
+            <h3 style="margin-bottom:10px;">
+                👥 Studying
+            </h3>
+
+            <div class="participants">
+
+                <div class="participant">
+                    👤 ${escapeHTML(currentUser)}
+                </div>
+
+                <div class="participant">
+                    👤 Alex
+                </div>
+
+                <div class="participant">
+                    👤 Mia
+                </div>
+
+            </div>
+
+
+            <div style="margin-top:25px;">
+
+                <strong>
+                    🔥 Team Streak: 4 days
+                </strong>
+
+                <br>
+
+                <strong>
+                    ⭐ Room XP: 350
+                </strong>
+
+            </div>
+
+
+            <div class="reactions">
+
+                <button onclick="roomReact('👍')">
+                    👍
+                </button>
+
+                <button onclick="roomReact('💪')">
+                    💪
+                </button>
+
+                <button onclick="roomReact('🔥')">
+                    🔥
+                </button>
+
+                <button onclick="roomReact('🎯')">
+                    🎯
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    updateRoomTimerDisplay();
 
 }
 
 
-/* Prevent HTML from being inserted
-   into flashcards */
+function toggleRoomTimer(){
 
-function escapeHTML(text) {
+    if(roomInterval){
 
-    const div =
-        document.createElement(
-            "div"
-        );
+        clearInterval(roomInterval);
 
-    div.textContent = text;
+        roomInterval = null;
 
-    return div.innerHTML;
-
-}
-
-
-function deleteFlashcard(index) {
-
-    flashcards.splice(
-        index,
-        1
-    );
-
-
-    saveFlashcards();
-
-    displayFlashcards();
-
-
-    showToast(
-        "Flashcard deleted."
-    );
-
-}
-
-
-/* =================================================
-   TIMER
-================================================= */
-
-let timerSeconds =
-    25 * 60;
-
-let timerInterval = null;
-
-let timerRunning = false;
-
-let timerMode =
-    "pomodoro";
-
-
-let pomodoroStage =
-    "study";
-
-
-/* Update timer */
-
-function updateTimerDisplay() {
-
-    const minutes =
-        Math.floor(
-            timerSeconds / 60
-        );
-
-
-    const seconds =
-        timerSeconds % 60;
-
-
-    document.getElementById(
-        "timerDisplay"
-    ).innerText =
-
-        String(minutes)
-        .padStart(2, "0")
-
-        +
-
-        ":"
-
-        +
-
-        String(seconds)
-        .padStart(2, "0");
-
-}
-
-
-/* Start */
-
-function startTimer() {
-
-    if (timerRunning)
         return;
 
+    }
 
-    timerRunning = true;
+    roomInterval =
+        setInterval(()=>{
 
+            if(roomTimerSeconds <= 0){
 
-    timerInterval =
-        setInterval(
+                clearInterval(roomInterval);
+                roomInterval = null;
 
-            () => {
+                showToast("Study room timer finished! 🎉");
 
-                if (
-                    timerSeconds > 0
-                ) {
+                return;
 
-                    timerSeconds--;
+            }
 
-                    updateTimerDisplay();
+            roomTimerSeconds--;
 
-                }
+            updateRoomTimerDisplay();
 
-                else {
-
-                    if (
-                        timerMode ===
-                        "pomodoro"
-                    ) {
-
-                        switchPomodoro();
-
-                    }
-
-                    else {
-
-                        pauseTimer();
-
-                        showToast(
-                            "Timer finished! 🎉"
-                        );
-
-                    }
-
-                }
-
-            },
-
-            1000
-
-        );
+        },1000);
 
 }
 
 
-/* Pause */
+function resetRoomTimer(){
 
-function pauseTimer() {
+    clearInterval(roomInterval);
 
-    timerRunning = false;
+    roomInterval = null;
 
-    clearInterval(
-        timerInterval
-    );
+    roomTimerSeconds = 25 * 60;
+
+    updateRoomTimerDisplay();
 
 }
 
 
-/* Reset */
+function updateRoomTimerDisplay(){
 
-function resetTimer() {
+    const display =
+        document.getElementById("roomTimer");
 
-    pauseTimer();
+    if(!display){
+        return;
+    }
+
+    const minutes =
+        Math.floor(roomTimerSeconds / 60)
+            .toString()
+            .padStart(2,"0");
+
+    const seconds =
+        (roomTimerSeconds % 60)
+            .toString()
+            .padStart(2,"0");
+
+    display.textContent =
+        `${minutes}:${seconds}`;
+
+}
 
 
-    if (
-        timerMode ===
-        "pomodoro"
-    ) {
+function roomReact(emoji){
 
-        pomodoroStage =
-            "study";
+    showToast(`You reacted ${emoji}`);
 
-        timerSeconds =
-            25 * 60;
+}
 
-        document.getElementById(
-            "timerLabel"
-        ).innerText =
-            "POMODORO";
 
-        document.getElementById(
-            "timerStatus"
-        ).innerText =
-            "25 min study • 5 min break";
+/* =========================================================
+   LIVE TUTORING
+========================================================= */
+
+function votePoll(element){
+
+    document
+        .querySelectorAll(".poll-option")
+        .forEach(option=>{
+            option.style.background = "";
+        });
+
+    element.style.background =
+        "#dceeff";
+
+    showToast("Vote submitted 📊");
+
+}
+
+
+function submitQuestion(){
+
+    const input =
+        document.getElementById("questionInput");
+
+    const status =
+        document.getElementById("questionStatus");
+
+    if(!input.value.trim()){
+
+        status.textContent =
+            "Write a question first.";
+
+        return;
 
     }
 
-    else {
+    status.textContent =
+        "✓ Question submitted for moderation.";
 
-        timerSeconds =
-            10 * 60;
-
-    }
-
-
-    updateTimerDisplay();
+    input.value = "";
 
 }
 
 
-/* Pomodoro */
-
-function setPomodoro() {
-
-    pauseTimer();
-
-
-    timerMode =
-        "pomodoro";
-
-
-    pomodoroStage =
-        "study";
-
-
-    timerSeconds =
-        25 * 60;
-
-
-    document.getElementById(
-        "timerLabel"
-    ).innerText =
-        "POMODORO";
-
-
-    document.getElementById(
-        "timerStatus"
-    ).innerText =
-        "25 min study • 5 min break";
-
-
-    updateTimerDisplay();
-
-}
-
-
-/* Normal */
-
-function setNormalTimer() {
-
-    pauseTimer();
-
-
-    timerMode =
-        "normal";
-
-
-    timerSeconds =
-        10 * 60;
-
-
-    document.getElementById(
-        "timerLabel"
-    ).innerText =
-        "NORMAL TIMER";
-
-
-    document.getElementById(
-        "timerStatus"
-    ).innerText =
-        "10 minute timer";
-
-
-    updateTimerDisplay();
-
-}
-
-
-/* Switch Pomodoro study/break */
-
-function switchPomodoro() {
-
-    pauseTimer();
-
-
-    if (
-        pomodoroStage ===
-        "study"
-    ) {
-
-        pomodoroStage =
-            "break";
-
-
-        timerSeconds =
-            5 * 60;
-
-
-        document.getElementById(
-            "timerLabel"
-        ).innerText =
-            "BREAK";
-
-
-        document.getElementById(
-            "timerStatus"
-        ).innerText =
-            "5 minute break ☕";
-
-
-        showToast(
-            "Study session complete! Take a break 🎉"
-        );
-
-    }
-
-    else {
-
-        pomodoroStage =
-            "study";
-
-
-        timerSeconds =
-            25 * 60;
-
-
-        document.getElementById(
-            "timerLabel"
-        ).innerText =
-            "POMODORO";
-
-
-        document.getElementById(
-            "timerStatus"
-        ).innerText =
-            "25 min study • 5 min break";
-
-
-        showToast(
-            "Break finished! Back to studying 💪"
-        );
-
-    }
-
-
-    updateTimerDisplay();
-
-}
-
-
-/* =================================================
+/* =========================================================
    TOAST
-================================================= */
+========================================================= */
 
-function showToast(message) {
+let toastTimeout;
+
+function showToast(message){
 
     const toast =
-        document.getElementById(
-            "toast"
-        );
+        document.getElementById("toast");
 
-
-    toast.innerText =
+    toast.textContent =
         message;
 
+    toast.classList.add("show");
 
-    toast.style.display =
-        "block";
+    clearTimeout(toastTimeout);
 
+    toastTimeout =
+        setTimeout(()=>{
 
-    setTimeout(
+            toast.classList.remove("show");
 
-        () => {
-
-            toast.style.display =
-                "none";
-
-        },
-
-        2500
-
-    );
+        },2500);
 
 }
 
 
-/* =================================================
-   AUTO LOGIN
-================================================= */
+/* =========================================================
+   STARTUP
+========================================================= */
 
-window.onload =
-    function() {
+if(currentUser){
 
-        const currentUser =
-            localStorage.getItem(
-                "studyQuestCurrentUser"
-            );
+    openApp();
 
+}else{
 
-        if (currentUser) {
+    document.getElementById("authPage").style.display =
+        "flex";
 
-            loadAccount();
-
-        }
+}
 
 
-        displayFlashcards();
+/* =========================================================
+   INITIAL TIMER
+========================================================= */
 
-        updateTimerDisplay();
-
-    };
-
+resetTimer();
 
 </script>
 

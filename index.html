@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Study Quest</title>
 
+
 <style>
+
+/* =========================================
+   GENERAL
+========================================= */
 
 * {
     box-sizing: border-box;
@@ -20,12 +27,49 @@ body {
     color: #172554;
 }
 
-/* =========================
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.logo-mark {
+    width: 38px;
+    height: 38px;
+
+    background: #3b82f6;
+    color: white;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+
+/* =========================================
    NAVBAR
-========================= */
+========================================= */
 
 .navbar {
     height: 70px;
+
     background: #102a56;
     color: white;
 
@@ -36,47 +80,31 @@ body {
     padding: 0 30px;
 
     box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-}
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    position: sticky;
+    top: 0;
 
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.logo-mark {
-    width: 38px;
-    height: 38px;
-
-    background: #3b82f6;
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    font-size: 18px;
+    z-index: 100;
 }
 
 .nav-buttons {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 6px;
 }
 
 .nav-buttons button {
-    background: transparent;
     border: none;
+
+    background: transparent;
     color: #dbeafe;
 
-    padding: 10px 15px;
+    padding: 10px 13px;
 
     border-radius: 8px;
 
     cursor: pointer;
+
     font-size: 14px;
 }
 
@@ -90,9 +118,10 @@ body {
     color: white !important;
 }
 
-/* =========================
-   PAGE SYSTEM
-========================= */
+
+/* =========================================
+   PAGES
+========================================= */
 
 .page {
     display: none;
@@ -102,17 +131,30 @@ body {
     display: block;
 }
 
-/* =========================
-   AUTH PAGE
-========================= */
+.container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 35px 25px;
+}
+
+
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
 #authPage {
     min-height: 100vh;
 
-    background:
-        linear-gradient(135deg, #102a56, #173f7a);
+    background: linear-gradient(
+        135deg,
+        #102a56,
+        #173f7a
+    );
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -125,38 +167,45 @@ body {
 
     background: white;
 
-    border-radius: 20px;
-
     padding: 35px;
 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.25);
 }
 
 .auth-logo {
     text-align: center;
+
     margin-bottom: 25px;
 }
 
 .auth-logo .logo-mark {
+    width: 58px;
+    height: 58px;
+
     margin: auto;
-    width: 55px;
-    height: 55px;
-    font-size: 25px;
+
+    font-size: 19px;
 }
 
 .auth-logo h1 {
-    margin-top: 12px;
+    margin-top: 13px;
+
     color: #102a56;
 }
 
 .auth-logo p {
     margin-top: 6px;
+
     color: #64748b;
 }
 
 .auth-box h2 {
-    margin-bottom: 20px;
     color: #102a56;
+
+    margin-bottom: 20px;
 }
 
 .input-group {
@@ -165,9 +214,11 @@ body {
 
 .input-group label {
     display: block;
+
     margin-bottom: 7px;
 
     font-size: 14px;
+
     font-weight: bold;
 
     color: #334155;
@@ -179,6 +230,7 @@ body {
     padding: 13px;
 
     border: 2px solid #dbe4f0;
+
     border-radius: 10px;
 
     outline: none;
@@ -194,6 +246,7 @@ body {
     width: 100%;
 
     background: #2563eb;
+
     color: white;
 
     border: none;
@@ -203,6 +256,7 @@ body {
     border-radius: 10px;
 
     font-size: 16px;
+
     font-weight: bold;
 
     cursor: pointer;
@@ -214,24 +268,29 @@ body {
 
 .switch-auth {
     text-align: center;
+
     margin-top: 18px;
 
     color: #64748b;
+
     font-size: 14px;
 }
 
 .switch-auth button {
-    background: none;
     border: none;
+
+    background: none;
 
     color: #2563eb;
 
     font-weight: bold;
+
     cursor: pointer;
 }
 
 .error-message {
     background: #fee2e2;
+
     color: #b91c1c;
 
     padding: 10px;
@@ -245,17 +304,10 @@ body {
     font-size: 14px;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
 
-.container {
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 35px 25px;
-}
+/* =========================================
+   HERO
+========================================= */
 
 .hero {
     margin-bottom: 30px;
@@ -263,47 +315,80 @@ body {
 
 .hero h1 {
     font-size: 32px;
+
     color: #102a56;
 }
 
 .hero p {
     color: #64748b;
+
     margin-top: 8px;
 }
 
-/* =========================
+
+/* =========================================
+   CARDS
+========================================= */
+
+.card,
+.big-card,
+.quest,
+.flashcard {
+    background: white;
+
+    border: 1px solid #dbe7f5;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(15,23,42,0.06);
+}
+
+.card {
+    padding: 22px;
+}
+
+.big-card {
+    padding: 30px;
+}
+
+.big-card h1 {
+    color: #102a56;
+
+    margin-bottom: 10px;
+}
+
+.big-card p {
+    color: #64748b;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
    STATS
-========================= */
+========================================= */
 
 .stats {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 18px;
 
     margin-bottom: 25px;
 }
 
-.card {
-    background: white;
-
-    padding: 22px;
-
-    border-radius: 16px;
-
-    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
-
-    border: 1px solid #dbe7f5;
-}
-
 .stat-title {
     color: #64748b;
+
     font-size: 14px;
 }
 
 .stat-number {
     font-size: 28px;
+
     font-weight: bold;
 
     margin-top: 7px;
@@ -311,16 +396,18 @@ body {
     color: #102a56;
 }
 
-/* =========================
+
+/* =========================================
    XP
-========================= */
+========================================= */
 
 .xp-card {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .xp-top {
     display: flex;
+
     justify-content: space-between;
 
     margin-bottom: 10px;
@@ -328,10 +415,13 @@ body {
 
 .xp-title {
     font-weight: bold;
+
+    color: #102a56;
 }
 
 .xp-number {
     color: #2563eb;
+
     font-weight: bold;
 }
 
@@ -365,38 +455,33 @@ body {
     font-size: 13px;
 }
 
-/* =========================
+
+/* =========================================
    QUESTS
-========================= */
+========================================= */
 
 .section-title {
-    margin-bottom: 15px;
-
     color: #102a56;
+
+    margin-bottom: 15px;
 }
 
 .quest-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 18px;
 }
 
 .quest {
-    background: white;
-
     padding: 22px;
-
-    border-radius: 16px;
-
-    border: 1px solid #dbe7f5;
-
-    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
 }
 
 .quest h3 {
     color: #102a56;
+
     margin-bottom: 8px;
 }
 
@@ -404,12 +489,15 @@ body {
     color: #64748b;
 
     margin-bottom: 15px;
+
+    line-height: 1.5;
 }
 
 .quest button {
     border: none;
 
     background: #2563eb;
+
     color: white;
 
     padding: 10px 15px;
@@ -429,14 +517,16 @@ body {
     background: #16a34a;
 }
 
-/* =========================
+
+/* =========================================
    BADGES
-========================= */
+========================================= */
 
 .badges {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 15px;
 }
@@ -463,11 +553,14 @@ body {
 
 .badge-icon {
     font-size: 30px;
+
     margin-bottom: 8px;
 }
 
 .badge h3 {
     font-size: 15px;
+
+    color: #102a56;
 }
 
 .badge p {
@@ -478,63 +571,254 @@ body {
     margin-top: 5px;
 }
 
-/* =========================
-   SIMPLE PAGES
-========================= */
 
-.big-card {
-    background: white;
+/* =========================================
+   FLASHCARDS
+========================================= */
 
-    padding: 30px;
-
-    border-radius: 18px;
-
-    border: 1px solid #dbe7f5;
-
-    box-shadow: 0 5px 18px rgba(15,23,42,0.06);
+.flashcard-create {
+    margin-bottom: 30px;
 }
 
-.big-card h1 {
+#flashcardList {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.flashcard {
+    padding: 22px;
+}
+
+.flashcard-question {
+    font-size: 18px;
+
+    font-weight: bold;
+
     color: #102a56;
+
+    margin-bottom: 12px;
+}
+
+.flashcard-answer {
+    color: #64748b;
+
+    margin-bottom: 15px;
+
+    line-height: 1.5;
+}
+
+.flashcard-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+.flashcard-actions button {
+    border: none;
+
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.delete-card {
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+.delete-card:hover {
+    background: #fecaca;
+}
+
+
+/* =========================================
+   TIMER
+========================================= */
+
+.timer-page {
+    min-height:
+        calc(100vh - 70px);
+
+    background: #eef4ff;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+}
+
+.timer-type {
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 35px;
+}
+
+.timer-type button {
+    border: none;
+
+    background: white;
+
+    color: #102a56;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.timer-type button:hover {
+    background: #dbeafe;
+}
+
+#timerLabel {
+    color: #2563eb;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
 
     margin-bottom: 10px;
 }
 
-.big-card p {
-    color: #64748b;
+#timerDisplay {
+    font-size:
+        clamp(80px, 18vw, 180px);
 
-    line-height: 1.6;
+    font-weight: bold;
+
+    color: #102a56;
+
+    line-height: 1;
+
+    margin:
+        15px 0 30px;
 }
 
-/* =========================
+.timer-buttons {
+    display: flex;
+
+    gap: 12px;
+}
+
+.timer-buttons button {
+    border: none;
+
+    background: #2563eb;
+
+    color: white;
+
+    padding: 12px 22px;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.timer-buttons button:hover {
+    background: #1d4ed8;
+}
+
+#timerStatus {
+    margin-top: 20px;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PROGRESS
+========================================= */
+
+.progress-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+.progress-stat {
+    text-align: center;
+
+    padding: 25px;
+}
+
+.progress-stat h2 {
+    font-size: 35px;
+
+    color: #2563eb;
+
+    margin-bottom: 5px;
+}
+
+.progress-stat p {
+    color: #64748b;
+}
+
+
+/* =========================================
    TOAST
-========================= */
+========================================= */
 
 #toast {
     position: fixed;
 
     bottom: 25px;
+
     right: 25px;
 
     background: #102a56;
+
     color: white;
 
     padding: 14px 20px;
 
     border-radius: 10px;
 
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.2);
 
     display: none;
 
     z-index: 1000;
 }
 
-/* =========================
-   MOBILE
-========================= */
 
-@media (max-width: 750px) {
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
 
     .navbar {
         padding: 0 15px;
@@ -553,27 +837,40 @@ body {
     }
 
     .badges {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    #flashcardList {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-grid {
+        grid-template-columns: 1fr;
     }
 
     .hero h1 {
         font-size: 26px;
     }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
 
-<!-- =========================
-     LOGIN / SIGNUP PAGE
-========================= -->
+<!-- =================================================
+     LOGIN / SIGN UP
+================================================= -->
 
 <div id="authPage">
 
     <div class="auth-box">
+
 
         <div class="auth-logo">
 
@@ -583,7 +880,9 @@ body {
 
             <h1>Study Quest</h1>
 
-            <p>Learn. Level up. Improve.</p>
+            <p>
+                Learn. Level up. Improve.
+            </p>
 
         </div>
 
@@ -592,44 +891,62 @@ body {
 
         <div id="loginForm">
 
-            <h2>Welcome back 👋</h2>
+            <h2>
+                Welcome back 👋
+            </h2>
 
-            <div id="loginError" class="error-message"></div>
+            <div
+                id="loginError"
+                class="error-message">
+            </div>
+
 
             <div class="input-group">
 
-                <label>Username</label>
+                <label>
+                    Username
+                </label>
 
                 <input
                     type="text"
                     id="loginUsername"
-                    placeholder="Enter your username"
-                >
+                    placeholder="Enter your username">
 
             </div>
 
+
             <div class="input-group">
 
-                <label>Password</label>
+                <label>
+                    Password
+                </label>
 
                 <input
                     type="password"
                     id="loginPassword"
-                    placeholder="Enter your password"
-                >
+                    placeholder="Enter your password">
 
             </div>
 
-            <button class="primary-btn" onclick="login()">
+
+            <button
+                class="primary-btn"
+                onclick="login()">
+
                 Log In
+
             </button>
+
 
             <div class="switch-auth">
 
                 Don't have an account?
 
-                <button onclick="showSignup()">
+                <button
+                    onclick="showSignup()">
+
                     Sign Up
+
                 </button>
 
             </div>
@@ -637,60 +954,83 @@ body {
         </div>
 
 
-        <!-- SIGNUP -->
+        <!-- SIGN UP -->
 
-        <div id="signupForm" style="display:none;">
+        <div
+            id="signupForm"
+            style="display:none;">
 
-            <h2>Create your account 🚀</h2>
+            <h2>
+                Create your account 🚀
+            </h2>
 
-            <div id="signupError" class="error-message"></div>
+
+            <div
+                id="signupError"
+                class="error-message">
+            </div>
+
 
             <div class="input-group">
 
-                <label>Username</label>
+                <label>
+                    Username
+                </label>
 
                 <input
                     type="text"
                     id="signupUsername"
-                    placeholder="Choose a username"
-                >
+                    placeholder="Choose a username">
 
             </div>
 
+
             <div class="input-group">
 
-                <label>Password</label>
+                <label>
+                    Password
+                </label>
 
                 <input
                     type="password"
                     id="signupPassword"
-                    placeholder="Create a password"
-                >
+                    placeholder="Create a password">
 
             </div>
 
+
             <div class="input-group">
 
-                <label>Confirm Password</label>
+                <label>
+                    Confirm Password
+                </label>
 
                 <input
                     type="password"
                     id="signupConfirm"
-                    placeholder="Confirm your password"
-                >
+                    placeholder="Confirm your password">
 
             </div>
 
-            <button class="primary-btn" onclick="signup()">
+
+            <button
+                class="primary-btn"
+                onclick="signup()">
+
                 Create Account
+
             </button>
+
 
             <div class="switch-auth">
 
                 Already have an account?
 
-                <button onclick="showLogin()">
+                <button
+                    onclick="showLogin()">
+
                     Log In
+
                 </button>
 
             </div>
@@ -702,16 +1042,20 @@ body {
 </div>
 
 
-<!-- =========================
-     MAIN APP
-========================= -->
 
-<div id="app" style="display:none;">
+<!-- =================================================
+     MAIN APP
+================================================= -->
+
+<div
+    id="app"
+    style="display:none;">
 
 
     <!-- NAVBAR -->
 
     <nav class="navbar">
+
 
         <div class="logo">
 
@@ -726,24 +1070,52 @@ body {
 
         <div class="nav-buttons">
 
-            <button onclick="showPage('dashboard')">
+            <button
+                onclick="showPage('dashboard')">
+
                 Dashboard
+
             </button>
 
-            <button onclick="showPage('quests')">
+
+            <button
+                onclick="showPage('quests')">
+
                 Quests
+
             </button>
 
-            <button onclick="showPage('learn')">
+
+            <button
+                onclick="showPage('flashcards')">
+
+                My Flashcards
+
+            </button>
+
+
+            <button
+                onclick="showPage('learn')">
+
                 Learn
+
             </button>
 
-            <button onclick="showPage('progress')">
+
+            <button
+                onclick="showPage('progress')">
+
                 Progress
+
             </button>
 
-            <button class="logout-btn" onclick="logout()">
+
+            <button
+                class="logout-btn"
+                onclick="logout()">
+
                 Log Out
+
             </button>
 
         </div>
@@ -751,18 +1123,27 @@ body {
     </nav>
 
 
-    <!-- =========================
-         DASHBOARD
-    ========================= -->
 
-    <section id="dashboard" class="page active">
+    <!-- =================================================
+         DASHBOARD
+    ================================================= -->
+
+    <section
+        id="dashboard"
+        class="page active">
+
 
         <div class="container">
+
 
             <div class="hero">
 
                 <h1>
-                    Welcome to Study Quest, <span id="playerName"></span> 👋
+
+                    Welcome to Study Quest,
+                    <span id="playerName"></span>
+                    👋
+
                 </h1>
 
                 <p>
@@ -776,14 +1157,19 @@ body {
 
             <div class="stats">
 
+
                 <div class="card">
 
                     <div class="stat-title">
                         Total XP
                     </div>
 
-                    <div class="stat-number" id="xpDisplay">
+                    <div
+                        class="stat-number"
+                        id="xpDisplay">
+
                         0
+
                     </div>
 
                 </div>
@@ -796,7 +1182,12 @@ body {
                     </div>
 
                     <div class="stat-number">
-                        🔥 <span id="streakDisplay">1</span>
+
+                        🔥
+                        <span id="streakDisplay">
+                            1
+                        </span>
+
                     </div>
 
                 </div>
@@ -808,8 +1199,12 @@ body {
                         Quests Complete
                     </div>
 
-                    <div class="stat-number" id="completedDisplay">
+                    <div
+                        class="stat-number"
+                        id="completedDisplay">
+
                         0
+
                     </div>
 
                 </div>
@@ -817,18 +1212,31 @@ body {
             </div>
 
 
-            <!-- LEVEL -->
+
+            <!-- XP -->
 
             <div class="card xp-card">
 
+
                 <div class="xp-top">
 
-                    <div class="xp-title" id="levelTitle">
+                    <div
+                        class="xp-title"
+                        id="levelTitle">
+
                         Level 1 — Beginner
+
                     </div>
 
+
                     <div class="xp-number">
-                        <span id="xpText">0</span> XP
+
+                        <span id="xpText">
+                            0
+                        </span>
+
+                        XP
+
                     </div>
 
                 </div>
@@ -847,24 +1255,34 @@ body {
                 <div
                     class="next-level"
                     id="nextLevel">
+
                     100 XP until Level 2
+
                 </div>
 
             </div>
 
 
-            <!-- DAILY QUESTS -->
+
+            <!-- QUESTS -->
 
             <h2 class="section-title">
+
                 Today's Quests ⚔️
+
             </h2>
+
 
             <div class="quest-grid">
 
 
+                <!-- MEMORY -->
+
                 <div class="quest">
 
-                    <h3>🧠 Memory Challenge</h3>
+                    <h3>
+                        🧠 Memory Challenge
+                    </h3>
 
                     <p>
                         Learn and recall 5 facts.
@@ -873,15 +1291,21 @@ body {
                     <button
                         id="questBtn1"
                         onclick="completeQuest(1,50)">
-                        Complete +50 XP
+
+                        Claim +50 XP
+
                     </button>
 
                 </div>
 
 
+                <!-- QUESTIONS -->
+
                 <div class="quest">
 
-                    <h3>📝 Practice Questions</h3>
+                    <h3>
+                        📝 Practice Questions
+                    </h3>
 
                     <p>
                         Complete 10 practice questions.
@@ -890,41 +1314,53 @@ body {
                     <button
                         id="questBtn2"
                         onclick="completeQuest(2,75)">
-                        Complete +75 XP
+
+                        Claim +75 XP
+
                     </button>
 
                 </div>
 
 
+                <!-- FOCUS -->
+
                 <div class="quest">
 
-                    <h3>⏱️ Focus Session</h3>
+                    <h3>
+                        ⏱️ Focus Session
+                    </h3>
 
                     <p>
-                        Focus on one task for 25 minutes.
+                        Focus on one task using the Study Quest timer.
                     </p>
 
                     <button
-                        id="questBtn3"
-                        onclick="completeQuest(3,50)">
-                        Complete +50 XP
+                        onclick="showPage('focusTimer')">
+
+                        Start Timer
+
                     </button>
 
                 </div>
 
 
+                <!-- FLASHCARDS -->
+
                 <div class="quest">
 
-                    <h3>🃏 Flashcard Quest</h3>
+                    <h3>
+                        🃏 Flashcard Quest
+                    </h3>
 
                     <p>
                         Create 5 useful flashcards.
                     </p>
 
                     <button
-                        id="questBtn4"
-                        onclick="completeQuest(4,50)">
-                        Complete +50 XP
+                        onclick="showPage('flashcards')">
+
+                        My Flashcards
+
                     </button>
 
                 </div>
@@ -932,12 +1368,15 @@ body {
             </div>
 
 
+
             <!-- BADGES -->
 
             <h2
                 class="section-title"
                 style="margin-top:35px;">
+
                 Achievements 🏆
+
             </h2>
 
 
@@ -952,9 +1391,13 @@ body {
                         ⭐
                     </div>
 
-                    <h3>First Quest</h3>
+                    <h3>
+                        First Quest
+                    </h3>
 
-                    <p>Complete your first quest.</p>
+                    <p>
+                        Complete your first quest.
+                    </p>
 
                 </div>
 
@@ -967,9 +1410,13 @@ body {
                         ⚔️
                     </div>
 
-                    <h3>Quest Hunter</h3>
+                    <h3>
+                        Quest Hunter
+                    </h3>
 
-                    <p>Complete 3 quests.</p>
+                    <p>
+                        Complete 3 quests.
+                    </p>
 
                 </div>
 
@@ -982,9 +1429,13 @@ body {
                         🧠
                     </div>
 
-                    <h3>Brain Power</h3>
+                    <h3>
+                        Brain Power
+                    </h3>
 
-                    <p>Earn 200 XP.</p>
+                    <p>
+                        Earn 200 XP.
+                    </p>
 
                 </div>
 
@@ -997,9 +1448,13 @@ body {
                         🔥
                     </div>
 
-                    <h3>On Fire</h3>
+                    <h3>
+                        On Fire
+                    </h3>
 
-                    <p>Reach a 7-day streak.</p>
+                    <p>
+                        Reach a 7-day streak.
+                    </p>
 
                 </div>
 
@@ -1012,9 +1467,13 @@ body {
                         🎓
                     </div>
 
-                    <h3>Scholar</h3>
+                    <h3>
+                        Scholar
+                    </h3>
 
-                    <p>Reach Level 5.</p>
+                    <p>
+                        Reach Level 5.
+                    </p>
 
                 </div>
 
@@ -1027,9 +1486,13 @@ body {
                         👑
                     </div>
 
-                    <h3>Study Master</h3>
+                    <h3>
+                        Study Master
+                    </h3>
 
-                    <p>Reach Level 11.</p>
+                    <p>
+                        Reach Level 11.
+                    </p>
 
                 </div>
 
@@ -1040,22 +1503,337 @@ body {
     </section>
 
 
-    <!-- =========================
+
+    <!-- =================================================
          QUESTS PAGE
-    ========================= -->
+    ================================================= -->
 
-    <section id="quests" class="page">
+    <section
+        id="quests"
+        class="page">
+
 
         <div class="container">
 
-            <div class="big-card">
 
-                <h1>⚔️ Quests</h1>
+            <div class="hero">
+
+                <h1>
+                    ⚔️ Quests
+                </h1>
 
                 <p>
-                    Your full quest system will live here.
-                    Soon we'll turn these into actual interactive
-                    challenges instead of simply pressing Complete.
+                    Complete challenges and earn XP.
+                </p>
+
+            </div>
+
+
+            <div class="quest-grid">
+
+
+                <div class="quest">
+
+                    <h3>
+                        🧠 Memory Challenge
+                    </h3>
+
+                    <p>
+                        Learn and recall 5 facts.
+                    </p>
+
+                    <button
+                        onclick="completeQuest(1,50)">
+
+                        Claim +50 XP
+
+                    </button>
+
+                </div>
+
+
+                <div class="quest">
+
+                    <h3>
+                        📝 Practice Questions
+                    </h3>
+
+                    <p>
+                        Complete 10 practice questions.
+                    </p>
+
+                    <button
+                        onclick="completeQuest(2,75)">
+
+                        Claim +75 XP
+
+                    </button>
+
+                </div>
+
+
+                <div class="quest">
+
+                    <h3>
+                        ⏱️ Focus Session
+                    </h3>
+
+                    <p>
+                        Complete a focused study session.
+                    </p>
+
+                    <button
+                        onclick="showPage('focusTimer')">
+
+                        Start Focus
+
+                    </button>
+
+                </div>
+
+
+                <div class="quest">
+
+                    <h3>
+                        🃏 Flashcard Quest
+                    </h3>
+
+                    <p>
+                        Create useful flashcards.
+                    </p>
+
+                    <button
+                        onclick="showPage('flashcards')">
+
+                        Create Flashcards
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FLASHCARDS
+    ================================================= -->
+
+    <section
+        id="flashcards"
+        class="page">
+
+
+        <div class="container">
+
+
+            <div class="hero">
+
+                <h1>
+                    🃏 My Flashcards
+                </h1>
+
+                <p>
+                    Create your own revision cards.
+                </p>
+
+            </div>
+
+
+            <div class="big-card flashcard-create">
+
+
+                <h2
+                    style="color:#102a56;
+                           margin-bottom:20px;">
+
+                    Create a Flashcard
+
+                </h2>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Question
+                    </label>
+
+                    <input
+                        type="text"
+                        id="flashcardQuestion"
+                        placeholder="e.g. What is photosynthesis?">
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Answer
+                    </label>
+
+                    <input
+                        type="text"
+                        id="flashcardAnswer"
+                        placeholder="e.g. The process plants use to make food.">
+
+                </div>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="addFlashcard()">
+
+                    + Add Flashcard
+
+                </button>
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Your Flashcards
+
+            </h2>
+
+
+            <div id="flashcardList">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOCUS TIMER
+    ================================================= -->
+
+    <section
+        id="focusTimer"
+        class="page">
+
+
+        <div class="timer-page">
+
+
+            <div class="timer-type">
+
+                <button
+                    onclick="setPomodoro()">
+
+                    Pomodoro
+
+                </button>
+
+
+                <button
+                    onclick="setNormalTimer()">
+
+                    Normal Timer
+
+                </button>
+
+            </div>
+
+
+            <div id="timerLabel">
+
+                POMODORO
+
+            </div>
+
+
+            <div id="timerDisplay">
+
+                25:00
+
+            </div>
+
+
+            <div class="timer-buttons">
+
+
+                <button
+                    onclick="startTimer()">
+
+                    Start
+
+                </button>
+
+
+                <button
+                    onclick="pauseTimer()">
+
+                    Pause
+
+                </button>
+
+
+                <button
+                    onclick="resetTimer()">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+
+            <div id="timerStatus">
+
+                25 min study • 5 min break
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LEARN
+    ================================================= -->
+
+    <section
+        id="learn"
+        class="page">
+
+
+        <div class="container">
+
+
+            <div class="hero">
+
+                <h1>
+                    📚 Learn
+                </h1>
+
+                <p>
+                    Your learning centre.
+                </p>
+
+            </div>
+
+
+            <div class="big-card">
+
+                <h1>
+                    Coming Soon 🚀
+                </h1>
+
+                <p>
+                    This is where we'll build subjects,
+                    revision guides, study techniques,
+                    videos, lessons and more.
                 </p>
 
             </div>
@@ -1065,57 +1843,94 @@ body {
     </section>
 
 
-    <!-- =========================
-         LEARN PAGE
-    ========================= -->
 
-    <section id="learn" class="page">
+    <!-- =================================================
+         PROGRESS
+    ================================================= -->
+
+    <section
+        id="progress"
+        class="page">
+
 
         <div class="container">
 
-            <div class="big-card">
 
-                <h1>📚 Learn</h1>
+            <div class="hero">
+
+                <h1>
+                    📊 Your Progress
+                </h1>
 
                 <p>
-                    This will become your learning centre.
-                    We'll eventually add subjects, videos,
-                    revision guides, flashcards and interactive lessons.
+                    See how far you've come.
                 </p>
+
+            </div>
+
+
+            <div class="progress-grid">
+
+
+                <div class="card progress-stat">
+
+                    <h2 id="progressXP">
+                        0
+                    </h2>
+
+                    <p>
+                        Total XP
+                    </p>
+
+                </div>
+
+
+                <div class="card progress-stat">
+
+                    <h2 id="progressQuests">
+                        0
+                    </h2>
+
+                    <p>
+                        Quests Completed
+                    </p>
+
+                </div>
+
+
+                <div class="card progress-stat">
+
+                    <h2 id="progressStreak">
+                        1
+                    </h2>
+
+                    <p>
+                        Current Streak
+                    </p>
+
+                </div>
+
+
+                <div class="card progress-stat">
+
+                    <h2 id="progressLevel">
+                        1
+                    </h2>
+
+                    <p>
+                        Current Level
+                    </p>
+
+                </div>
 
             </div>
 
         </div>
 
     </section>
-
-
-    <!-- =========================
-         PROGRESS PAGE
-    ========================= -->
-
-    <section id="progress" class="page">
-
-        <div class="container">
-
-            <div class="big-card">
-
-                <h1>📊 Your Progress</h1>
-
-                <p>
-                    Your XP, levels, quests, streaks and achievements
-                    will eventually be displayed here with detailed
-                    progress charts.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
 
 </div>
+
 
 
 <!-- TOAST -->
@@ -1123,47 +1938,64 @@ body {
 <div id="toast"></div>
 
 
+
 <script>
 
-/* =================================
+/* =================================================
    ACCOUNT SYSTEM
-================================= */
+================================================= */
 
 function showSignup() {
 
-    document.getElementById("loginForm").style.display = "none";
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
 
-    document.getElementById("signupForm").style.display = "block";
+    document.getElementById(
+        "signupForm"
+    ).style.display = "block";
 
 }
 
 
 function showLogin() {
 
-    document.getElementById("signupForm").style.display = "none";
+    document.getElementById(
+        "signupForm"
+    ).style.display = "none";
 
-    document.getElementById("loginForm").style.display = "block";
+    document.getElementById(
+        "loginForm"
+    ).style.display = "block";
 
 }
 
 
-/* =================================
+/* =================================================
    SIGN UP
-================================= */
+================================================= */
 
 function signup() {
 
     const username =
-        document.getElementById("signupUsername").value.trim();
+        document.getElementById(
+            "signupUsername"
+        ).value.trim();
 
     const password =
-        document.getElementById("signupPassword").value;
+        document.getElementById(
+            "signupPassword"
+        ).value;
 
     const confirm =
-        document.getElementById("signupConfirm").value;
+        document.getElementById(
+            "signupConfirm"
+        ).value;
 
     const error =
-        document.getElementById("signupError");
+        document.getElementById(
+            "signupError"
+        );
 
 
     error.style.display = "none";
@@ -1177,6 +2009,7 @@ function signup() {
         error.style.display = "block";
 
         return;
+
     }
 
 
@@ -1188,6 +2021,7 @@ function signup() {
         error.style.display = "block";
 
         return;
+
     }
 
 
@@ -1199,14 +2033,17 @@ function signup() {
         error.style.display = "block";
 
         return;
+
     }
 
 
-    const existingUser =
-        localStorage.getItem("studyQuestUser_" + username);
+    const existing =
+        localStorage.getItem(
+            "studyQuestUser_" + username
+        );
 
 
-    if (existingUser) {
+    if (existing) {
 
         error.innerText =
             "That username already exists.";
@@ -1214,6 +2051,7 @@ function signup() {
         error.style.display = "block";
 
         return;
+
     }
 
 
@@ -1242,39 +2080,52 @@ function signup() {
 
 
     localStorage.setItem(
+
         "studyQuestUser_" + username,
+
         JSON.stringify(account)
+
     );
 
 
     localStorage.setItem(
+
         "studyQuestCurrentUser",
+
         username
+
     );
-
-
-    showToast("Account created! Welcome to Study Quest 🚀");
 
 
     loadAccount();
 
+    showToast(
+        "Account created! Welcome 🚀"
+    );
+
 }
 
 
-/* =================================
+/* =================================================
    LOGIN
-================================= */
+================================================= */
 
 function login() {
 
     const username =
-        document.getElementById("loginUsername").value.trim();
+        document.getElementById(
+            "loginUsername"
+        ).value.trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document.getElementById(
+            "loginPassword"
+        ).value;
 
     const error =
-        document.getElementById("loginError");
+        document.getElementById(
+            "loginError"
+        );
 
 
     error.style.display = "none";
@@ -1294,6 +2145,7 @@ function login() {
         error.style.display = "block";
 
         return;
+
     }
 
 
@@ -1309,12 +2161,16 @@ function login() {
         error.style.display = "block";
 
         return;
+
     }
 
 
     localStorage.setItem(
+
         "studyQuestCurrentUser",
+
         username
+
     );
 
 
@@ -1323,9 +2179,9 @@ function login() {
 }
 
 
-/* =================================
+/* =================================================
    LOAD ACCOUNT
-================================= */
+================================================= */
 
 function loadAccount() {
 
@@ -1335,11 +2191,8 @@ function loadAccount() {
         );
 
 
-    if (!username) {
-
+    if (!username)
         return;
-
-    }
 
 
     const stored =
@@ -1348,28 +2201,32 @@ function loadAccount() {
         );
 
 
-    if (!stored) {
-
+    if (!stored)
         return;
-
-    }
 
 
     const account =
         JSON.parse(stored);
 
 
-    /* Load game variables */
+    xp =
+        account.xp || 0;
 
-    xp = account.xp;
-
-    streak = account.streak;
+    streak =
+        account.streak || 1;
 
     completedQuests =
-        account.completedQuests;
+        account.completedQuests || 0;
 
     completed =
-        account.completed;
+        account.completed || {
+
+            1:false,
+            2:false,
+            3:false,
+            4:false
+
+        };
 
 
     document.getElementById(
@@ -1389,12 +2246,14 @@ function loadAccount() {
 
     updateScreen();
 
+    displayFlashcards();
+
 }
 
 
-/* =================================
+/* =================================================
    SAVE ACCOUNT
-================================= */
+================================================= */
 
 function saveAccount() {
 
@@ -1404,7 +2263,18 @@ function saveAccount() {
         );
 
 
-    if (!username) return;
+    if (!username)
+        return;
+
+
+    const oldAccount =
+        JSON.parse(
+
+            localStorage.getItem(
+                "studyQuestUser_" + username
+            )
+
+        );
 
 
     const account = {
@@ -1412,11 +2282,7 @@ function saveAccount() {
         username: username,
 
         password:
-            JSON.parse(
-                localStorage.getItem(
-                    "studyQuestUser_" + username
-                )
-            ).password,
+            oldAccount.password,
 
         xp: xp,
 
@@ -1442,9 +2308,9 @@ function saveAccount() {
 }
 
 
-/* =================================
+/* =================================================
    LOGOUT
-================================= */
+================================================= */
 
 function logout() {
 
@@ -1468,9 +2334,9 @@ function logout() {
 }
 
 
-/* =================================
+/* =================================================
    GAME VARIABLES
-================================= */
+================================================= */
 
 let xp = 0;
 
@@ -1489,9 +2355,9 @@ let completed = {
 };
 
 
-/* =================================
+/* =================================================
    LEVEL SYSTEM
-================================= */
+================================================= */
 
 function getLevel() {
 
@@ -1530,9 +2396,9 @@ function getLevel() {
 }
 
 
-/* =================================
+/* =================================================
    UPDATE SCREEN
-================================= */
+================================================= */
 
 function updateScreen() {
 
@@ -1557,14 +2423,17 @@ function updateScreen() {
 
     document.getElementById(
         "completedDisplay"
-    ).innerText = completedQuests;
+    ).innerText =
+        completedQuests;
 
 
     document.getElementById(
         "levelTitle"
     ).innerText =
-        "Level " + level[0] +
-        " — " + level[1];
+        "Level " +
+        level[0] +
+        " — " +
+        level[1];
 
 
     let previousXP = 0;
@@ -1613,12 +2482,14 @@ function updateScreen() {
         (currentXP / levelXP) * 100;
 
 
-    if (percentage > 100)
-        percentage = 100;
-
-
-    if (percentage < 0)
-        percentage = 0;
+    percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                percentage
+            )
+        );
 
 
     document.getElementById(
@@ -1632,11 +2503,14 @@ function updateScreen() {
         document.getElementById(
             "nextLevel"
         ).innerText =
+
             (level[2] - xp) +
             " XP until Level " +
             (level[0] + 1);
 
-    } else {
+    }
+
+    else {
 
         document.getElementById(
             "nextLevel"
@@ -1646,9 +2520,13 @@ function updateScreen() {
     }
 
 
-    /* Quest buttons */
+    /* QUEST BUTTONS */
 
-    for (let i = 1; i <= 4; i++) {
+    for (
+        let i = 1;
+        i <= 4;
+        i++
+    ) {
 
         const button =
             document.getElementById(
@@ -1656,52 +2534,93 @@ function updateScreen() {
             );
 
 
-        if (completed[i]) {
+        if (button) {
 
-            button.innerText =
-                "Completed ✓";
+            if (completed[i]) {
 
-            button.classList.add(
-                "completed"
-            );
+                button.innerText =
+                    "Completed ✓";
 
-            button.disabled = true;
+                button.classList.add(
+                    "completed"
+                );
+
+                button.disabled = true;
+
+            }
 
         }
 
     }
 
 
-    /* Badges */
+    /* BADGES */
 
     if (completedQuests >= 1)
-        document.getElementById("badge1")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge1"
+        ).classList.add("unlocked");
 
 
     if (completedQuests >= 3)
-        document.getElementById("badge2")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge2"
+        ).classList.add("unlocked");
 
 
     if (xp >= 200)
-        document.getElementById("badge3")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge3"
+        ).classList.add("unlocked");
 
 
     if (streak >= 7)
-        document.getElementById("badge4")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge4"
+        ).classList.add("unlocked");
 
 
     if (level[0] >= 5)
-        document.getElementById("badge5")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge5"
+        ).classList.add("unlocked");
 
 
     if (level[0] >= 11)
-        document.getElementById("badge6")
-            .classList.add("unlocked");
+
+        document.getElementById(
+            "badge6"
+        ).classList.add("unlocked");
+
+
+    /* PROGRESS PAGE */
+
+    document.getElementById(
+        "progressXP"
+    ).innerText = xp;
+
+
+    document.getElementById(
+        "progressQuests"
+    ).innerText =
+        completedQuests;
+
+
+    document.getElementById(
+        "progressStreak"
+    ).innerText =
+        streak;
+
+
+    document.getElementById(
+        "progressLevel"
+    ).innerText =
+        level[0];
 
 
     saveAccount();
@@ -1709,11 +2628,14 @@ function updateScreen() {
 }
 
 
-/* =================================
+/* =================================================
    COMPLETE QUEST
-================================= */
+================================================= */
 
-function completeQuest(number, reward) {
+function completeQuest(
+    number,
+    reward
+) {
 
     if (completed[number])
         return;
@@ -1730,45 +2652,585 @@ function completeQuest(number, reward) {
 
 
     showToast(
-        "+" + reward + " XP! Quest complete! 🎉"
-    );
 
+        "+" +
+        reward +
+        " XP! Quest complete! 🎉"
+
+    );
 
 }
 
 
-/* =================================
+/* =================================================
    PAGE NAVIGATION
-================================= */
+================================================= */
 
 function showPage(pageID) {
 
     const pages =
-        document.querySelectorAll(".page");
+        document.querySelectorAll(
+            ".page"
+        );
 
 
-    pages.forEach(page => {
+    pages.forEach(
+        page => {
 
-        page.classList.remove("active");
+            page.classList.remove(
+                "active"
+            );
 
-    });
+        }
+    );
 
 
-    document.getElementById(
-        pageID
-    ).classList.add("active");
+    const selected =
+        document.getElementById(
+            pageID
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
 
 }
 
 
-/* =================================
+/* =================================================
+   FLASHCARD SYSTEM
+================================================= */
+
+let flashcards =
+
+    JSON.parse(
+
+        localStorage.getItem(
+            "studyQuestFlashcards"
+        )
+
+    ) || [];
+
+
+function saveFlashcards() {
+
+    localStorage.setItem(
+
+        "studyQuestFlashcards",
+
+        JSON.stringify(
+            flashcards
+        )
+
+    );
+
+}
+
+
+function addFlashcard() {
+
+    const question =
+        document.getElementById(
+            "flashcardQuestion"
+        ).value.trim();
+
+
+    const answer =
+        document.getElementById(
+            "flashcardAnswer"
+        ).value.trim();
+
+
+    if (
+        !question ||
+        !answer
+    ) {
+
+        showToast(
+            "Add a question and answer first."
+        );
+
+        return;
+
+    }
+
+
+    flashcards.push({
+
+        question: question,
+
+        answer: answer
+
+    });
+
+
+    saveFlashcards();
+
+    displayFlashcards();
+
+
+    document.getElementById(
+        "flashcardQuestion"
+    ).value = "";
+
+
+    document.getElementById(
+        "flashcardAnswer"
+    ).value = "";
+
+
+    showToast(
+        "Flashcard created! 🃏"
+    );
+
+}
+
+
+function displayFlashcards() {
+
+    const list =
+        document.getElementById(
+            "flashcardList"
+        );
+
+
+    if (!list)
+        return;
+
+
+    if (
+        flashcards.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="big-card">
+
+                <p>
+
+                    You haven't created
+                    any flashcards yet.
+                    Create your first one above!
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    flashcards.forEach(
+        (card, index) => {
+
+            list.innerHTML += `
+
+                <div class="flashcard">
+
+                    <div class="flashcard-question">
+
+                        ${escapeHTML(
+                            card.question
+                        )}
+
+                    </div>
+
+
+                    <div class="flashcard-answer">
+
+                        ${escapeHTML(
+                            card.answer
+                        )}
+
+                    </div>
+
+
+                    <div class="flashcard-actions">
+
+                        <button
+                            class="delete-card"
+                            onclick="deleteFlashcard(${index})">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* Prevent HTML from being inserted
+   into flashcards */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+function deleteFlashcard(index) {
+
+    flashcards.splice(
+        index,
+        1
+    );
+
+
+    saveFlashcards();
+
+    displayFlashcards();
+
+
+    showToast(
+        "Flashcard deleted."
+    );
+
+}
+
+
+/* =================================================
+   TIMER
+================================================= */
+
+let timerSeconds =
+    25 * 60;
+
+let timerInterval = null;
+
+let timerRunning = false;
+
+let timerMode =
+    "pomodoro";
+
+
+let pomodoroStage =
+    "study";
+
+
+/* Update timer */
+
+function updateTimerDisplay() {
+
+    const minutes =
+        Math.floor(
+            timerSeconds / 60
+        );
+
+
+    const seconds =
+        timerSeconds % 60;
+
+
+    document.getElementById(
+        "timerDisplay"
+    ).innerText =
+
+        String(minutes)
+        .padStart(2, "0")
+
+        +
+
+        ":"
+
+        +
+
+        String(seconds)
+        .padStart(2, "0");
+
+}
+
+
+/* Start */
+
+function startTimer() {
+
+    if (timerRunning)
+        return;
+
+
+    timerRunning = true;
+
+
+    timerInterval =
+        setInterval(
+
+            () => {
+
+                if (
+                    timerSeconds > 0
+                ) {
+
+                    timerSeconds--;
+
+                    updateTimerDisplay();
+
+                }
+
+                else {
+
+                    if (
+                        timerMode ===
+                        "pomodoro"
+                    ) {
+
+                        switchPomodoro();
+
+                    }
+
+                    else {
+
+                        pauseTimer();
+
+                        showToast(
+                            "Timer finished! 🎉"
+                        );
+
+                    }
+
+                }
+
+            },
+
+            1000
+
+        );
+
+}
+
+
+/* Pause */
+
+function pauseTimer() {
+
+    timerRunning = false;
+
+    clearInterval(
+        timerInterval
+    );
+
+}
+
+
+/* Reset */
+
+function resetTimer() {
+
+    pauseTimer();
+
+
+    if (
+        timerMode ===
+        "pomodoro"
+    ) {
+
+        pomodoroStage =
+            "study";
+
+        timerSeconds =
+            25 * 60;
+
+        document.getElementById(
+            "timerLabel"
+        ).innerText =
+            "POMODORO";
+
+        document.getElementById(
+            "timerStatus"
+        ).innerText =
+            "25 min study • 5 min break";
+
+    }
+
+    else {
+
+        timerSeconds =
+            10 * 60;
+
+    }
+
+
+    updateTimerDisplay();
+
+}
+
+
+/* Pomodoro */
+
+function setPomodoro() {
+
+    pauseTimer();
+
+
+    timerMode =
+        "pomodoro";
+
+
+    pomodoroStage =
+        "study";
+
+
+    timerSeconds =
+        25 * 60;
+
+
+    document.getElementById(
+        "timerLabel"
+    ).innerText =
+        "POMODORO";
+
+
+    document.getElementById(
+        "timerStatus"
+    ).innerText =
+        "25 min study • 5 min break";
+
+
+    updateTimerDisplay();
+
+}
+
+
+/* Normal */
+
+function setNormalTimer() {
+
+    pauseTimer();
+
+
+    timerMode =
+        "normal";
+
+
+    timerSeconds =
+        10 * 60;
+
+
+    document.getElementById(
+        "timerLabel"
+    ).innerText =
+        "NORMAL TIMER";
+
+
+    document.getElementById(
+        "timerStatus"
+    ).innerText =
+        "10 minute timer";
+
+
+    updateTimerDisplay();
+
+}
+
+
+/* Switch Pomodoro study/break */
+
+function switchPomodoro() {
+
+    pauseTimer();
+
+
+    if (
+        pomodoroStage ===
+        "study"
+    ) {
+
+        pomodoroStage =
+            "break";
+
+
+        timerSeconds =
+            5 * 60;
+
+
+        document.getElementById(
+            "timerLabel"
+        ).innerText =
+            "BREAK";
+
+
+        document.getElementById(
+            "timerStatus"
+        ).innerText =
+            "5 minute break ☕";
+
+
+        showToast(
+            "Study session complete! Take a break 🎉"
+        );
+
+    }
+
+    else {
+
+        pomodoroStage =
+            "study";
+
+
+        timerSeconds =
+            25 * 60;
+
+
+        document.getElementById(
+            "timerLabel"
+        ).innerText =
+            "POMODORO";
+
+
+        document.getElementById(
+            "timerStatus"
+        ).innerText =
+            "25 min study • 5 min break";
+
+
+        showToast(
+            "Break finished! Back to studying 💪"
+        );
+
+    }
+
+
+    updateTimerDisplay();
+
+}
+
+
+/* =================================================
    TOAST
-================================= */
+================================================= */
 
 function showToast(message) {
 
     const toast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
 
     toast.innerText =
@@ -1779,35 +3241,48 @@ function showToast(message) {
         "block";
 
 
-    setTimeout(() => {
+    setTimeout(
 
-        toast.style.display =
-            "none";
+        () => {
 
-    }, 2500);
+            toast.style.display =
+                "none";
+
+        },
+
+        2500
+
+    );
 
 }
 
 
-/* =================================
+/* =================================================
    AUTO LOGIN
-================================= */
+================================================= */
 
-window.onload = function() {
+window.onload =
+    function() {
 
-    const currentUser =
-        localStorage.getItem(
-            "studyQuestCurrentUser"
-        );
+        const currentUser =
+            localStorage.getItem(
+                "studyQuestCurrentUser"
+            );
 
 
-    if (currentUser) {
+        if (currentUser) {
 
-        loadAccount();
+            loadAccount();
 
-    }
+        }
 
-};
+
+        displayFlashcards();
+
+        updateTimerDisplay();
+
+    };
+
 
 </script>
 
